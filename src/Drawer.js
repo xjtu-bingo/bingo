@@ -13,8 +13,14 @@ import MenuIcon from 'material-ui-icons/Menu';
 import ChevronLeftIcon from 'material-ui-icons/ChevronLeft';
 import ChevronRightIcon from 'material-ui-icons/ChevronRight';
 import {ListItem, ListItemIcon, ListItemText} from "material-ui";
-import CafeIcon from "material-ui-icons/LocalCafe"
+import CafeIcon from "material-ui-icons/LocalCafe";
+import TimerIcon from 'material-ui-icons/Timer';
+import MemberIcon from 'material-ui-icons/CardMembership';
+import CookbookIcon from 'material-ui-icons/Book';
+import AlarmIcon from 'material-ui-icons/Alarm';
+
 import Stepper from './Stepper'
+
 
 const drawerWidth = 240;
 
@@ -126,7 +132,7 @@ class MiniDrawer extends React.Component {
                                 <MenuIcon/>
                             </IconButton>
                             <Typography align='center' type="title" color="inherit" noWrap>
-                                Bingo
+                                品阁咖啡屋
                             </Typography>
                         </Toolbar>
                     </AppBar>
@@ -147,12 +153,38 @@ class MiniDrawer extends React.Component {
                             <List>
                                 <ListItem button>
                                     <ListItemIcon>
+                                        <TimerIcon/>
+                                    </ListItemIcon>
+                                    <ListItemText primary="待处理订单"/>
+                                </ListItem>
+                                <ListItem button>
+                                    <ListItemIcon>
                                         <CafeIcon/>
                                     </ListItemIcon>
-                                    <ListItemText primary="Order"/>
+                                    <ListItemText primary="点单"/>
+                                </ListItem>
+                                <ListItem button>
+                                    <ListItemIcon>
+                                        <MemberIcon/>
+                                    </ListItemIcon>
+                                    <ListItemText primary="品阁会员"/>
                                 </ListItem>
                             </List>
                             <Divider/>
+                            <List>
+                                <ListItem button>
+                                    <ListItemIcon>
+                                        <CookbookIcon/>
+                                    </ListItemIcon>
+                                    <ListItemText primary="制作方法"/>
+                                </ListItem>
+                                <ListItem button>
+                                    <ListItemIcon>
+                                        <AlarmIcon/>
+                                    </ListItemIcon>
+                                    <ListItemText primary="计时器"/>
+                                </ListItem>
+                            </List>
                         </div>
                     </Drawer>
                     <main className={classes.content}>
