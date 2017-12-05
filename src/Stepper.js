@@ -6,13 +6,20 @@ import Button from 'material-ui/Button';
 import {FormControl, FormControlLabel, FormLabel, Radio, RadioGroup} from "material-ui";
 import OrderDetail from './OrderDetail'
 import Menu from './Menu';
+import MemberSearch from './MemberSearch'
 
 const styles = theme => ({
     root: {
         width: '90%',
     },
-    button: {
-        marginRight: theme.spacing.unit,
+    buttonOne: {
+        marginRight: '18%',
+    },
+    buttonTwo: {
+        marginRight: '10%',
+    },
+    buttonThree: {
+        marginRight: '48%',
     },
     actionsContainer: {
         marginTop: theme.spacing.unit,
@@ -52,8 +59,9 @@ function getStepContent(step) {
 
 class VerticalLinearStepper extends React.Component {
     state = {
-        activeStep: 1,
-        value: ''
+        activeStep: 0,
+        value: '',
+
     };
 
     handleNext = () => {
@@ -78,6 +86,7 @@ class VerticalLinearStepper extends React.Component {
         this.setState({value: v});
     };
 
+
     render() {
         const {classes} = this.props;
         const steps = getSteps();
@@ -90,8 +99,7 @@ class VerticalLinearStepper extends React.Component {
                         <StepLabel>菜单</StepLabel>
                         <StepContent>
                             <Menu/>
-
-                            <Button raised color="primary" onClick={this.handleNext}>
+                            <Button raised color="primary" onClick={this.handleNext} className={classes.buttonOne}>
                                 确定
                             </Button>
                         </StepContent>
@@ -116,6 +124,15 @@ class VerticalLinearStepper extends React.Component {
                                     <FormControlLabel value="wechat" control={<Radio/>} label="微信"/>
                                 </RadioGroup>
                             </FormControl>
+                            <br/>
+                            <MemberSearch/>
+                            <br/>
+                            <Button raised color="primary" onClick={this.handleBack} className={classes.buttonTwo}>
+                                上一步
+                            </Button>
+                            <Button raised color="primary" onClick={this.handleNext} className={classes.buttonThree}>
+                                确定
+                            </Button>
                         </StepContent>
                     </Step>
                 </Stepper>
