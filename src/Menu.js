@@ -19,23 +19,15 @@ const styles = theme => ({
     },
 });
 
-function generate(element) {
-    return [0, 1, 2].map(value =>
-        React.cloneElement(element, {
-            key: value,
-        }),
-    );
-}
 
 class InteractiveList extends React.Component {
     state = {
         dense: false,
-        secondary: false,
     };
 
     render() {
         const {classes} = this.props;
-        const {dense, secondary} = this.state;
+        const {dense} = this.state;
 
         return (
             <div className={classes.root}>

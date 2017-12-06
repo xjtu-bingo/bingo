@@ -18,6 +18,8 @@ import TimerIcon from 'material-ui-icons/Timer';
 import MemberIcon from 'material-ui-icons/CardMembership';
 import CookbookIcon from 'material-ui-icons/Book';
 import AlarmIcon from 'material-ui-icons/Alarm';
+import FinancialIcon from 'material-ui-icons/AttachMoney';
+import StaffIcon from 'material-ui-icons/Flag';
 
 import Stepper from './Stepper'
 
@@ -27,7 +29,7 @@ const drawerWidth = 240;
 const styles = theme => ({
     root: {
         width: '100%',
-        height: 800,
+        height: '100%',
         zIndex: 1,
         overflow: 'hidden',
     },
@@ -183,6 +185,24 @@ class MiniDrawer extends React.Component {
                                         <AlarmIcon/>
                                     </ListItemIcon>
                                     <ListItemText primary="计时器"/>
+                                </ListItem>
+                            </List>
+                            <Divider/>
+                            <List>
+                                <ListItem button>
+                                    <ListItemIcon>
+                                        <FinancialIcon/>
+                                    </ListItemIcon>
+                                    <ListItemText primary="财务报表"/>
+                                </ListItem>
+                            </List>
+                            <Divider/>
+                            <List>
+                                <ListItem button>
+                                    <ListItemIcon>
+                                        <StaffIcon/>
+                                    </ListItemIcon>
+                                    <ListItemText primary="员工签到"/>
                                 </ListItem>
                             </List>
                         </div>

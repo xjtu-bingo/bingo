@@ -7,6 +7,10 @@ import ModeEditIcon from 'material-ui-icons/ModeEdit';
 const styles = theme => ({
     button: {
         margin: theme.spacing.unit,
+        position: 'fixed',
+        bottom: theme.spacing.unit * 14,
+        right: theme.spacing.unit * 4
+
     },
 });
 
