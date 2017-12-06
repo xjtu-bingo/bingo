@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {withStyles} from 'material-ui/styles';
 import Stepper, {Step, StepContent, StepLabel} from 'material-ui/Stepper';
 import Button from 'material-ui/Button';
-import {FormControl, FormControlLabel, FormLabel, Radio, RadioGroup} from "material-ui";
+import {FormControl, FormControlLabel, FormLabel, Radio, RadioGroup, Typography} from "material-ui";
 import OrderDetail from './OrderDetail'
 import Menu from './Menu';
 import MemberSearch from './MemberSearch'
@@ -11,6 +11,9 @@ import MemberSearch from './MemberSearch'
 const styles = theme => ({
     root: {
         width: '90%',
+    },
+    action: {
+        margin: '2em'
     },
     buttonOne: {
         marginRight: '18%',
@@ -76,16 +79,29 @@ class VerticalLinearStepper extends React.Component {
                         <StepLabel>菜单</StepLabel>
                         <StepContent>
                             <Menu/>
-                            <Button raised color="primary" onClick={this.handleNext} className={classes.buttonOne}>
+                            <Button raised color="primary" onClick={this.handleNext} className={classes.action}>
                                 确定
                             </Button>
                         </StepContent>
                     </Step>
                     <Step>
-                        <StepLabel>付款</StepLabel>
+                        <StepLabel>订单</StepLabel>
                         <StepContent>
                             <OrderDetail
                                 data={[{name: "AASD", price: 2, amount: 12}, {name: 'HH', price: 3, amount: 30}]}/>
+                            <br/>
+                            <Button raised color="primary" onClick={this.handleNext}
+                                    className={classes.action}>确定</Button>
+                            <Button raised color="accent" onClick={this.handleBack}
+                                    className={classes.action}>返回</Button>
+                        </StepContent>
+                    </Step>
+                    <Step>
+                        <StepLabel>付款</StepLabel>
+                        <StepContent>
+                            <Typography type="headline">
+                                订单共计 10 元，请选择支付方式：
+                            </Typography>
                             <FormControl component="fieldset" required className={classes.formControl}>
                                 <FormLabel component="legend">支付方式</FormLabel>
                                 <RadioGroup
@@ -104,12 +120,10 @@ class VerticalLinearStepper extends React.Component {
                             <br/>
                             <MemberSearch/>
                             <br/>
-                            <Button raised color="primary" onClick={this.handleBack} className={classes.buttonTwo}>
-                                上一步
-                            </Button>
-                            <Button raised color="primary" onClick={this.handleNext} className={classes.buttonThree}>
-                                确定
-                            </Button>
+                            <Button raised color="primary" onClick={this.handleNext}
+                                    className={classes.action}>确定</Button>
+                            <Button raised color="accent" onClick={this.handleBack}
+                                    className={classes.action}>返回</Button>
                         </StepContent>
                     </Step>
                 </Stepper>
