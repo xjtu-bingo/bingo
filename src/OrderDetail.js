@@ -15,8 +15,6 @@ const styles = theme => ({
     },
 });
 
-let id = 0;
-
 function BasicTable(props) {
     const {classes, data} = props;
 
