@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 import {withStyles} from 'material-ui/styles';
 import Stepper, {Step, StepContent, StepLabel} from 'material-ui/Stepper';
 import Button from 'material-ui/Button';
-import {FormControl, FormControlLabel, FormLabel, Radio, RadioGroup} from "material-ui";
 import OrderDetail from './OrderDetail'
 import Menu from './Menu';
 import MemberSearch from './MemberSearch'
+import MemberSearchDialog from './MemberSearchDialog'
 
 const styles = theme => ({
     root: {
@@ -109,22 +109,10 @@ class VerticalLinearStepper extends React.Component {
                         <StepContent>
                             <OrderDetail
                                 data={[{name: "AASD", price: 2, amount: 12}, {name: 'HH', price: 3, amount: 30}]}/>
-                            <FormControl component="fieldset" required className={classes.formControl}>
-                                <FormLabel component="legend">支付方式</FormLabel>
-                                <RadioGroup
-                                    name="支付方式"
-                                    className={classes.group}
-                                    value={this.state.value}
-                                    onChange={this.handleChange}
-                                    row
-                                >
-                                    <FormControlLabel value="card" control={<Radio/>} label="会员"/>
-                                    <FormControlLabel value="cash" control={<Radio/>} label="现金"/>
-                                    <FormControlLabel value="alipay" control={<Radio/>} label="支付宝"/>
-                                    <FormControlLabel value="wechat" control={<Radio/>} label="微信"/>
-                                </RadioGroup>
-                            </FormControl>
+
                             <br/>
+
+                            <MemberSearchDialog/>
                             <MemberSearch/>
                             <br/>
                             <Button raised color="primary" onClick={this.handleBack} className={classes.buttonTwo}>

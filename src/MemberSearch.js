@@ -4,7 +4,7 @@ import {FormControl, Input} from "material-ui";
 
 class MemberSearch extends Component {
     state = {
-        key: ''
+        key: '',
     };
     handleChangeInput = event => {
         this.setState({key: event.target.value});
@@ -20,7 +20,8 @@ class MemberSearch extends Component {
                     placeholder="会员卡号/姓名/手机号"
                 />
             </FormControl>
-        );
+        )
+            ;
     }
 }
 
