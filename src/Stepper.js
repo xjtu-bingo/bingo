@@ -72,6 +72,7 @@ class VerticalLinearStepper extends React.Component {
         const {classes} = this.props;
         const {activeStep} = this.state;
 
+        let order = [{name: "蜂蜜柠檬茶", price: 6, amount: 1}, {name: '热可可', price: 7, amount: 2}];
         return (
             <div className={classes.root}>
                 <Stepper activeStep={activeStep} orientation="vertical">
@@ -88,7 +89,10 @@ class VerticalLinearStepper extends React.Component {
                         <StepLabel>订单</StepLabel>
                         <StepContent>
                             <OrderDetail
-                                data={[{name: "AASD", price: 2, amount: 12}, {name: 'HH', price: 3, amount: 30}]}/>
+                                data={order}/>
+                            <Typography type="headline" noWrap>
+                                {order.map(o => `${o.amount} 份 ${o.name}`).join('；') + '。还需要别的吗？'}
+                            </Typography>
                             <br/>
                             <Button raised color="primary" onClick={this.handleNext}
                                     className={classes.action}>确定</Button>
@@ -124,6 +128,14 @@ class VerticalLinearStepper extends React.Component {
                                     className={classes.action}>确定</Button>
                             <Button raised color="accent" onClick={this.handleBack}
                                     className={classes.action}>返回</Button>
+                        </StepContent>
+                    </Step>
+                    <Step>
+                        <StepLabel>完成</StepLabel>
+                        <StepContent>
+                            <Typography>订单已提交，本次点单结束，请开始制作。</Typography>
+                            <Button raised color="primary" className={classes.action}>查看待制作产品</Button>
+                            <Button raised color="accent" className={classes.action}>再来一单</Button>
                         </StepContent>
                     </Step>
                 </Stepper>
