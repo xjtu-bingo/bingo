@@ -92,15 +92,10 @@ const styles = theme => ({
     },
     content: {
         width: '100%',
-        flexGrow: 1,
         backgroundColor: theme.palette.background.default,
         padding: 24,
-        height: 'calc(100% - 56px)',
         marginTop: 56,
-        [theme.breakpoints.up('sm')]: {
-            height: 'calc(100% - 64px)',
-            marginTop: 64,
-        },
+        overflowY: 'scroll'
     },
 });
 
@@ -207,11 +202,11 @@ class MiniDrawer extends React.Component {
                             </List>
                         </div>
                     </Drawer>
-                    <main className={classes.content}>
+                    <div className={classes.content}>
                         <Typography type="body1" noWrap>
                             <Stepper/>
                         </Typography>
-                    </main>
+                    </div>
                 </div>
             </div>
         );
