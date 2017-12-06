@@ -25,7 +25,6 @@ class MenuItem extends React.Component {
                             </IconButton>
 
                             : null
-
                     }
                     <IconButton onClick={() => this.setState({OrderNumber: this.state.OrderNumber + 1})}>
                         <AddIcon/>

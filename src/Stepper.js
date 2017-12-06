@@ -6,7 +6,7 @@ import Button from 'material-ui/Button';
 import {FormControl, FormControlLabel, FormLabel, Radio, RadioGroup, Typography} from "material-ui";
 import OrderDetail from './OrderDetail'
 import Menu from './Menu';
-import MemberSearch from './MemberSearch'
+import MemberSearch from './SearchTable'
 
 const styles = theme => ({
     root: {
@@ -70,12 +70,7 @@ class VerticalLinearStepper extends React.Component {
     handleChange = (e, v) => {
         this.setState({value: v});
     };
-    handleMemberSearchOpen = () => {
-        this.setState({display: true})
-    };
-    handleMemberSearchClose = () => {
-        this.setState({display: false})
-    };
+
     render() {
         const {classes} = this.props;
         const {activeStep} = this.state;

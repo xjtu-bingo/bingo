@@ -31,7 +31,6 @@ class InteractiveList extends React.Component {
 
         return (
             <div className={classes.root}>
-
                 <Grid container>
                     <Grid item xs={12} md={2}>
 

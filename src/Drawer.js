@@ -20,6 +20,8 @@ import CookbookIcon from 'material-ui-icons/Book';
 import AlarmIcon from 'material-ui-icons/Alarm';
 import FinancialIcon from 'material-ui-icons/AttachMoney';
 import StaffIcon from 'material-ui-icons/Flag';
+import CookBook from './MemberPage';
+
 
 import Stepper from './Stepper'
 
@@ -102,6 +104,7 @@ const styles = theme => ({
 class MiniDrawer extends React.Component {
     state = {
         open: false,
+        page: 1,
     };
 
     handleDrawerOpen = () => {
@@ -203,9 +206,8 @@ class MiniDrawer extends React.Component {
                         </div>
                     </Drawer>
                     <div className={classes.content}>
-                        <Typography type="body1" noWrap>
-                            <Stepper/>
-                        </Typography>
+                        {this.state.page == 0 ? <Stepper/> : null}
+                        {this.state.page == 1 ? <CookBook/> : null}
                     </div>
                 </div>
             </div>
