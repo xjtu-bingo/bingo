@@ -7,7 +7,6 @@ import {FormControl, FormControlLabel, FormLabel, Radio, RadioGroup, Typography}
 import OrderDetail from './OrderDetail'
 import Menu from './Menu';
 import MemberSearch from './MemberSearch'
-import MemberSearchDialog from './MemberSearchDialog'
 
 const styles = theme => ({
     root: {
@@ -36,6 +35,9 @@ const styles = theme => ({
     formControl: {
         marginTop: '2em',
         paddingLeft: '1em'
+    },
+    memberSearch: {
+        display: 'none'
     }
 });
 
@@ -43,7 +45,8 @@ class VerticalLinearStepper extends React.Component {
     state = {
         activeStep: 0,
         value: '',
-
+        open: false,
+        display: false
     };
 
     handleNext = () => {
@@ -67,8 +70,12 @@ class VerticalLinearStepper extends React.Component {
     handleChange = (e, v) => {
         this.setState({value: v});
     };
-
-
+    handleMemberSearchOpen = () => {
+        this.setState({display: true})
+    };
+    handleMemberSearchClose = () => {
+        this.setState({display: false})
+    };
     render() {
         const {classes} = this.props;
         const {activeStep} = this.state;
@@ -116,16 +123,18 @@ class VerticalLinearStepper extends React.Component {
                                     onChange={this.handleChange}
                                     row
                                 >
-                                    <FormControlLabel value="card" control={<Radio/>} label="会员"/>
-                                    <FormControlLabel value="cash" control={<Radio/>} label="现金"/>
-                                    <FormControlLabel value="alipay" control={<Radio/>} label="支付宝"/>
-                                    <FormControlLabel value="wechat" control={<Radio/>} label="微信"/>
+                                    <FormControlLabel value="card" control={<Radio/>} label="会员"
+                                                      onClick={this.handleMemberSearchOpen}/>
+                                    <FormControlLabel value="cash" control={<Radio/>} label="现金"
+                                                      onClick={this.handleMemberSearchClose}/>
+                                    <FormControlLabel value="alipay" control={<Radio/>} label="支付宝"
+                                                      onClick={this.handleMemberSearchClose}/>
+                                    <FormControlLabel value="wechat" control={<Radio/>} label="微信"
+                                                      onClick={this.handleMemberSearchClose}/>
                                 </RadioGroup>
                             </FormControl>
                             <br/>
-
-                            <MemberSearchDialog/>
-                            <MemberSearch/>
+                            <MemberSearch className={this.state.display ? null : classes.memberSearch}/>
                             <br/>
                             <Button raised color="primary" onClick={this.handleNext}
                                     className={classes.action}>确定</Button>

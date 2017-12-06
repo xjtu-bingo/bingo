@@ -12,7 +12,7 @@ class MemberSearch extends Component {
 
     render() {
         return (
-            <FormControl fullWidth>
+            <FormControl fullWidth className={this.props.className}>
                 <Input
                     id="amount"
                     value={this.state.key}
