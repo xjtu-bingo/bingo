@@ -20,7 +20,7 @@ import CookbookIcon from 'material-ui-icons/Book';
 import AlarmIcon from 'material-ui-icons/Alarm';
 import FinancialIcon from 'material-ui-icons/AttachMoney';
 import StaffIcon from 'material-ui-icons/Flag';
-import CookBook from './MemberPage';
+import MemberPage from './MemberPage';
 
 
 import Stepper from './Stepper'
@@ -207,7 +207,7 @@ class MiniDrawer extends React.Component {
                     </Drawer>
                     <div className={classes.content}>
                         {this.state.page == 0 ? <Stepper/> : null}
-                        {this.state.page == 1 ? <CookBook/> : null}
+                        {this.state.page == 1 ? <MemberPage/> : null}
                     </div>
                 </div>
             </div>

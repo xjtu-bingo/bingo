@@ -43,7 +43,7 @@ const styles = theme => ({
 
 class VerticalLinearStepper extends React.Component {
     state = {
-        activeStep: 0,
+        activeStep: 0 ,
         value: '',
         open: false,
         display: false

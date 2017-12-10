@@ -3,7 +3,7 @@ import {withStyles} from 'material-ui/styles';
 import ButtonBase from 'material-ui/ButtonBase';
 import Typography from 'material-ui/Typography';
 import RegisterPage from './RegisterPage'
-
+import TopUpPage from  './TopUpPage';
 const styles = theme => ({
     root: {
         marginTop: theme.spacing.unit * 3,
@@ -97,7 +97,8 @@ class CookBook extends Component {
 
     state = {
         display: false,
-        open: false,
+        registerPageOpen: false,
+        topUpPageOpen: false,
     };
 
     // handleMemberSearchOpen = () => {
@@ -108,11 +109,18 @@ class CookBook extends Component {
     // };
 
     handleRegisterPageOpen = () => {
-        this.setState({open: true});
+        this.setState({registerPageOpen: true});
     };
 
-    handleRequestClose = () => {
-        this.setState({open: false});
+    handleRegisterPageRequestClose = () => {
+        this.setState({registerPageOpen: false});
+    };
+    handleTopUpPageOpen = () => {
+        this.setState({topUpPageOpen: true});
+    };
+
+    handleTopUpPageRequestClose = () => {
+        this.setState({topUpPageOpen: false});
     };
 
     render() {
@@ -155,7 +163,7 @@ class CookBook extends Component {
                     style={{
                         width: images[1].width,
                     }}
-                    onClick={this.handleRegisterPageOpen}
+                    onClick={this.handleTopUpPageOpen}
                 >
                     <div
                         className={classes.imageSrc}
@@ -177,7 +185,8 @@ class CookBook extends Component {
                     </div>
                 </ButtonBase>
                 {/*<MemberSearchDialog open={this.state.open} onRequestClose={this.handleMemberSearchClose}/>*/}
-                <RegisterPage open={this.state.open} onRequestClose={this.handleRequestClose}/>
+                <RegisterPage open={this.state.registerPageOpen} onRequestClose={this.handleRegisterPageRequestClose}/>
+                <TopUpPage open={this.state.topUpPageOpen} onRequestClose={this.handleTopUpPageRequestClose}/>
             </div>
         );
     }
