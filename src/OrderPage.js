@@ -1,12 +1,12 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import {withStyles} from 'material-ui/styles';
 import Stepper, {Step, StepContent, StepLabel} from 'material-ui/Stepper';
 import Button from 'material-ui/Button';
 import {FormControl, FormControlLabel, FormLabel, Radio, RadioGroup, Typography} from "material-ui";
 import OrderDetail from './OrderDetail'
 import Menu from './Menu';
-import MemberSearch from './SearchTable'
+import MemberSearch from './Components/SearchTable'
+import OrderCreatedSnackbar from './Components/SnackBar'
 
 const styles = theme => ({
     root: {
@@ -46,20 +46,35 @@ class VerticalLinearStepper extends React.Component {
         activeStep: 0 ,
         value: '',
         open: false,
-        display: false
+        memberSearchBarDisplay: false,
+        orderCreatedSnackBarOpen: false,
     };
 
     handleNext = () => {
         this.setState({
             activeStep: this.state.activeStep + 1,
+
         });
     };
 
+    handleNextAndSnackBar = () => {
+        this.setState({
+            activeStep: this.state.activeStep + 1,
+            orderCreatedSnackBarOpen: true,
+        })
+    };
+
+    handleOrderCreatedSnackBaeClose = () => {
+        this.setState({
+            orderCreatedSnackBarOpen: false
+        })
+    };
     handleBack = () => {
         this.setState({
             activeStep: this.state.activeStep - 1,
         });
     };
+
 
     handleReset = () => {
         this.setState({
@@ -71,6 +86,16 @@ class VerticalLinearStepper extends React.Component {
         this.setState({value: v});
     };
 
+    handleMemberSearchOpen = () => {
+        this.setState({
+            memberSearchBarDisplay: true,
+        })
+    };
+    handleMemberSearchClose = () => {
+        this.setState({
+            memberSearchBarDisplay: false,
+        })
+    };
     render() {
         const {classes} = this.props;
         const {activeStep} = this.state;
@@ -129,12 +154,13 @@ class VerticalLinearStepper extends React.Component {
                                 </RadioGroup>
                             </FormControl>
                             <br/>
-                            <MemberSearch className={this.state.display ? null : classes.memberSearch}/>
+                            <MemberSearch className={this.state.memberSearchBarDisplay ? null : classes.memberSearch}/>
                             <br/>
-                            <Button raised color="primary" onClick={this.handleNext}
+                            <Button raised color="primary" onClick={this.handleNextAndSnackBar}
                                     className={classes.action}>确定</Button>
                             <Button raised color="accent" onClick={this.handleBack}
                                     className={classes.action}>返回</Button>
+
                         </StepContent>
                     </Step>
                     <Step>
@@ -143,6 +169,7 @@ class VerticalLinearStepper extends React.Component {
                             <Typography>订单已提交，本次点单结束，请开始制作。</Typography>
                             <Button raised color="primary" className={classes.action}>查看待制作产品</Button>
                             <Button raised color="accent" className={classes.action}>再来一单</Button>
+                            <OrderCreatedSnackbar open={this.state.orderCreatedSnackBarOpen} onRequestClose={this.handleOrderCreatedSnackBaeClose} Note="订单已创建"/>
                         </StepContent>
                     </Step>
                 </Stepper>
@@ -150,9 +177,5 @@ class VerticalLinearStepper extends React.Component {
         );
     }
 }
-
-VerticalLinearStepper.propTypes = {
-    classes: PropTypes.object,
-};
 
 export default withStyles(styles)(VerticalLinearStepper);

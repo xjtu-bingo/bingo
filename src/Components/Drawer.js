@@ -20,10 +20,12 @@ import CookbookIcon from 'material-ui-icons/Book';
 import AlarmIcon from 'material-ui-icons/Alarm';
 import FinancialIcon from 'material-ui-icons/AttachMoney';
 import StaffIcon from 'material-ui-icons/Flag';
-import MemberPage from './MemberPage';
+import MemberPage from '../MemberPage';
+import Badge from 'material-ui/Badge'
+import ManufacturingMethodPage from '../ManufacturingMethodPage'
 
 
-import Stepper from './Stepper'
+import Stepper from '../OrderPage'
 
 
 const drawerWidth = 240;
@@ -115,6 +117,23 @@ class MiniDrawer extends React.Component {
         this.setState({open: false});
     };
 
+    handleOrderPageChange =() => {
+        this.setState({
+            page: 0,
+        })
+    };
+
+    handleMemberPageChange =() => {
+        this.setState({
+            page: 1,
+        })
+    };
+
+    handleManufacturingMethodPageChange = () => {
+        this.setState({
+            page: 3,
+        })
+    }
     render() {
         const {classes, theme} = this.props;
 
@@ -153,17 +172,19 @@ class MiniDrawer extends React.Component {
                             <List>
                                 <ListItem button>
                                     <ListItemIcon>
-                                        <TimerIcon/>
+                                        <Badge className={classes.badge} badgeContent={4} color="primary">
+                                            <TimerIcon/>
+                                        </Badge>
                                     </ListItemIcon>
                                     <ListItemText primary="待处理订单"/>
                                 </ListItem>
-                                <ListItem button>
+                                <ListItem button onClick={this.handleOrderPageChange}>
                                     <ListItemIcon>
                                         <CafeIcon/>
                                     </ListItemIcon>
                                     <ListItemText primary="点单"/>
                                 </ListItem>
-                                <ListItem button>
+                                <ListItem button onClick={this.handleMemberPageChange}>
                                     <ListItemIcon>
                                         <MemberIcon/>
                                     </ListItemIcon>
@@ -172,7 +193,7 @@ class MiniDrawer extends React.Component {
                             </List>
                             <Divider/>
                             <List>
-                                <ListItem button>
+                                <ListItem button onClick={this.handleManufacturingMethodPageChange}>
                                     <ListItemIcon>
                                         <CookbookIcon/>
                                     </ListItemIcon>
@@ -208,6 +229,7 @@ class MiniDrawer extends React.Component {
                     <div className={classes.content}>
                         {this.state.page == 0 ? <Stepper/> : null}
                         {this.state.page == 1 ? <MemberPage/> : null}
+                        {this.state.page == 3 ? <ManufacturingMethodPage/> : null}
                     </div>
                 </div>
             </div>

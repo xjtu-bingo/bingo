@@ -11,7 +11,7 @@ import Typography from 'material-ui/Typography';
 import CloseIcon from 'material-ui-icons/Close';
 import Slide from 'material-ui/transitions/Slide';
 import {FormControl, Input, InputLabel} from "material-ui";
-import SearchTable from './SearchTable'
+import SearchTable from './Components/SearchTable'
 const styles = {
     appBar: {
         position: 'relative',

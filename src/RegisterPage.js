@@ -10,7 +10,7 @@ import Typography from 'material-ui/Typography';
 import CloseIcon from 'material-ui-icons/Close';
 import Slide from 'material-ui/transitions/Slide';
 import {FormControl, Input, InputLabel} from "material-ui";
-import DatePicker from './DatePicker'
+import DatePicker from './Components/DatePicker'
 
 const styles = {
     appBar: {

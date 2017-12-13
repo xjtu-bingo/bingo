@@ -12,18 +12,7 @@ const styles = theme => ({
     },
 });
 
-class SimpleSnackbar extends React.Component {
-    handleClick = () => {
-        this.setState({open: true});
-    };
-
-    handleRequestClose = (event, reason) => {
-        if (reason === 'clickaway') {
-            return;
-        }
-
-        this.setState({open: false});
-    };
+class SimpleSnackBar extends React.Component {
 
     render() {
         const {classes} = this.props;
@@ -34,23 +23,23 @@ class SimpleSnackbar extends React.Component {
                         vertical: 'bottom',
                         horizontal: 'left',
                     }}
-                    open={this.state.open}
+                    open={this.props.open}
                     autoHideDuration={6000}
-                    onRequestClose={this.handleRequestClose}
+                    onRequestClose={this.props.onRequestClose}
                     SnackbarContentProps={{
                         'aria-describedby': 'message-id',
                     }}
-                    message={<span id="message-id">Note archived</span>}
+                    message={<span id="message-id">{this.props.Note}</span>}
                     action={[
-                        <Button key="undo" color="accent" dense onClick={this.handleRequestClose}>
-                            UNDO
+                        <Button key="undo" color="accent" dense onClick={this.props.onRequestClose}>
+                            确定
                         </Button>,
                         <IconButton
                             key="close"
                             aria-label="Close"
                             color="inherit"
                             className={classes.close}
-                            onClick={this.handleRequestClose}
+                            onClick={this.props.onRequestClose}
                         >
                             <CloseIcon/>
                         </IconButton>,
@@ -61,4 +50,4 @@ class SimpleSnackbar extends React.Component {
     }
 }
 
-export default withStyles(styles)(SimpleSnackbar);
+export default withStyles(styles)(SimpleSnackBar);
