@@ -11,7 +11,7 @@ const theme = createMuiTheme({
     palette: {
         primary: {
             ...red,
-            [500]: 'rgb(163, 46, 10)'
+            500: 'rgb(163, 46, 10)'
         },
         secondary: brown,
         error: purple
