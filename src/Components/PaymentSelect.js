@@ -27,8 +27,8 @@ class PaymentSelect extends React.Component {
         const {classes, onRequestClose, selectedValue, paymentWays, ...other} = this.props;
 
         return (
-            <Dialog onRequestClose={this.handleRequestClose} {...other}>
-                <DialogTitle>选择支付方式</DialogTitle>
+            <Dialog onRequestClose={this.handleRequestClose} {...other} >
+                <DialogTitle style={{width: 300}}>选择支付方式</DialogTitle>
                 <div>
                     <List>
                         {paymentWays.map((ways, i) => (
