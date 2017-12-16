@@ -28,7 +28,7 @@ class PaymentSelect extends React.Component {
 
         return (
             <Dialog onRequestClose={this.handleRequestClose} {...other}>
-                <DialogTitle>Set backup account</DialogTitle>
+                <DialogTitle>选择支付方式</DialogTitle>
                 <div>
                     <List>
                         {paymentWays.map((ways, i) => (
