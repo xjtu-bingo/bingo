@@ -23,14 +23,16 @@ function AutoGrid(props) {
         <div className={classes.root}>
             <Grid container spacing={24}>
                 <Grid item xs>
-                    <Paper className={classes.paper}>待处理订单</Paper>
+                    <Paper className={classes.paper}>待付款订单</Paper>
                     <OrderCard data={[{name: "星冰乐", price: 10, amount: 2}, {name: "keke", price: 20, amount: 3}]}/>
                 </Grid>
                 <Grid item xs>
-                    <Paper className={classes.paper}>xs</Paper>
+                    <Paper className={classes.paper}>待制作订单</Paper>
+                    <OrderCard data={[{name: "星冰乐", price: 10, amount: 2}, {name: "keke", price: 20, amount: 3}]}/>
                 </Grid>
                 <Grid item xs>
-                    <Paper className={classes.paper}>xs</Paper>
+                    <Paper className={classes.paper}>已完成订单</Paper>
+                    <OrderCard data={[{name: "星冰乐", price: 10, amount: 2}, {name: "keke", price: 20, amount: 3}]}/>
                 </Grid>
             </Grid>
         </div>
