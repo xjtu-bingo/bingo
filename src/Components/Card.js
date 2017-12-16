@@ -1,13 +1,14 @@
 import React from 'react';
 import {withStyles} from 'material-ui/styles';
-import Card, {CardActions, CardContent} from 'material-ui/Card';
-import Button from 'material-ui/Button';
+import Card, {CardActions, CardContent, CardHeader} from 'material-ui/Card';
 import OrderDetail from "../OrderDetailTable"
+import {Avatar} from "material-ui";
 
 
 const styles = theme => ({
     card: {
         minWidth: 275,
+        marginTop: '1em'
     },
     bullet: {
         display: 'inline-block',
@@ -26,22 +27,25 @@ const styles = theme => ({
 });
 
 class SimpleCard extends React.Component {
-
-
     render() {
-        const {classes, data} = this.props;
+        const {classes, data, actions} = this.props;
         const bull = <span className={classes.bullet}>•</span>;
         return (
-            <div>
-                <Card className={classes.card}>
-                    <CardContent>
-                        <OrderDetail data={data}/>
-                    </CardContent>
-                    <CardActions>
-                        <Button dense onClick={this.props.handleAction}>{this.props.actionName}</Button>
-                    </CardActions>
-                </Card>
-            </div>
+            <Card className={classes.card}>
+                <CardHeader
+                    avatar={
+                        <Avatar aria-label="Recipe" className={classes.avatar}>
+                            匿
+                        </Avatar>
+                    }
+                    title="会员名"
+                    subheader="订单时间"
+                />
+                <CardContent>
+                    <OrderDetail data={data}/>
+                </CardContent>
+                <CardActions>{actions}</CardActions>
+            </Card>
         );
     }
 }

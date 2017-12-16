@@ -3,7 +3,7 @@ import {withStyles} from 'material-ui/styles';
 import List, {ListItem, ListItemText,} from 'material-ui/List';
 import Grid from 'material-ui/Grid';
 import Typography from 'material-ui/Typography';
-import MenuItem from './MenuItem'
+import OrderProductItem from "./Components/OrderProductItem";
 
 const styles = theme => ({
     root: {
@@ -18,15 +18,54 @@ const styles = theme => ({
     },
 });
 
+const data = [
+    {
+        category: '奶茶',
+        items: [
+            {
+                id: 'A',
+                name: '原味奶茶',
+                price: 6
+            },
+            {
+                id: 'B',
+                name: '啤酒',
+                price: 4
+            }
+        ]
+    },
+    {
+        category: '奶绿',
+        items: [
+            {
+                id: 'C',
+                name: '原味奶绿',
+                price: 7
+            },
+            {
+                id: 'D',
+                name: '绿啤酒',
+                price: 5
+            },
+            {
+                id: 'E',
+                name: '草原',
+                price: 1
+            }
+        ]
+    }
+];
+
 
 class InteractiveList extends React.Component {
     state = {
         dense: false,
+        category: 0
     };
 
     render() {
         const {classes} = this.props;
-        const {dense} = this.state;
+        const {dense, category} = this.state;
 
         return (
             <div className={classes.root}>
@@ -40,18 +79,11 @@ class InteractiveList extends React.Component {
                         </Typography>
                         <div className={classes.demo}>
                             <List dense={dense}>
-                                <ListItem button>
-                                    <ListItemText primary="奶茶"/>
-                                </ListItem>
-                                <ListItem button>
-                                    <ListItemText primary="奶绿"/>
-                                </ListItem>
-                                <ListItem button>
-                                    <ListItemText primary="果茶"/>
-                                </ListItem>
-                                <ListItem button>
-                                    <ListItemText primary="牛奶"/>
-                                </ListItem>
+                                {data.map((v, i) => (
+                                    <ListItem button key={i} onClick={() => this.setState({category: i})}>
+                                        <ListItemText primary={v.category}/>
+                                    </ListItem>
+                                ))}
                             </List>
                         </div>
                     </Grid>
@@ -61,8 +93,11 @@ class InteractiveList extends React.Component {
                         </Typography>
                         <div className={classes.demo}>
                             <List dense={dense}>
-                                <MenuItem name="原味奶茶" price={6}/>
-                                <MenuItem name="红豆奶茶" price={7}/>
+                                {
+                                    data[category].items.map((v, i) => (
+                                        <OrderProductItem key={i} name={v.name} price={v.price} amount={1}
+                                                          onAmountChanged={console.log}/>))
+                                }
                             </List>
                         </div>
                     </Grid>

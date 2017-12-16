@@ -64,12 +64,12 @@ class VerticalLinearStepper extends React.Component {
         return (
             <div className={classes.root}>
                 <Grid container>
-                    <Grid item xs={8}>
+                    <Grid item xs>
                         <Paper>
                             <Menu/>
                         </Paper>
                     </Grid>
-                    <Grid item xs={4}>
+                    <Grid item xs>
                         <Paper>
                             <OrderDetail
                                 data={order}/>
