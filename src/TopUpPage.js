@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import {withStyles} from 'material-ui/styles';
 import Button from 'material-ui/Button';
 import Dialog from 'material-ui/Dialog';
@@ -12,6 +11,7 @@ import CloseIcon from 'material-ui-icons/Close';
 import Slide from 'material-ui/transitions/Slide';
 import {FormControl, Input, InputLabel} from "material-ui";
 import SearchTable from './Components/SearchTable'
+
 const styles = {
     appBar: {
         position: 'relative',

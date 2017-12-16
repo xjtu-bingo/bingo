@@ -133,7 +133,7 @@ class MiniDrawer extends React.Component {
         this.setState({
             page: 3,
         })
-    }
+    };
     render() {
         const {classes, theme} = this.props;
 
@@ -227,9 +227,9 @@ class MiniDrawer extends React.Component {
                         </div>
                     </Drawer>
                     <div className={classes.content}>
-                        {this.state.page == 0 ? <Stepper/> : null}
-                        {this.state.page == 1 ? <MemberPage/> : null}
-                        {this.state.page == 3 ? <ManufacturingMethodPage/> : null}
+                        {this.state.page === 0 ? <Stepper/> : null}
+                        {this.state.page === 1 ? <MemberPage/> : null}
+                        {this.state.page === 3 ? <ManufacturingMethodPage/> : null}
                     </div>
                 </div>
             </div>
