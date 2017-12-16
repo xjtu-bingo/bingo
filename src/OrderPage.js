@@ -1,7 +1,7 @@
 import React from 'react';
 import {withStyles} from 'material-ui/styles';
 import Button from 'material-ui/Button';
-import {Grid} from "material-ui";
+import {Grid, Paper} from "material-ui";
 import OrderDetail from './OrderDetailTable'
 import Menu from './Menu';
 import SnackBar from './Components/SnackBar'
@@ -65,14 +65,18 @@ class VerticalLinearStepper extends React.Component {
             <div className={classes.root}>
                 <Grid container>
                     <Grid item xs={8}>
-                        <Menu/>
+                        <Paper>
+                            <Menu/>
+                        </Paper>
                     </Grid>
                     <Grid item xs={4}>
-                        <OrderDetail
-                            data={order}/>
-                        <Button raised color="primary" className={classes.action}
-                                onClick={this.handleNextAndSnackBar}>确定下单</Button>
-                        <Button raised color="accent" className={classes.action}>取消订单</Button>
+                        <Paper>
+                            <OrderDetail
+                                data={order}/>
+                            <Button raised color="primary" className={classes.action}
+                                    onClick={this.handleNextAndSnackBar}>确定下单</Button>
+                            <Button raised color="accent" className={classes.action}>取消订单</Button>
+                        </Paper>
                     </Grid>
                 </Grid>
                 <SnackBar open={this.state.orderCreatedSnackBarOpen}
