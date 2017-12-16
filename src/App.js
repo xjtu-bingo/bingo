@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
-import Add from './Add'
-import Edit from './Edit'
-import Drawer from './Components/Drawer'
+import Add from './Components/Add'
+import Edit from './Components/Edit'
+import Drawer from './Drawer'
 
 class App extends Component {
     render() {

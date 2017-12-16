@@ -20,12 +20,12 @@ import CookbookIcon from 'material-ui-icons/Book';
 import AlarmIcon from 'material-ui-icons/Alarm';
 import FinancialIcon from 'material-ui-icons/AttachMoney';
 import StaffIcon from 'material-ui-icons/Flag';
-import MemberPage from '../MemberPage';
+import MemberPage from './MemberPage';
 import Badge from 'material-ui/Badge'
-import ManufacturingMethodPage from '../ManufacturingMethodPage'
+import ManufacturingMethodPage from './ManufacturingMethodPage'
+import OrderProcessingPage from './OrderProcessingPage'
 
-
-import Stepper from '../OrderPage'
+import Stepper from './OrderPage'
 
 
 const drawerWidth = 240;
@@ -117,15 +117,20 @@ class MiniDrawer extends React.Component {
         this.setState({open: false});
     };
 
-    handleOrderPageChange =() => {
+    handleOrderProcessingPageChange = () => {
         this.setState({
             page: 0,
+        })
+    };
+    handleOrderPageChange =() => {
+        this.setState({
+            page: 1,
         })
     };
 
     handleMemberPageChange =() => {
         this.setState({
-            page: 1,
+            page: 2,
         })
     };
 
@@ -133,7 +138,7 @@ class MiniDrawer extends React.Component {
         this.setState({
             page: 3,
         })
-    }
+    };
     render() {
         const {classes, theme} = this.props;
 
@@ -170,7 +175,7 @@ class MiniDrawer extends React.Component {
                             </div>
                             <Divider/>
                             <List>
-                                <ListItem button>
+                                <ListItem button onClick={this.handleOrderProcessingPageChange}>
                                     <ListItemIcon>
                                         <Badge className={classes.badge} badgeContent={4} color="primary">
                                             <TimerIcon/>
@@ -227,9 +232,10 @@ class MiniDrawer extends React.Component {
                         </div>
                     </Drawer>
                     <div className={classes.content}>
-                        {this.state.page == 0 ? <Stepper/> : null}
-                        {this.state.page == 1 ? <MemberPage/> : null}
-                        {this.state.page == 3 ? <ManufacturingMethodPage/> : null}
+                        {this.state.page === 0 ? <OrderProcessingPage/> : null}
+                        {this.state.page === 1 ? <Stepper/> : null}
+                        {this.state.page === 2 ? <MemberPage/> : null}
+                        {this.state.page === 3 ? <ManufacturingMethodPage/> : null}
                     </div>
                 </div>
             </div>
