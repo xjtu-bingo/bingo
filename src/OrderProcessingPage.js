@@ -49,12 +49,15 @@ class OrderProcessingPage extends React.Component {
                     </Grid>
                     <Grid item xs>
                         <Paper className={classes.paper}>待制作订单</Paper>
-                        <OrderCard data={this.props.paidOrder}
-                                   actionName="已制作"/>
+                        {this.props.paidOrder.map((order, i) => (<OrderCard data={order}
+                                                                            actionName="已制作"
+                                                                            handleAction={this.handleClickOpen}/>))}
                     </Grid>
                     <Grid item xs>
                         <Paper className={classes.paper}>已完成订单</Paper>
-                        <OrderCard data={this.props.finishedOrder}/>
+                        {this.props.finishedOrder.map((order, i) => (<OrderCard data={order}
+                                                                                actionName="已撤销"
+                                                                                handleAction={this.handleClickOpen}/>))}
                     </Grid>
                     <PaymentSelect
                         selectedValue={this.state.selectedValue}
