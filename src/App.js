@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import Drawer from './Components/Drawer';
+import Drawer from './Drawer';
 import Add from './Components/Add';
 import Edit from './Components/Edit';
 import {createMuiTheme, MuiThemeProvider} from "material-ui/styles";

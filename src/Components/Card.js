@@ -2,7 +2,7 @@ import React from 'react';
 import {withStyles} from 'material-ui/styles';
 import Card, {CardActions, CardContent} from 'material-ui/Card';
 import Button from 'material-ui/Button';
-import OrderDetail from "../OrderDetail"
+import OrderDetail from "../OrderDetailTable"
 
 const styles = theme => ({
     card: {
