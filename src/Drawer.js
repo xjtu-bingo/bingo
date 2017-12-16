@@ -28,6 +28,11 @@ import OrderProcessingPage from './OrderProcessingPage'
 import Stepper from './OrderPage'
 
 
+const data = [[{name: "星冰乐", price: 10, amount: 2}, {name: "keke", price: 20, amount: 3}], [{
+    name: "星冰乐",
+    price: 10,
+    amount: 2
+}, {name: "keke", price: 20, amount: 3}], [{name: "星冰乐", price: 10, amount: 2}, {name: "keke", price: 20, amount: 3}]];
 const drawerWidth = 240;
 
 const styles = theme => ({
@@ -232,7 +237,8 @@ class MiniDrawer extends React.Component {
                         </div>
                     </Drawer>
                     <div className={classes.content}>
-                        {this.state.page === 0 ? <OrderProcessingPage/> : null}
+                        {this.state.page === 0 ?
+                            <OrderProcessingPage untreatedOrder={data} paidOrder={data} finishedOrder={data}/> : null}
                         {this.state.page === 1 ? <Stepper/> : null}
                         {this.state.page === 2 ? <MemberPage/> : null}
                         {this.state.page === 3 ? <ManufacturingMethodPage/> : null}

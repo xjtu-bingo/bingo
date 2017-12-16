@@ -3,9 +3,8 @@ import {withStyles} from 'material-ui/styles';
 import Card, {CardActions, CardContent} from 'material-ui/Card';
 import Button from 'material-ui/Button';
 import OrderDetail from "../OrderDetailTable"
-import PaymentSelect from "./PaymentSelect"
 
-const PaymentWays = ["会员支付", "支付宝", "微信", "现金"];
+
 const styles = theme => ({
     card: {
         minWidth: 275,
@@ -27,20 +26,7 @@ const styles = theme => ({
 });
 
 class SimpleCard extends React.Component {
-    state = {
-        open: false,
-        selectedValue: PaymentWays[1],
-    };
 
-    handleClickOpen = () => {
-        this.setState({
-            open: true,
-        });
-    };
-
-    handleRequestClose = value => {
-        this.setState({selectedValue: value, open: false});
-    };
 
     render() {
         const {classes, data} = this.props;
@@ -52,14 +38,8 @@ class SimpleCard extends React.Component {
                         <OrderDetail data={data}/>
                     </CardContent>
                     <CardActions>
-                        <Button dense onClick={this.handleClickOpen}>付 款</Button>
+                        <Button dense onClick={this.props.handleAction}>{this.props.actionName}</Button>
                     </CardActions>
-                    <PaymentSelect
-                        selectedValue={this.state.selectedValue}
-                        open={this.state.open}
-                        onRequestClose={this.handleRequestClose}
-                        paymentWays={PaymentWays}
-                    />
                 </Card>
             </div>
         );
