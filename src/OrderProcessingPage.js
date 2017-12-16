@@ -1,7 +1,8 @@
 import React from 'react';
-import { withStyles } from 'material-ui/styles';
+import {withStyles} from 'material-ui/styles';
 import Paper from 'material-ui/Paper';
 import Grid from 'material-ui/Grid';
+import OrderCard from './Components/Card'
 
 const styles = theme => ({
     root: {
@@ -22,21 +23,11 @@ function AutoGrid(props) {
         <div className={classes.root}>
             <Grid container spacing={24}>
                 <Grid item xs>
-                    <Paper className={classes.paper}>xs</Paper>
+                    <Paper className={classes.paper}>待处理订单</Paper>
+                    <OrderCard data={[{name: "星冰乐", price: 10, amount: 2}, {name: "keke", price: 20, amount: 3}]}/>
                 </Grid>
                 <Grid item xs>
                     <Paper className={classes.paper}>xs</Paper>
-                </Grid>
-                <Grid item xs>
-                    <Paper className={classes.paper}>xs</Paper>
-                </Grid>
-            </Grid>
-            <Grid container spacing={24}>
-                <Grid item xs>
-                    <Paper className={classes.paper}>xs</Paper>
-                </Grid>
-                <Grid item xs={6}>
-                    <Paper className={classes.paper}>xs=6</Paper>
                 </Grid>
                 <Grid item xs>
                     <Paper className={classes.paper}>xs</Paper>
