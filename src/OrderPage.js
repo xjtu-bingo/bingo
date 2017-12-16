@@ -3,7 +3,7 @@ import {withStyles} from 'material-ui/styles';
 import Stepper, {Step, StepContent, StepLabel} from 'material-ui/Stepper';
 import Button from 'material-ui/Button';
 import {FormControl, FormControlLabel, FormLabel, Radio, RadioGroup, Typography} from "material-ui";
-import OrderDetail from './OrderDetail'
+import OrderDetail from './OrderDetailTable'
 import Menu from './Menu';
 import MemberSearch from './Components/SearchTable'
 import OrderCreatedSnackbar from './Components/SnackBar'
