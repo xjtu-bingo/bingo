@@ -43,17 +43,18 @@ class OrderProcessingPage extends React.Component {
                 <Grid container spacing={24}>
                     <Grid item xs>
                         <Paper className={classes.paper}>待付款订单</Paper>
-                        <OrderCard data={[{name: "星冰乐", price: 10, amount: 2}, {name: "keke", price: 20, amount: 3}]}
-                                   actionName="付  款" handleAction={this.handleClickOpen}/>
+                        {this.props.untreatedOrder.map((order, i) => (<OrderCard data={order}
+                                                                                 actionName="付  款"
+                                                                                 handleAction={this.handleClickOpen}/>))}
                     </Grid>
                     <Grid item xs>
                         <Paper className={classes.paper}>待制作订单</Paper>
-                        <OrderCard data={[{name: "星冰乐", price: 10, amount: 2}, {name: "keke", price: 20, amount: 3}]}
+                        <OrderCard data={this.props.paidOrder}
                                    actionName="已制作"/>
                     </Grid>
                     <Grid item xs>
                         <Paper className={classes.paper}>已完成订单</Paper>
-                        <OrderCard data={[{name: "星冰乐", price: 10, amount: 2}, {name: "keke", price: 20, amount: 3}]}/>
+                        <OrderCard data={this.props.finishedOrder}/>
                     </Grid>
                     <PaymentSelect
                         selectedValue={this.state.selectedValue}
