@@ -1,18 +1,17 @@
-import React, { Fragment, Component } from 'react';
+import React, {Component, Fragment} from 'react';
 import moment from 'moment';
-import { Typography } from 'material-ui';
-import { TimePicker, DatePicker } from 'material-ui-pickers';
+import {DatePicker} from 'material-ui-pickers';
 import LeftArrowIcon from 'material-ui-icons/KeyboardArrowLeft';
 import RightArrowIcon from 'material-ui-icons/KeyboardArrowRight';
 
 export default class BasicUsage extends Component {
     state = {
         selectedDate: moment(),
-    }
+    };
 
     handleDateChange = (date) => {
         this.setState({ selectedDate: date });
-    }
+    };
 
     render() {
         const { selectedDate } = this.state;
