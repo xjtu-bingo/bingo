@@ -3,7 +3,10 @@ import {withStyles} from 'material-ui/styles';
 import Paper from 'material-ui/Paper';
 import Grid from 'material-ui/Grid';
 import OrderCard from './Components/Card'
+import PaymentSelect from "./Components/PaymentSelect"
 
+
+const PaymentWays = ["会员支付", "支付宝", "微信", "现金"];
 const styles = theme => ({
     root: {
         flexGrow: 1,
@@ -16,28 +19,53 @@ const styles = theme => ({
     },
 });
 
-function AutoGrid(props) {
-    const { classes } = props;
+class OrderProcessingPage extends React.Component {
+    state = {
+        open: false,
+        selectedValue: PaymentWays[1],
+    };
 
-    return (
-        <div className={classes.root}>
-            <Grid container spacing={24}>
-                <Grid item xs>
-                    <Paper className={classes.paper}>待付款订单</Paper>
-                    <OrderCard data={[{name: "星冰乐", price: 10, amount: 2}, {name: "keke", price: 20, amount: 3}]}/>
+    handleClickOpen = () => {
+        this.setState({
+            open: true,
+        });
+    };
+
+    handleRequestClose = value => {
+        this.setState({selectedValue: value, open: false});
+    };
+
+    render() {
+        const {classes} = this.props;
+
+        return (
+            <div className={classes.root}>
+                <Grid container spacing={24}>
+                    <Grid item xs>
+                        <Paper className={classes.paper}>待付款订单</Paper>
+                        <OrderCard data={[{name: "星冰乐", price: 10, amount: 2}, {name: "keke", price: 20, amount: 3}]}
+                                   actionName="付  款" handleAction={this.handleClickOpen}/>
+                    </Grid>
+                    <Grid item xs>
+                        <Paper className={classes.paper}>待制作订单</Paper>
+                        <OrderCard data={[{name: "星冰乐", price: 10, amount: 2}, {name: "keke", price: 20, amount: 3}]}
+                                   actionName="已制作"/>
+                    </Grid>
+                    <Grid item xs>
+                        <Paper className={classes.paper}>已完成订单</Paper>
+                        <OrderCard data={[{name: "星冰乐", price: 10, amount: 2}, {name: "keke", price: 20, amount: 3}]}/>
+                    </Grid>
+                    <PaymentSelect
+                        selectedValue={this.state.selectedValue}
+                        open={this.state.open}
+                        onRequestClose={this.handleRequestClose}
+                        paymentWays={PaymentWays}
+                    />
                 </Grid>
-                <Grid item xs>
-                    <Paper className={classes.paper}>待制作订单</Paper>
-                    <OrderCard data={[{name: "星冰乐", price: 10, amount: 2}, {name: "keke", price: 20, amount: 3}]}/>
-                </Grid>
-                <Grid item xs>
-                    <Paper className={classes.paper}>已完成订单</Paper>
-                    <OrderCard data={[{name: "星冰乐", price: 10, amount: 2}, {name: "keke", price: 20, amount: 3}]}/>
-                </Grid>
-            </Grid>
-        </div>
-    );
+            </div>
+        );
+    }
 }
 
 
-export default withStyles(styles)(AutoGrid);
+export default withStyles(styles)(OrderProcessingPage);
