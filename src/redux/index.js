@@ -1,6 +1,11 @@
-import {createStore} from 'redux';
+import {combineReducers, createStore} from 'redux';
+import orders from './orders';
+import products from './products';
 
-const reducer = (state, action) => state;
+const reducer = combineReducers({
+    orders,
+    products
+});
 
 const store = createStore(reducer, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
 

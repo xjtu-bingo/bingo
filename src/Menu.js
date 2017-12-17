@@ -18,7 +18,7 @@ const styles = theme => ({
     },
 });
 
-const data = [
+const datad = [
     {
         category: '奶茶',
         items: [
@@ -64,7 +64,7 @@ class InteractiveList extends React.Component {
     };
 
     render() {
-        const {classes} = this.props;
+        const {classes, data} = this.props;
         const {dense, category} = this.state;
 
         return (
@@ -94,9 +94,11 @@ class InteractiveList extends React.Component {
                         <div className={classes.demo}>
                             <List dense={dense}>
                                 {
-                                    data[category].items.map((v, i) => (
-                                        <OrderProductItem key={i} name={v.name} price={v.price} amount={1}
-                                                          onAmountChanged={console.log}/>))
+                                    category < data.length ?
+                                        data[category].items.map((v, i) => (
+                                            <OrderProductItem key={i} name={v.name} price={v.price} amount={1}
+                                                              onAmountChanged={console.log}/>))
+                                        : null
                                 }
                             </List>
                         </div>
