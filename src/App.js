@@ -6,6 +6,8 @@ import {createMuiTheme, MuiThemeProvider} from "material-ui/styles";
 import purple from 'material-ui/colors/purple';
 import red from 'material-ui/colors/red';
 import brown from "material-ui/colors/brown";
+import {Provider} from "react-redux";
+import store from './redux';
 
 const theme = createMuiTheme({
     palette: {
@@ -21,13 +23,15 @@ const theme = createMuiTheme({
 class App extends Component {
     render() {
         return (
-            <MuiThemeProvider theme={theme}>
-                <div className="full-height">
-                    <Drawer/>
-                    <Add/>
-                    <Edit/>
-                </div>
-            </MuiThemeProvider>
+            <Provider store={store}>
+                <MuiThemeProvider theme={theme}>
+                    <div className="full-height">
+                        <Drawer/>
+                        <Add/>
+                        <Edit/>
+                    </div>
+                </MuiThemeProvider>
+            </Provider>
         );
     }
 }
