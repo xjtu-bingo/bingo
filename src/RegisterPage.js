@@ -9,7 +9,7 @@ import IconButton from 'material-ui/IconButton';
 import Typography from 'material-ui/Typography';
 import CloseIcon from 'material-ui-icons/Close';
 import Slide from 'material-ui/transitions/Slide';
-import {FormControl, Input, InputLabel} from "material-ui";
+import {FormControl, Input, InputLabel, MenuItem, Select} from "material-ui";
 import DatePicker from './Components/DatePicker'
 
 const styles = {
@@ -37,15 +37,30 @@ class RegisterPage extends React.Component {
     state = {
         name: '',
         phoneNumber: '',
+        cardNumber: '',
+        age: '',
+        amount: '',
     };
 
     handleNameChange = event => {
         this.setState({name: event.target.value});
     };
+
     handlePhoneNumberChange = event => {
-        this.setState({name: event.target.value});
+        this.setState({phoneNumber: event.target.value});
     };
 
+    handleCardNumberChange = event => {
+        this.setState({cardNumber: event.target.value});
+    };
+
+    handleAgeChange = event => {
+        this.setState({age: event.target.value});
+    };
+
+    handleAmountChange = event => {
+        this.setState({amount: event.target.value});
+    };
     render() {
         const {classes} = this.props;
         return (
@@ -65,14 +80,14 @@ class RegisterPage extends React.Component {
                                 新会员注册
                             </Typography>
                             <Button color="contrast" onClick={this.props.onRequestClose}>
-                                保存
+                                注册
                             </Button>
                         </Toolbar>
                     </AppBar>
                     <List>
                         <ListItem>
                             <FormControl fullWidth className={classes.formControl}>
-                                <InputLabel htmlFor="name">姓名</InputLabel>
+                                <InputLabel>姓名</InputLabel>
                                 <Input
                                     id="name"
                                     value={this.state.name}
@@ -82,13 +97,45 @@ class RegisterPage extends React.Component {
                         </ListItem>
                         <ListItem>
                             <FormControl fullWidth className={classes.formControl}>
-                                <InputLabel htmlFor="phoneNumber">电话</InputLabel>
+                                <InputLabel>电话</InputLabel>
                                 <Input
                                     id="phoneNumber"
                                     value={this.state.phoneNumber}
                                     onChange={this.handlePhoneNumberChange}
                                 />
-
+                            </FormControl>
+                        </ListItem>
+                        <ListItem>
+                            <FormControl fullWidth className={classes.formControl}>
+                                <InputLabel>卡号</InputLabel>
+                                <Input
+                                    id="cardNumber"
+                                    value={this.state.cardNumber}
+                                    onChange={this.handleCardNumberChange}
+                                />
+                            </FormControl>
+                        </ListItem>
+                        <ListItem>
+                            <FormControl fullWidth className={classes.formControl}>
+                                <InputLabel>充值</InputLabel>
+                                <Input
+                                    id="amount"
+                                    value={this.state.cardNumber}
+                                    onChange={this.handleAmountChange}
+                                />
+                            </FormControl>
+                        </ListItem>
+                        <ListItem>
+                            <FormControl fullWidth className={classes.formControl}>
+                                <InputLabel>性别</InputLabel>
+                                <Select
+                                    value={this.state.age}
+                                    onChange={this.handleAgeChange}
+                                    input={<Input name="gender" id="genderSelect"/>}
+                                >
+                                    <MenuItem value='female'>女</MenuItem>
+                                    <MenuItem value='male'>男</MenuItem>
+                                </Select>
                             </FormControl>
                         </ListItem>
                         <ListItem>

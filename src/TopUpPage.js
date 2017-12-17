@@ -10,7 +10,8 @@ import Typography from 'material-ui/Typography';
 import CloseIcon from 'material-ui-icons/Close';
 import Slide from 'material-ui/transitions/Slide';
 import {FormControl, Input, InputLabel} from "material-ui";
-import SearchTable from './Components/SearchTable'
+import PersonalInformationTable from './Components/PersonalInformationTable';
+import MemberRechargeDialog from './Components/MemberRechargeDialog';
 
 const styles = {
     appBar: {
@@ -35,16 +36,32 @@ function Transition(props) {
 
 class TopUpPage extends React.Component {
     state = {
-        name: '',
-        phoneNumber: '',
+        personalInformation: '',
+        memberRechargeDialogOpen: false,
+        memberID: '',
+        memberName: '',
     };
 
-    handleNameChange = event => {
+    handlePersonalInformationChange = event => {
         this.setState({name: event.target.value});
     };
-    handlePhoneNumberChange = event => {
-        this.setState({name: event.target.value});
+
+    handleMemberRechargeDialogOpen = (i, name) => {
+        this.setState({
+            memberRechargeDialogOpen: true,
+            memberID: i,
+            memberName: name,
+        });
     };
+
+    handleMemberRechargeDialogClose = () => {
+        this.setState({memberRechargeDialogOpen: false});
+    };
+
+    handleMemberRecharge = (amount) => {
+        console.log(amount);
+    };
+
 
     render() {
         const {classes} = this.props;
@@ -65,33 +82,27 @@ class TopUpPage extends React.Component {
                                 会员充值
                             </Typography>
                             <Button color="contrast" onClick={this.props.onRequestClose}>
-                                保存
+                                充 值
                             </Button>
                         </Toolbar>
                     </AppBar>
                     <List>
                         <ListItem>
                             <FormControl fullWidth className={classes.formControl}>
-                                <InputLabel htmlFor="name">姓名</InputLabel>
+                                <InputLabel>个人信息</InputLabel>
                                 <Input
-                                    id="name"
-                                    value={this.state.name}
-                                    onChange={this.handleNameChange}
+                                    id="personalInformation"
+                                    value={this.state.personalInformation}
+                                    onChange={this.handlePersonalInformationChange}
                                 />
                             </FormControl>
                         </ListItem>
                         <ListItem>
-                            <FormControl fullWidth className={classes.formControl}>
-                                <InputLabel htmlFor="phoneNumber">电话</InputLabel>
-                                <Input
-                                    id="phoneNumber"
-                                    value={this.state.phoneNumber}
-                                    onChange={this.handlePhoneNumberChange}
-                                />
-                            </FormControl>
-                        </ListItem>
-                        <ListItem>
-                            <SearchTable/>
+                            <PersonalInformationTable onClick={this.handleMemberRechargeDialogOpen}/>
+                            <MemberRechargeDialog open={this.state.memberRechargeDialogOpen}
+                                                  onRequestClose={this.handleMemberRechargeDialogClose}
+                                                  name={this.state.memberName}
+                                                  memberRecharge={this.handleMemberRecharge}/>
                         </ListItem>
                     </List>
                 </Dialog>
