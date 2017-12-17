@@ -18,7 +18,7 @@ const styles = theme => ({
         margin: theme.spacing.unit,
     },
     dialog: {
-        width: 1000,
+        width: '45%',
     }
 });
 
@@ -29,16 +29,19 @@ class MemberRechargeDialog extends React.Component {
     };
 
     handleOnChange = (e) => {
-        this.setState({
-            amount: e.target.value,
-        })
+        let value = e.target.value;
+        if (+value >= 0 || value === '') {
+            this.setState({
+                amount: value,
+            });
+        }
     };
 
     render() {
         const {classes, open, onRequestClose, name, memberRecharge} = this.props;
         return (
             <div>
-                <Dialog open={open} onRequestClose={onRequestClose}>
+                <Dialog open={open} onRequestClose={onRequestClose} classes={{paper: classes.dialog}}>
                     <DialogContent>
                         <DialogContentText>
                             {name}
@@ -49,8 +52,7 @@ class MemberRechargeDialog extends React.Component {
                                 value={this.state.amount}
                                 type="number"
                                 onChange={this.handleOnChange}
-                                startAdornment={<InputAdornment position="start">$</InputAdornment>}
-                                className={classes.dialog}
+                                startAdornment={<InputAdornment position="start">￥</InputAdornment>}
                             />
                         </FormControl>
                     </DialogContent>
@@ -58,7 +60,7 @@ class MemberRechargeDialog extends React.Component {
                         <Button onClick={onRequestClose} color="primary">
                             取消
                         </Button>
-                        <Button onClick={() => memberRecharge(this.state.amount)} color="primary">
+                        <Button onClick={() => memberRecharge(+this.state.amount)} color="primary">
                             充值
                         </Button>
                     </DialogActions>
