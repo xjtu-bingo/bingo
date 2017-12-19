@@ -31,7 +31,7 @@ class OrderProcessingPage extends React.Component {
         selectedValue: PaymentWays[1],
     };
 
-    handleMemeberSearchDialogOpen = () => {
+    handleMemberSearchDialogOpen = () => {
         this.setState({
             memberSearchDialogOpen: true,
         })
@@ -55,12 +55,23 @@ class OrderProcessingPage extends React.Component {
         });
     };
 
-    handleRequestClose = value => {
+    handlePaymentRequestClose = () => {
+        this.setState({
+            open: false,
+        })
+    };
+    handlePaymentSelectRequestClose = value => {
+        let {dispatch} = this.props;
         this.setState({selectedValue: value, open: false});
+        if (this.state.selectedValue === "会员付款") {
+            this.handleMemberSearchDialogOpen();
+        } else {
+            dispatch({type: "PAY/ORDER", payload: this.state.indexOfOrders})
+        }
     };
 
     render() {
-        const {classes, order} = this.props;
+        const {classes, order, paidOrder, finishedOrder} = this.props;
 
         return (
             <div className={classes.root}>
@@ -72,9 +83,10 @@ class OrderProcessingPage extends React.Component {
                                 .map((order, i) => (
                                     <OrderCard
                                         data={order}
+                                        key={i}
                                         actions={
                                             [
-                                                <Button onClick={(i) => this.handleClickOpen(i)}>付款</Button>,
+                                                <Button onClick={() => this.handleClickOpen(i)}>付款</Button>,
                                                 <Button>取消订单</Button>
                                             ]
                                         }
@@ -85,7 +97,7 @@ class OrderProcessingPage extends React.Component {
                     <Grid item xs>
                         <Paper className={classes.paper}>待制作订单</Paper>
                         {
-                            this.props.paidOrder
+                            paidOrder
                                 .map((order, i) => (
                                     <OrderCard
                                         data={order}
@@ -102,7 +114,7 @@ class OrderProcessingPage extends React.Component {
                     <Grid item xs>
                         <Paper className={classes.paper}>已完成订单</Paper>
                         {
-                            this.props.finishedOrder
+                            finishedOrder
                                 .map((order, i) => (
                                     <OrderCard
                                         data={order}
@@ -118,8 +130,9 @@ class OrderProcessingPage extends React.Component {
                     <PaymentSelect
                         selectedValue={this.state.selectedValue}
                         open={this.state.open}
-                        onRequestClose={this.handleRequestClose}
+                        onRequestClose={this.handlePaymentSelectRequestClose}
                         paymentWays={PaymentWays}
+                        handlePaymentRequestClose={this.handlePaymentRequestClose}
                     />
                     <MemberSearchDialog open={this.state.memberSearchDialogOpen}
                                         handleMemberSearchDialogOnClose={this.handleMemberSearchDialogOnClose}
@@ -132,6 +145,8 @@ class OrderProcessingPage extends React.Component {
 
 const selector = (state) => ({
     order: state.orders.items,
+    paidOrder: state.orders.paidItems,
+    finishedOrder: state.orders.finishedItems,
 });
 
 export default withStyles(styles)(connect(selector)(OrderProcessingPage));

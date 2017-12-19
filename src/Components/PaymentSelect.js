@@ -6,7 +6,6 @@ import Dialog, {DialogTitle} from 'material-ui/Dialog';
 import PersonIcon from 'material-ui-icons/Person';
 import blue from 'material-ui/colors/blue';
 
-const emails = ['username@gmail.com', 'user02@gmail.com'];
 const styles = {
     avatar: {
         background: blue[100],
@@ -16,7 +15,7 @@ const styles = {
 
 class PaymentSelect extends React.Component {
     handleRequestClose = () => {
-        this.props.onRequestClose(this.props.selectedValue);
+        this.props.onRequestClose("none");
     };
 
     handleListItemClick = value => {
@@ -27,7 +26,7 @@ class PaymentSelect extends React.Component {
         const {classes, onRequestClose, selectedValue, paymentWays, ...other} = this.props;
 
         return (
-            <Dialog onRequestClose={this.handleRequestClose} {...other} >
+            <Dialog onRequestClose={this.props.handlePaymentRequestClose} {...other} >
                 <DialogTitle style={{width: 300}}>选择支付方式</DialogTitle>
                 <div>
                     <List>
