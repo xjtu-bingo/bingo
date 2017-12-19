@@ -8,7 +8,6 @@ class MenuItem extends React.Component {
     state = {
         OrderNumber: 0,
     };
-
     render() {
         return (
             <ListItem>
@@ -23,7 +22,6 @@ class MenuItem extends React.Component {
                                 onClick={() => this.setState({OrderNumber: Math.max(this.state.OrderNumber - 1, 0)})}>
                                 <SubIcon/>
                             </IconButton>
-
                             : null
                     }
                     <IconButton onClick={() => this.setState({OrderNumber: this.state.OrderNumber + 1})}>

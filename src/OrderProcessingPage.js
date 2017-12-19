@@ -5,6 +5,8 @@ import Grid from 'material-ui/Grid';
 import OrderCard from './Components/Card'
 import PaymentSelect from "./Components/PaymentSelect"
 import {Button} from "material-ui";
+import {connect} from "react-redux";
+import MemberSearchDialog from './Components/MemberSearchDialog'
 
 
 const PaymentWays = ["会员支付", "支付宝", "微信", "现金"];
@@ -24,12 +26,32 @@ const styles = theme => ({
 class OrderProcessingPage extends React.Component {
     state = {
         open: false,
+        memberSearchDialogOpen: false,
+        indexOfOrders: 0,
         selectedValue: PaymentWays[1],
     };
 
-    handleClickOpen = () => {
+    handleMemeberSearchDialogOpen = () => {
+        this.setState({
+            memberSearchDialogOpen: true,
+        })
+    };
+
+    handleMemberSearchDialogOnClose = () => {
+        this.setState({
+            memberSearchDialogOpen: false,
+        })
+    };
+
+    handleMemberSearchDialogClose = () => {
+        this.setState({
+            memberSearchDialogOpen: false,
+        })
+    };
+    handleClickOpen = (index) => {
         this.setState({
             open: true,
+            indexOfOrder: index,
         });
     };
 
@@ -38,7 +60,7 @@ class OrderProcessingPage extends React.Component {
     };
 
     render() {
-        const {classes} = this.props;
+        const {classes, order} = this.props;
 
         return (
             <div className={classes.root}>
@@ -46,13 +68,13 @@ class OrderProcessingPage extends React.Component {
                     <Grid item xs>
                         <Paper className={classes.paper}>待付款订单</Paper>
                         {
-                            this.props.untreatedOrder
+                            order
                                 .map((order, i) => (
                                     <OrderCard
                                         data={order}
                                         actions={
                                             [
-                                                <Button onClick={this.handleClickOpen}>付款</Button>,
+                                                <Button onClick={(i) => this.handleClickOpen(i)}>付款</Button>,
                                                 <Button>取消订单</Button>
                                             ]
                                         }
@@ -99,11 +121,17 @@ class OrderProcessingPage extends React.Component {
                         onRequestClose={this.handleRequestClose}
                         paymentWays={PaymentWays}
                     />
+                    <MemberSearchDialog open={this.state.memberSearchDialogOpen}
+                                        handleMemberSearchDialogOnClose={this.handleMemberSearchDialogOnClose}
+                                        handleMemberSearchDialogClose={this.handleMemberSearchDialogClose}/>
                 </Grid>
             </div>
         );
     }
 }
 
+const selector = (state) => ({
+    order: state.orders.items,
+});
 
-export default withStyles(styles)(OrderProcessingPage);
+export default withStyles(styles)(connect(selector)(OrderProcessingPage));
