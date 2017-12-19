@@ -55,6 +55,20 @@ class OrderProcessingPage extends React.Component {
         });
     };
 
+    handleFinishOrder = (index) => {
+        let {dispatch} = this.props;
+        dispatch({
+            type: 'FINISH/ORDER',
+            payload: index,
+        })
+    };
+    handleCancelOrder = (index) => {
+        let {dispatch} = this.props;
+        dispatch({
+            type: 'CANCEL/ORDER',
+            payload: index,
+        })
+    };
     handlePaymentRequestClose = () => {
         this.setState({
             open: false,
@@ -62,11 +76,12 @@ class OrderProcessingPage extends React.Component {
     };
     handlePaymentSelectRequestClose = value => {
         let {dispatch} = this.props;
+        let indx = this.state.indexOfOrders;
         this.setState({selectedValue: value, open: false});
         if (this.state.selectedValue === "会员付款") {
             this.handleMemberSearchDialogOpen();
         } else {
-            dispatch({type: "PAY/ORDER", payload: this.state.indexOfOrders})
+            dispatch({type: "PAY/ORDER", payload: {index: indx, payment: value}})
         }
     };
 
@@ -82,12 +97,12 @@ class OrderProcessingPage extends React.Component {
                             order
                                 .map((order, i) => (
                                     <OrderCard
-                                        data={order}
+                                        data={order.orders}
                                         key={i}
                                         actions={
                                             [
                                                 <Button onClick={() => this.handleClickOpen(i)}>付款</Button>,
-                                                <Button>取消订单</Button>
+                                                <Button onClick={() => this.handleCancelOrder(i)}>取消订单</Button>
                                             ]
                                         }
                                     />
@@ -100,10 +115,10 @@ class OrderProcessingPage extends React.Component {
                             paidOrder
                                 .map((order, i) => (
                                     <OrderCard
-                                        data={order}
+                                        data={order.orders}
                                         actions={
                                             [
-                                                <Button>完成</Button>,
+                                                <Button onClick={() => this.handleFinishOrder(i)}>完成</Button>,
                                                 <Button>退款</Button>
                                             ]
                                         }
@@ -117,7 +132,7 @@ class OrderProcessingPage extends React.Component {
                             finishedOrder
                                 .map((order, i) => (
                                     <OrderCard
-                                        data={order}
+                                        data={order.orders}
                                         actions={
                                             [
                                                 <Button>撤销</Button>
