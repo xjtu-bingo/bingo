@@ -54,7 +54,7 @@ class OrderPage extends React.Component {
         });
         this.props.dispatch({
             type: "NEW_ORDER",
-            payload: this.props.order,
+            payload: {orders: this.props.order},
         })
     };
 
