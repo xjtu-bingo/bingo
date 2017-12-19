@@ -48,10 +48,12 @@ class OrderPage extends React.Component {
         }
     };
 
-    handleNextAndSnackBar = () => {
+    handleOrderAndSnackBar = () => {
         this.setState({
-            activeStep: this.state.activeStep + 1,
             orderCreatedSnackBarOpen: true,
+        });
+        this.props.dispatch({
+            type: "NEW_ORDER",
         })
     };
 
@@ -61,8 +63,30 @@ class OrderPage extends React.Component {
         })
     };
 
+    handleAmountChange = (i, j, k) => {
+        let {menu, order, dispatch} = this.props;
+        let product = menu[i].items[j];
+        let ith = order.findIndex((v, ii) => v.name === product.name);
+        let nextOrder;
+        if (ith === -1) {
+            nextOrder = [...order, {...product, amount: k}];
+        }
+        else if (k === 0) {
+            nextOrder = [...order];
+            nextOrder.splice(ith, 1);
+        } else {
+            nextOrder = [...order];
+            nextOrder[ith] = {...order[ith], amount: k};
+        }
+        dispatch({
+            type: "ORDER/EDIT",
+            payload: nextOrder
+        })
+
+    };
+
     render() {
-        const {classes, menu} = this.props;
+        const {classes, menu, order} = this.props;
 
         // let order = [{name: "蜂蜜柠檬茶", price: 6, amount: 1}, {name: '热可可', price: 7, amount: 2}];
         let items = this.state.order.items;
@@ -71,15 +95,15 @@ class OrderPage extends React.Component {
                 <Grid container>
                     <Grid item xs>
                         <Paper>
-                            <Menu data={menu}/>
+                            <Menu data={menu} handleAmountChange={this.handleAmountChange}/>
                         </Paper>
                     </Grid>
                     <Grid item xs>
                         <Paper>
                             <OrderDetail
-                                data={items}/>
+                                data={order}/>
                             <Button raised color="primary" className={classes.action}
-                                    onClick={this.handleNextAndSnackBar}>确定下单</Button>
+                                    onClick={this.handleOrderAndSnackBar}>确定下单</Button>
                             <Button raised color="accent" className={classes.action}>取消订单</Button>
                         </Paper>
                     </Grid>
@@ -91,9 +115,44 @@ class OrderPage extends React.Component {
     }
 }
 
+function addAmount(tempArray, order) {
+    return tempArray.map((a, i) => {
+        let ith = order.findIndex((v, ii) => v.name === a.name);
+        if (ith === -1) {
+            return {...a, amount: 0};
+        } else {
+            return {...a, amount: order[ith].amount};
+        }
+    })
+}
+
+function foldMenu(tempMenu, order) {
+    let temp = addAmount(tempMenu, order);
+    let array = [];
+    for (let i = 0; i < temp.length; i++) {
+        let ith = array.findIndex((ar, ii) => ar === temp[i].category);
+        if (ith === -1) {
+            array.push(temp[i].category)
+        }
+    }
+    let FoldMenu = [];
+    for (let j = 0; j < array.length; j++) {
+        FoldMenu.push({category: array[j], items: [],})
+    }
+    for (let k = 0; k < temp.length; k++) {
+        let indx = FoldMenu.findIndex((menu, i) =>
+            menu.category === temp[k].category
+        );
+
+        FoldMenu[indx].items.push(temp[k]);
+    }
+    return FoldMenu;
+}
 
 const selector = (state) => ({
-    menu: state.products.items
+    menu: foldMenu(state.products.items, state.orders.curItems),
+    order: state.orders.curItems,
+
 });
 
 export default withStyles(styles)(connect(selector)(OrderPage));

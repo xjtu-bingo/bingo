@@ -60,11 +60,12 @@ const datad = [
 class InteractiveList extends React.Component {
     state = {
         dense: false,
-        category: 0
+        category: 0,
+        amount: 0,
     };
 
     render() {
-        const {classes, data} = this.props;
+        const {classes, data, handleAmountChange} = this.props;
         const {dense, category} = this.state;
 
         return (
@@ -96,8 +97,9 @@ class InteractiveList extends React.Component {
                                 {
                                     category < data.length ?
                                         data[category].items.map((v, i) => (
-                                            <OrderProductItem key={i} name={v.name} price={v.price} amount={1}
-                                                              onAmountChanged={console.log}/>))
+                                            <OrderProductItem key={i} name={v.name} price={v.price}
+                                                              amount={v.amount || 0}
+                                                              onAmountChanged={(amount) => handleAmountChange(category, i, amount)}/>))
                                         : null
                                 }
                             </List>

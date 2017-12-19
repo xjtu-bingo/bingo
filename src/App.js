@@ -25,38 +25,33 @@ store.dispatch({
     payload: [
         {
             category: '奶茶',
-            items: [
-                {
-                    id: 'A',
-                    name: '原味奶茶',
-                    price: 6
-                },
-                {
-                    id: 'B',
-                    name: '啤酒',
-                    price: 4
-                }
-            ]
+            id: 'A',
+            name: '原味奶茶',
+            price: 6
+        },
+        {
+            category: '奶茶',
+            id: 'B',
+            name: '啤酒',
+            price: 4
         },
         {
             category: '奶绿',
-            items: [
-                {
-                    id: 'C',
-                    name: '原味奶绿',
-                    price: 7
-                },
-                {
-                    id: 'D',
-                    name: '绿啤酒',
-                    price: 5
-                },
-                {
-                    id: 'E',
-                    name: '草原',
-                    price: 1
-                }
-            ]
+            id: 'C',
+            name: '原味奶绿',
+            price: 7
+        },
+        {
+            category: '奶绿',
+            id: 'D',
+            name: '绿啤酒',
+            price: 5
+        },
+        {
+            category: '奶绿',
+            id: 'E',
+            name: '草原',
+            price: 1
         }
     ]
 });
