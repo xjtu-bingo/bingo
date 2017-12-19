@@ -8,6 +8,7 @@ import red from 'material-ui/colors/red';
 import brown from "material-ui/colors/brown";
 import {Provider} from "react-redux";
 import store from './redux';
+import query from "./query";
 
 const theme = createMuiTheme({
     palette: {
@@ -20,41 +21,14 @@ const theme = createMuiTheme({
     }
 });
 
-store.dispatch({
-    type: 'PRODUCT/LOAD',
-    payload: [
-        {
-            category: '奶茶',
-            id: 'A',
-            name: '原味奶茶',
-            price: 6
-        },
-        {
-            category: '奶茶',
-            id: 'B',
-            name: '啤酒',
-            price: 4
-        },
-        {
-            category: '奶绿',
-            id: 'C',
-            name: '原味奶绿',
-            price: 7
-        },
-        {
-            category: '奶绿',
-            id: 'D',
-            name: '绿啤酒',
-            price: 5
-        },
-        {
-            category: '奶绿',
-            id: 'E',
-            name: '草原',
-            price: 1
-        }
-    ]
-});
+query(`query { products {id name price type}}`)
+    .then(v => v.json())
+    .then(v => v.data.products)
+    .then(v => v.map(x => ({...x, category: x.type}))) // type adapter (database)
+    .then(data => store.dispatch({
+        type: 'PRODUCT/LOAD',
+        payload: data
+    }));
 
 class App extends Component {
     render() {
@@ -71,4 +45,5 @@ class App extends Component {
         );
     }
 }
+
 export default App;

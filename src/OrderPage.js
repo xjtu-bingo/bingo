@@ -88,9 +88,6 @@ class OrderPage extends React.Component {
 
     render() {
         const {classes, menu, order} = this.props;
-
-        // let order = [{name: "蜂蜜柠檬茶", price: 6, amount: 1}, {name: '热可可', price: 7, amount: 2}];
-        let items = this.state.order.items;
         return (
             <div className={classes.root}>
                 <Grid container>
