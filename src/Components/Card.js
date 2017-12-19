@@ -29,7 +29,6 @@ const styles = theme => ({
 class SimpleCard extends React.Component {
     render() {
         const {classes, data, actions} = this.props;
-        const bull = <span className={classes.bullet}>•</span>;
         return (
             <Card className={classes.card}>
                 <CardHeader
