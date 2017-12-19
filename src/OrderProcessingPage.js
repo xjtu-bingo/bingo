@@ -48,6 +48,14 @@ class OrderProcessingPage extends React.Component {
             memberSearchDialogOpen: false,
         })
     };
+
+    handleRevokeOrder = (index) => {
+        let {dispatch} = this.props;
+        dispatch({
+            type: 'REVOKE/ORDER',
+            payload: index,
+        })
+    };
     handleClickOpen = (index) => {
         this.setState({
             open: true,
@@ -135,7 +143,7 @@ class OrderProcessingPage extends React.Component {
                                         data={order.orders}
                                         actions={
                                             [
-                                                <Button>撤销</Button>
+                                                <Button onClick={() => this.handleRevokeOrder(i)}>撤销</Button>
                                             ]
                                         }
                                     />

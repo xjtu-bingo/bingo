@@ -26,6 +26,11 @@ const reducer = (state = defaultState, action) => {
             });
         case 'CANCEL/ORDER':
             return Object.assign({}, state, {items: [...state.items.slice(0, action.payload), ...state.items.slice(action.payload + 1, state.items.length)]});
+        case 'REVOKE/ORDER':
+            return Object.assign({}, state, {
+                paidItems: [...state.paidItems, state.finishedItems[action.payload]],
+                finishedItems: [...state.finishedItems.slice(0, action.payload), ...state.finishedItems.slice(action.payload + 1, state.finishedItems.length)]
+            });
         default:
             return state;
     }

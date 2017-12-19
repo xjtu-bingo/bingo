@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import {withStyles} from 'material-ui/styles';
 import classNames from 'classnames';
 import Drawer from 'material-ui/Drawer';
@@ -24,7 +23,7 @@ import MemberPage from './MemberPage';
 import Badge from 'material-ui/Badge'
 import ManufacturingMethodPage from './ManufacturingMethodPage'
 import OrderProcessingPage from './OrderProcessingPage'
-
+import {connect} from "react-redux";
 import Stepper from './OrderPage'
 
 
@@ -145,8 +144,8 @@ class MiniDrawer extends React.Component {
         })
     };
     render() {
-        const {classes, theme} = this.props;
-
+        const {classes, theme, order, paidOrder} = this.props;
+        console.log(paidOrder);
         return (
             <div className={classes.root}>
                 <div className={classes.appFrame}>
@@ -182,7 +181,8 @@ class MiniDrawer extends React.Component {
                             <List>
                                 <ListItem button onClick={this.handleOrderProcessingPageChange}>
                                     <ListItemIcon>
-                                        <Badge className={classes.badge} badgeContent={4} color="primary">
+                                        <Badge className={classes.badge} badgeContent={order.length + paidOrder.length}
+                                               color="primary">
                                             <TimerIcon/>
                                         </Badge>
                                     </ListItemIcon>
@@ -249,9 +249,9 @@ class MiniDrawer extends React.Component {
     }
 }
 
-MiniDrawer.propTypes = {
-    classes: PropTypes.object.isRequired,
-    theme: PropTypes.object.isRequired,
-};
+const selector = (state) => ({
+    order: state.orders.items,
+    paidOrder: state.orders.paidItems,
+});
 
-export default withStyles(styles, {withTheme: true})(MiniDrawer);
+export default withStyles(styles, {withTheme: true})(connect(selector)(MiniDrawer));
