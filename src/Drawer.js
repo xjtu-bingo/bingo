@@ -104,7 +104,7 @@ const styles = theme => ({
         backgroundColor: theme.palette.background.default,
         padding: 24,
         marginTop: 56,
-        overflowY: 'scroll'
+        overflowY: 'auto'
     },
 });
 

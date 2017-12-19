@@ -21,7 +21,7 @@ const theme = createMuiTheme({
     }
 });
 
-query(`query { products {id name price type}}`)
+query(`query { products(limit: 60) {id name price type}}`)
     .then(v => v.json())
     .then(v => v.data.products)
     .then(v => v.map(x => ({...x, category: x.type}))) // type adapter (database)

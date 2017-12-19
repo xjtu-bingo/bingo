@@ -9,7 +9,7 @@ import {connect} from "react-redux";
 
 const styles = theme => ({
     root: {
-        width: '90%',
+        width: '100%',
     },
     action: {
         margin: '2em'
@@ -96,7 +96,7 @@ class OrderPage extends React.Component {
                             <Menu data={menu} handleAmountChange={this.handleAmountChange}/>
                         </Paper>
                     </Grid>
-                    <Grid item xs>
+                    <Grid item xs={4}>
                         <Paper>
                             <OrderDetail
                                 data={order}/>
