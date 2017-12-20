@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import {withStyles} from 'material-ui/styles';
 import Table, {TableBody, TableCell, TableHead, TableRow} from 'material-ui/Table';
 import Paper from 'material-ui/Paper';
@@ -11,7 +10,7 @@ const styles = theme => ({
         overflowX: 'auto',
     },
     table: {
-        minWidth: 700,
+        maxWidth: 600,
     },
 });
 
@@ -65,8 +64,5 @@ function BasicTable(props) {
     );
 }
 
-BasicTable.propTypes = {
-    classes: PropTypes.object.isRequired,
-};
 
 export default withStyles(styles)(BasicTable);
