@@ -29,6 +29,7 @@ class OrderProcessingPage extends React.Component {
         memberSearchDialogOpen: false,
         indexOfOrders: 0,
         selectedValue: PaymentWays[1],
+        tableSelected: '',
     };
 
     handleMemberSearchDialogOpen = () => {
@@ -91,6 +92,12 @@ class OrderProcessingPage extends React.Component {
         } else {
             dispatch({type: "PAY/ORDER", payload: {index: indx, payment: value}})
         }
+    };
+
+    handlePersonalInformationSelected = (id, name) => {
+        this.setState({
+            tableSelected: id,
+        })
     };
 
     render() {
@@ -158,8 +165,10 @@ class OrderProcessingPage extends React.Component {
                         handlePaymentRequestClose={this.handlePaymentRequestClose}
                     />
                     <MemberSearchDialog open={this.state.memberSearchDialogOpen}
+                                        tableSelected={this.state.tableSelected}
                                         handleMemberSearchDialogOnClose={this.handleMemberSearchDialogOnClose}
-                                        handleMemberSearchDialogClose={this.handleMemberSearchDialogClose}/>
+                                        handleMemberSearchDialogClose={this.handleMemberSearchDialogClose}
+                                        handlePersonalInformationSelected={this.handlePersonalInformationSelected}/>
                 </Grid>
             </div>
         );

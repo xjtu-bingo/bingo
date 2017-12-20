@@ -32,7 +32,8 @@ class MemberSearchDialog extends React.Component {
                             fullWidth
                         />
                     </DialogContent>
-                    <PersonalInformationTable/>
+                    <PersonalInformationTable onClick={this.props.handlePersonalInformationSelected}
+                                              tableSelected={this.props.tableSelected}/>
                     <DialogActions>
                         <Button onClick={this.props.handleMemberSearchDialogClose} color="primary">
                             确认

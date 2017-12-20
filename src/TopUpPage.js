@@ -40,6 +40,7 @@ class TopUpPage extends React.Component {
         memberRechargeDialogOpen: false,
         memberID: '',
         memberName: '',
+        tableSelected: false,
     };
 
     handlePersonalInformationChange = event => {
@@ -51,6 +52,7 @@ class TopUpPage extends React.Component {
             memberRechargeDialogOpen: true,
             memberID: i,
             memberName: name,
+            tableSelected: true,
         });
     };
 
@@ -98,7 +100,8 @@ class TopUpPage extends React.Component {
                             </FormControl>
                         </ListItem>
                         <ListItem>
-                            <PersonalInformationTable onClick={this.handleMemberRechargeDialogOpen}/>
+                            <PersonalInformationTable onClick={this.handleMemberRechargeDialogOpen}
+                                                      tableSelected={this.state.tableSelected}/>
                             <MemberRechargeDialog open={this.state.memberRechargeDialogOpen}
                                                   onRequestClose={this.handleMemberRechargeDialogClose}
                                                   name={this.state.memberName}

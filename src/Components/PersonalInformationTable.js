@@ -29,7 +29,7 @@ const data = [
 ];
 
 function BasicTable(props) {
-    const {classes, onClick} = props;
+    const {classes, onClick, tableSelected} = props;
 
     return (
         <Table className={classes.table}>
@@ -44,9 +44,9 @@ function BasicTable(props) {
                 </TableRow>
             </TableHead>
             <TableBody>
-                {data.map(n => {
+                {data.map((n, i) => {
                     return (
-                        <TableRow key={n.id} onClick={() => onClick(n.id, n.name)}>
+                        <TableRow selected={n.id === tableSelected} key={n.id} onClick={() => onClick(n.id, n.name)}>
                             <TableCell>{n.name}</TableCell>
                             <TableCell padding="none">{n.calories}</TableCell>
                             <TableCell padding="none">{n.fat}</TableCell>
