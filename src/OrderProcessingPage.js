@@ -85,8 +85,8 @@ class OrderProcessingPage extends React.Component {
     handlePaymentSelectRequestClose = value => {
         let {dispatch} = this.props;
         let indx = this.state.indexOfOrders;
-        this.setState({selectedValue: value, open: false});
-        if (this.state.selectedValue === "会员付款") {
+        this.setState({open: false});
+        if (value === "会员支付") {
             this.handleMemberSearchDialogOpen();
         } else {
             dispatch({type: "PAY/ORDER", payload: {index: indx, payment: value}})
