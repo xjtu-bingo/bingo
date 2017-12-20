@@ -1,7 +1,6 @@
 import React from 'react';
 import {withStyles} from 'material-ui/styles';
 import Table, {TableBody, TableCell, TableHead, TableRow} from 'material-ui/Table';
-import Paper from 'material-ui/Paper';
 
 const styles = theme => ({
     root: {
@@ -33,34 +32,32 @@ function BasicTable(props) {
     const {classes, onClick} = props;
 
     return (
-        <Paper className={classes.root}>
-            <Table className={classes.table}>
-                <TableHead>
-                    <TableRow>
-                        <TableCell>姓名</TableCell>
-                        <TableCell>性别</TableCell>
-                        <TableCell>电话</TableCell>
-                        <TableCell>卡号</TableCell>
-                        <TableCell>生日</TableCell>
-                        <TableCell>余额</TableCell>
-                    </TableRow>
-                </TableHead>
-                <TableBody>
-                    {data.map(n => {
-                        return (
-                            <TableRow key={n.id} onClick={() => onClick(n.id, n.name)}>
-                                <TableCell>{n.name}</TableCell>
-                                <TableCell>{n.calories}</TableCell>
-                                <TableCell>{n.fat}</TableCell>
-                                <TableCell>{n.carbs}</TableCell>
-                                <TableCell>{n.protein}</TableCell>
-                                <TableCell>{n.protein}</TableCell>
-                            </TableRow>
-                        );
-                    })}
-                </TableBody>
-            </Table>
-        </Paper>
+        <Table className={classes.table}>
+            <TableHead>
+                <TableRow>
+                    <TableCell>姓名</TableCell>
+                    <TableCell padding="none">性别</TableCell>
+                    <TableCell padding="none">电话</TableCell>
+                    <TableCell padding="none">卡号</TableCell>
+                    <TableCell padding="none">生日</TableCell>
+                    <TableCell padding="none">余额</TableCell>
+                </TableRow>
+            </TableHead>
+            <TableBody>
+                {data.map(n => {
+                    return (
+                        <TableRow key={n.id} onClick={() => onClick(n.id, n.name)}>
+                            <TableCell>{n.name}</TableCell>
+                            <TableCell padding="none">{n.calories}</TableCell>
+                            <TableCell padding="none">{n.fat}</TableCell>
+                            <TableCell padding="none">{n.carbs}</TableCell>
+                            <TableCell padding="none">{n.protein}</TableCell>
+                            <TableCell padding="none">{n.protein}</TableCell>
+                        </TableRow>
+                    );
+                })}
+            </TableBody>
+        </Table>
     );
 }
 
