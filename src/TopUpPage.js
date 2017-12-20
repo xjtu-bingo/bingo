@@ -52,7 +52,7 @@ class TopUpPage extends React.Component {
             memberRechargeDialogOpen: true,
             memberID: i,
             memberName: name,
-            tableSelected: true,
+            tableSelectedMemberID: true,
         });
     };
 
@@ -101,7 +101,7 @@ class TopUpPage extends React.Component {
                         </ListItem>
                         <ListItem>
                             <PersonalInformationTable onClick={this.handleMemberRechargeDialogOpen}
-                                                      tableSelected={this.state.tableSelected}/>
+                                                      tableSelected={this.state.tableSelectedMemberID}/>
                             <MemberRechargeDialog open={this.state.memberRechargeDialogOpen}
                                                   onRequestClose={this.handleMemberRechargeDialogClose}
                                                   name={this.state.memberName}

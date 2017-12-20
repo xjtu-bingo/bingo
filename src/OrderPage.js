@@ -54,9 +54,10 @@ class OrderPage extends React.Component {
         });
         this.props.dispatch({
             type: "NEW_ORDER",
-            payload: {orders: this.props.order},
+            payload: {orders: this.props.order, total: caculateOrderToalCost(this.props.order)},
         })
     };
+
 
     handleOrderCreatedSnackBaeClose = () => {
         this.setState({
@@ -111,6 +112,14 @@ class OrderPage extends React.Component {
             </div>
         );
     }
+}
+
+function caculateOrderToalCost(order) {
+    let total = 0;
+    for (let i = 0; i < order.length; i++) {
+        total = total + order[i].amount * order[i].price;
+    }
+    return total;
 }
 
 function addAmount(tempArray, order) {

@@ -29,7 +29,7 @@ class OrderProcessingPage extends React.Component {
         memberSearchDialogOpen: false,
         indexOfOrders: 0,
         selectedValue: PaymentWays[1],
-        tableSelected: '',
+        tableSelectedMemberID: '',
     };
 
     handleMemberSearchDialogOpen = () => {
@@ -47,7 +47,8 @@ class OrderProcessingPage extends React.Component {
     handleMemberSearchDialogClose = () => {
         this.setState({
             memberSearchDialogOpen: false,
-        })
+        });
+
     };
 
     handleRevokeOrder = (index) => {
@@ -96,7 +97,7 @@ class OrderProcessingPage extends React.Component {
 
     handlePersonalInformationSelected = (id, name) => {
         this.setState({
-            tableSelected: id,
+            tableSelectedMemberID: id,
         })
     };
 
@@ -165,7 +166,7 @@ class OrderProcessingPage extends React.Component {
                         handlePaymentRequestClose={this.handlePaymentRequestClose}
                     />
                     <MemberSearchDialog open={this.state.memberSearchDialogOpen}
-                                        tableSelected={this.state.tableSelected}
+                                        tableSelected={this.state.tableSelectedMemberID}
                                         handleMemberSearchDialogOnClose={this.handleMemberSearchDialogOnClose}
                                         handleMemberSearchDialogClose={this.handleMemberSearchDialogClose}
                                         handlePersonalInformationSelected={this.handlePersonalInformationSelected}/>
