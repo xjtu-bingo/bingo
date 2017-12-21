@@ -3,7 +3,8 @@ import {withStyles} from 'material-ui/styles';
 import ButtonBase from 'material-ui/ButtonBase';
 import Typography from 'material-ui/Typography';
 import RegisterPage from './RegisterPage'
-import TopUpPage from  './TopUpPage';
+import TopUpPage from './TopUpPage';
+
 const styles = theme => ({
     root: {
         marginTop: theme.spacing.unit * 3,
@@ -112,9 +113,16 @@ class CookBook extends Component {
         this.setState({registerPageOpen: true});
     };
 
-    handleRegisterPageRequestClose = () => {
+    handleRegisterPageRequestOnClose = () => {
+        this.setState({
+            registerPageOpen: false,
+        });
+    };
+
+    handleRegisterPageRequestClose = (name, phoneNumber, cardNumber, amount, gender, birthday) => {
         this.setState({registerPageOpen: false});
     };
+
     handleTopUpPageOpen = () => {
         this.setState({topUpPageOpen: true});
     };
@@ -185,7 +193,8 @@ class CookBook extends Component {
                     </div>
                 </ButtonBase>
                 {/*<MemberSearchDialog open={this.state.open} onRequestClose={this.handleMemberSearchClose}/>*/}
-                <RegisterPage open={this.state.registerPageOpen} onRequestClose={this.handleRegisterPageRequestClose}/>
+                <RegisterPage open={this.state.registerPageOpen} onRequestClose={this.handleRegisterPageRequestOnClose}
+                              RequestClose={this.handleRegisterPageRequestClose}/>
                 <TopUpPage open={this.state.topUpPageOpen} onRequestClose={this.handleTopUpPageRequestClose}/>
             </div>
         );

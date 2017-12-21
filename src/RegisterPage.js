@@ -38,7 +38,7 @@ class RegisterPage extends React.Component {
         name: '',
         phoneNumber: '',
         cardNumber: '',
-        age: '',
+        gender: 'male',
         amount: '',
     };
 
@@ -54,8 +54,9 @@ class RegisterPage extends React.Component {
         this.setState({cardNumber: event.target.value});
     };
 
-    handleAgeChange = event => {
-        this.setState({age: event.target.value});
+    handleGenderChange = event => {
+        this.setState({gender: event.target.value});
+        console.log(this.state.gender)
     };
 
     handleAmountChange = event => {
@@ -79,7 +80,7 @@ class RegisterPage extends React.Component {
                             <Typography type="title" color="inherit" className={classes.flex}>
                                 新会员注册
                             </Typography>
-                            <Button color="contrast" onClick={this.props.onRequestClose}>
+                            <Button color="contrast" onClick={this.props.RequestClose}>
                                 注册
                             </Button>
                         </Toolbar>
@@ -120,7 +121,7 @@ class RegisterPage extends React.Component {
                                 <InputLabel>充值</InputLabel>
                                 <Input
                                     id="amount"
-                                    value={this.state.cardNumber}
+                                    value={this.state.amount}
                                     onChange={this.handleAmountChange}
                                 />
                             </FormControl>
@@ -129,8 +130,8 @@ class RegisterPage extends React.Component {
                             <FormControl fullWidth className={classes.formControl}>
                                 <InputLabel>性别</InputLabel>
                                 <Select
-                                    value={this.state.age}
-                                    onChange={this.handleAgeChange}
+                                    value={this.state.gender}
+                                    onChange={this.handleGenderChange}
                                     input={<Input name="gender" id="genderSelect"/>}
                                 >
                                     <MenuItem value='female'>女</MenuItem>
