@@ -4,6 +4,7 @@ import ButtonBase from 'material-ui/ButtonBase';
 import Typography from 'material-ui/Typography';
 import RegisterPage from './RegisterPage'
 import TopUpPage from './TopUpPage';
+import {connect} from 'react-redux';
 
 const styles = theme => ({
     root: {
@@ -94,7 +95,7 @@ const images = [
 ];
 
 
-class CookBook extends Component {
+class MemberPage extends Component {
 
     state = {
         display: false,
@@ -120,8 +121,9 @@ class CookBook extends Component {
     };
 
     handleRegisterPageRequestClose = (name, phoneNumber, cardNumber, amount, gender, birthday) => {
+        let {dispatch} = this.props;
         this.setState({registerPageOpen: false});
-        this.props.dispatch({
+        dispatch({
             type: "NEW/MEMBER",
             payload: {
                 name: name,
@@ -130,7 +132,7 @@ class CookBook extends Component {
                 amount: amount,
                 gender: gender,
                 birthday: birthday
-            }
+            },
         })
     };
 
@@ -212,5 +214,6 @@ class CookBook extends Component {
     }
 }
 
+const selector = (state) => ({});
 
-export default withStyles(styles)(CookBook);
+export default withStyles(styles)(connect(selector)(MemberPage));
