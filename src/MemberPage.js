@@ -113,7 +113,7 @@ class CookBook extends Component {
         this.setState({registerPageOpen: true});
     };
 
-    handleRegisterPageRequestOnClose = () => {
+    handleRegisterPageOnRequestClose = () => {
         this.setState({
             registerPageOpen: false,
         });
@@ -121,6 +121,17 @@ class CookBook extends Component {
 
     handleRegisterPageRequestClose = (name, phoneNumber, cardNumber, amount, gender, birthday) => {
         this.setState({registerPageOpen: false});
+        this.props.dispatch({
+            type: "NEW/MEMBER",
+            payload: {
+                name: name,
+                phoneNumber: phoneNumber,
+                cardNumber: cardNumber,
+                amount: amount,
+                gender: gender,
+                birthday: birthday
+            }
+        })
     };
 
     handleTopUpPageOpen = () => {
@@ -193,8 +204,8 @@ class CookBook extends Component {
                     </div>
                 </ButtonBase>
                 {/*<MemberSearchDialog open={this.state.open} onRequestClose={this.handleMemberSearchClose}/>*/}
-                <RegisterPage open={this.state.registerPageOpen} onRequestClose={this.handleRegisterPageRequestOnClose}
-                              RequestClose={this.handleRegisterPageRequestClose}/>
+                <RegisterPage open={this.state.registerPageOpen} onRequestClose={this.handleRegisterPageOnRequestClose}
+                              RegisterRequestClose={this.handleRegisterPageRequestClose}/>
                 <TopUpPage open={this.state.topUpPageOpen} onRequestClose={this.handleTopUpPageRequestClose}/>
             </div>
         );

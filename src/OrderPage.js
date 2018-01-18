@@ -87,6 +87,14 @@ class OrderPage extends React.Component {
 
     };
 
+    handleOrderCanceled = () => {
+        this.props.dispatch({
+            type: "ORDER/CANCELED",
+            payload: ""
+        })
+    }
+    ;
+
     render() {
         const {classes, menu, order} = this.props;
         return (
@@ -106,7 +114,8 @@ class OrderPage extends React.Component {
                                     <div>
                                         <Button raised color="primary" className={classes.action}
                                                 onClick={this.handleOrderAndSnackBar}>确定下单</Button>
-                                        <Button raised color="accent" className={classes.action}>取消订单</Button>
+                                        <Button raised color="accent" className={classes.action}
+                                                onClick={this.handleOrderCanceled}>取消订单</Button>
                                     </div> : null
                             }
 

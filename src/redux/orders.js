@@ -9,6 +9,8 @@ const reducer = (state = defaultState, action) => {
     switch (action.type) {
         case 'NEW_ORDER':
             return Object.assign({}, state, {items: [...state.items, action.payload], curItems: []});
+        case 'ORDER/CANCELED':
+            return Object.assign({}, state, {curItems: []});
         case 'ORDER/EDIT':
             return Object.assign({}, state, {curItems: action.payload});
         case 'PAY/ORDER':

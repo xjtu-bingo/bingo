@@ -10,8 +10,10 @@ import Typography from 'material-ui/Typography';
 import CloseIcon from 'material-ui-icons/Close';
 import Slide from 'material-ui/transitions/Slide';
 import {FormControl, Input, InputLabel, MenuItem, Select} from "material-ui";
-import DatePicker from './Components/DatePicker'
+import DatePicker from './Components/DatePicker';
+import jMoment from 'moment-jalaali';
 
+jMoment.loadPersian({dialect: 'persian-modern', usePersianDigits: true});
 const styles = {
     appBar: {
         position: 'relative',
@@ -40,6 +42,7 @@ class RegisterPage extends React.Component {
         cardNumber: '',
         gender: 'male',
         amount: '',
+        birthday: ''
     };
 
     handleNameChange = event => {
@@ -62,8 +65,15 @@ class RegisterPage extends React.Component {
     handleAmountChange = event => {
         this.setState({amount: event.target.value});
     };
+
+    handleBirthdayChange = (date) => {
+        this.setState({
+            birthday: date,
+        });
+    };
+
     render() {
-        const {classes} = this.props;
+        const {classes, onRequestClose, RegisterRequestClose} = this.props;
         return (
             <div>
                 <Dialog
@@ -74,13 +84,14 @@ class RegisterPage extends React.Component {
                 >
                     <AppBar className={classes.appBar}>
                         <Toolbar>
-                            <IconButton color="contrast" onClick={this.props.onRequestClose} aria-label="Close">
+                            <IconButton color="contrast" onClick={onRequestClose} aria-label="Close">
                                 <CloseIcon/>
                             </IconButton>
                             <Typography type="title" color="inherit" className={classes.flex}>
                                 新会员注册
                             </Typography>
-                            <Button color="contrast" onClick={this.props.RequestClose}>
+                            <Button color="contrast"
+                                    onClick={() => RegisterRequestClose(this.state.name, this.state.phoneNumber, this.state.cardNumber, this.state.amount, this.state.gender, this.state.birthday)}>
                                 注册
                             </Button>
                         </Toolbar>
@@ -141,7 +152,11 @@ class RegisterPage extends React.Component {
                         </ListItem>
                         <ListItem>
                             <FormControl fullWidth className={classes.formControl}>
-                                <DatePicker/>
+                                <DatePicker onChange={this.handleBirthdayChange}
+                                            labelFunc={date => jMoment(date).format('jYYYY/jMM/jDD')}/>
+                                {
+                                    console.log(this.state.birthday)
+                                }
                             </FormControl>
                         </ListItem>
                     </List>
