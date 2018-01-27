@@ -27,9 +27,10 @@ class OrderProcessingPage extends React.Component {
     state = {
         open: false,
         memberSearchDialogOpen: false,
-        indexOfOrders: 0,
+        indexOfOrder: 0,
         selectedValue: PaymentWays[1],
         tableSelectedMemberID: '',
+        selectedMemberAmount: ''
     };
 
     handleMemberSearchDialogOpen = () => {
@@ -45,10 +46,30 @@ class OrderProcessingPage extends React.Component {
     };
 
     handleMemberSearchDialogClose = () => {
+        let {members, dispatch} = this.props;
         this.setState({
             memberSearchDialogOpen: false,
         });
-
+        let memberIndex = 0;
+        let indx = this.state.indexOfOrder;
+        for (let i = 0; i < members.length; i++) {
+            if (this.state.tableSelectedMemberID === members[i].id) {
+                memberIndex = i;
+                break;
+            }
+        }
+        let total = this.props.order[this.state.indexOfOrder].total;
+        let memberAmount = members[memberIndex].amount;
+        if (total <= memberAmount) {
+            console.log("付款成功");
+            dispatch({
+                type: 'PAYMENT/SUCCESS',
+                payload: {id: members[memberIndex].id, memberAmount: memberAmount - total}
+            });
+            dispatch({type: "PAY/ORDER", payload: {index: indx, payment: "会员付款"}})
+        } else {
+            console.log("余额不足");
+        }
     };
 
     handleRevokeOrder = (index) => {
@@ -86,7 +107,7 @@ class OrderProcessingPage extends React.Component {
     };
     handlePaymentSelectRequestClose = value => {
         let {dispatch} = this.props;
-        let indx = this.state.indexOfOrders;
+        let indx = this.state.indexOfOrder;
         this.setState({open: false});
         if (value === "会员支付") {
             this.handleMemberSearchDialogOpen();
@@ -95,9 +116,10 @@ class OrderProcessingPage extends React.Component {
         }
     };
 
-    handlePersonalInformationSelected = (id, name) => {
+    handlePersonalInformationSelected = (id, amount) => {
         this.setState({
             tableSelectedMemberID: id,
+            selectedMemberAmount: amount,
         })
     };
 

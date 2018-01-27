@@ -60,7 +60,7 @@ class MemberRechargeDialog extends React.Component {
                         <Button onClick={onRequestClose} color="primary">
                             取消
                         </Button>
-                        <Button onClick={() => memberRecharge(+this.state.amount)} color="primary">
+                        <Button onClick={() => memberRecharge(this.state.amount)} color="primary">
                             充值
                         </Button>
                     </DialogActions>
