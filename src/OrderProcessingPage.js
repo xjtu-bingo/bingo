@@ -116,7 +116,7 @@ class OrderProcessingPage extends React.Component {
         }
     };
 
-    handlePersonalInformationSelected = (id, amount) => {
+    handlePersonalInformationSelected = (id, name, amount) => {
         this.setState({
             tableSelectedMemberID: id,
             selectedMemberAmount: amount,

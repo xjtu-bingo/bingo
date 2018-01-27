@@ -72,26 +72,50 @@ class RegisterPage extends React.Component {
         });
     };
 
+    handleRegisterRequestClose = () => {
+        this.setState({
+            name: '',
+            phoneNumber: '',
+            cardNumber: '',
+            gender: 'male',
+            amount: '',
+            birthday: ''
+        });
+        this.props.RegisterRequestClose(this.state.name, this.state.phoneNumber, this.state.cardNumber, this.state.amount, this.state.gender, this.state.birthday);
+    };
+
+    handleOnRequestClose = () => {
+        this.setState({
+            name: '',
+            phoneNumber: '',
+            cardNumber: '',
+            gender: 'male',
+            amount: '',
+            birthday: ''
+        });
+        this.props.onRequestClose();
+    };
+
     render() {
-        const {classes, onRequestClose, RegisterRequestClose} = this.props;
+        const {classes} = this.props;
         return (
             <div>
                 <Dialog
                     fullScreen
                     open={this.props.open}
-                    onRequestClose={this.props.onRequestClose}
+                    onRequestClose={this.handleOnRequestClose}
                     transition={Transition}
                 >
                     <AppBar className={classes.appBar}>
                         <Toolbar>
-                            <IconButton color="contrast" onClick={onRequestClose} aria-label="Close">
+                            <IconButton color="contrast" onClick={this.handleOnRequestClose} aria-label="Close">
                                 <CloseIcon/>
                             </IconButton>
                             <Typography type="title" color="inherit" className={classes.flex}>
                                 新会员注册
                             </Typography>
                             <Button color="contrast"
-                                    onClick={() => RegisterRequestClose(this.state.name, this.state.phoneNumber, this.state.cardNumber, this.state.amount, this.state.gender, this.state.birthday)}>
+                                    onClick={this.handleRegisterRequestClose}>
                                 注册
                             </Button>
                         </Toolbar>

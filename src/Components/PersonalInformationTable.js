@@ -46,7 +46,8 @@ function BasicTable(props) {
             <TableBody>
                 {members.map((n, i) => {
                     return (
-                        <TableRow selected={n.id === tableSelected} key={n.id} onClick={() => onClick(n.id, n.amount)}>
+                        <TableRow selected={n.id === tableSelected} key={n.id}
+                                  onClick={() => onClick(n.id, n.name, n.amount)}>
                             <TableCell>{n.name}</TableCell>
                             <TableCell padding="none">{n.gender}</TableCell>
                             <TableCell padding="none">{n.phoneNumber}</TableCell>

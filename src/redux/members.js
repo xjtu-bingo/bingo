@@ -16,6 +16,16 @@ const reducer = (state = defaultState, action) => {
                     }
                 })
             });
+        case "MEMBER/RECHARGE":
+            return Object.assign({}, state, {
+                member: state.member.map((v, i) => {
+                    if (action.payload.id === v.id) {
+                        return Object.assign({}, v, {amount: action.payload.amount});
+                    } else {
+                        return v;
+                    }
+                })
+            });
         default:
             return state;
     }

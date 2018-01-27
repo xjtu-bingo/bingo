@@ -1,6 +1,5 @@
 import React from 'react';
 import {withStyles} from 'material-ui/styles';
-import Button from 'material-ui/Button';
 import Dialog from 'material-ui/Dialog';
 import List, {ListItem} from 'material-ui/List';
 import AppBar from 'material-ui/AppBar';
@@ -42,32 +41,48 @@ class TopUpPage extends React.Component {
     state = {
         personalInformation: '',
         memberRechargeDialogOpen: false,
-        memberID: '',
         memberName: '',
-        tableSelected: false,
+        tableSelectedMemberID: '',
+        memberAmount: 0,
+        rechargeAmount: '',
     };
 
     handlePersonalInformationChange = event => {
         this.setState({personalInformation: event.target.value});
     };
 
-    handleMemberRechargeDialogOpen = (i, name) => {
+    handleMemberRechargeDialogOpen = (i, name, amount) => {
         this.setState({
             memberRechargeDialogOpen: true,
-            memberID: i,
             memberName: name,
-            tableSelectedMemberID: true,
+            memberAmount: amount,
+            tableSelectedMemberID: i,
         });
     };
 
     handleMemberRechargeDialogClose = () => {
-        this.setState({memberRechargeDialogOpen: false});
+        this.setState({memberRechargeDialogOpen: false, rechargeAmount: ''});
     };
 
     handleMemberRecharge = (amount) => {
-        console.log(amount);
+        console.log(typeof amount);
+        console.log(typeof this.state.memberAmount);
+        if (Number(this.state.memberAmount) < 0) {
+            alert("充值金额不能为负数")
+        } else {
+            this.props.handleMemberRecharge(amount + Number(this.state.memberAmount), this.state.tableSelectedMemberID);
+        }
+        this.setState({memberRechargeDialogOpen: false, rechargeAmount: ''});
     };
 
+    handleOnChange = (e) => {
+        let value = e.target.value;
+        if (+value >= 0 || value === '') {
+            this.setState({
+                rechargeAmount: value,
+            });
+        }
+    };
 
     render() {
         const {classes} = this.props;
@@ -87,15 +102,15 @@ class TopUpPage extends React.Component {
                             <Typography type="title" color="inherit" className={classes.flex}>
                                 会员充值
                             </Typography>
-                            <Button color="contrast" onClick={this.props.onRequestClose}>
-                                充 值
-                            </Button>
+                            {/*<Button color="contrast" onClick={this.props.onRequestClose}>*/}
+                            {/*充 值*/}
+                            {/*</Button>*/}
                         </Toolbar>
                     </AppBar>
                     <List>
                         <ListItem>
                             <FormControl fullWidth className={classes.formControl}>
-                                <InputLabel>个人信息</InputLabel>
+                                <InputLabel>请输入查询信息</InputLabel>
                                 <Input
                                     id="personalInformation"
                                     value={this.state.personalInformation}
@@ -113,7 +128,9 @@ class TopUpPage extends React.Component {
                             <MemberRechargeDialog open={this.state.memberRechargeDialogOpen}
                                                   onRequestClose={this.handleMemberRechargeDialogClose}
                                                   name={this.state.memberName}
-                                                  memberRecharge={this.handleMemberRecharge}/>
+                                                  memberRecharge={this.handleMemberRecharge}
+                                                  handleOnChange={this.handleOnChange}
+                                                  rechargeAmount={this.state.rechargeAmount}/>
                         </ListItem>
                     </List>
                 </Dialog>

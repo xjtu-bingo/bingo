@@ -98,6 +98,7 @@ const images = [
 class MemberPage extends Component {
 
     state = {
+        id: 0,
         display: false,
         registerPageOpen: false,
         topUpPageOpen: false,
@@ -109,6 +110,7 @@ class MemberPage extends Component {
     // handleMemberSearchClose = () => {
     //     this.setState({open: false})
     // };
+
 
     handleRegisterPageOpen = () => {
         this.setState({registerPageOpen: true});
@@ -122,10 +124,11 @@ class MemberPage extends Component {
 
     handleRegisterPageRequestClose = (name, phoneNumber, cardNumber, amount, gender, birthday) => {
         let {dispatch} = this.props;
-        this.setState({registerPageOpen: false});
+        this.setState({registerPageOpen: false, id: this.state.id + 1});
         dispatch({
             type: "NEW/MEMBER",
             payload: {
+                id: this.state.id,
                 name: name,
                 phoneNumber: phoneNumber,
                 cardNumber: cardNumber,
@@ -139,6 +142,15 @@ class MemberPage extends Component {
 
     handleTopUpPageOpen = () => {
         this.setState({topUpPageOpen: true});
+    };
+
+    handleMemberRecharge = (amount, id) => {
+        console.log(amount);
+        let {dispatch} = this.props;
+        dispatch({
+            type: "MEMBER/RECHARGE",
+            payload: {id: id, amount: amount},
+        })
     };
 
     handleTopUpPageRequestClose = () => {
@@ -210,7 +222,8 @@ class MemberPage extends Component {
                 <RegisterPage open={this.state.registerPageOpen} onRequestClose={this.handleRegisterPageOnRequestClose}
                               RegisterRequestClose={this.handleRegisterPageRequestClose}/>
                 <TopUpPage open={this.state.topUpPageOpen} onRequestClose={this.handleTopUpPageRequestClose}
-                           members={this.props.members}/>
+                           members={this.props.members}
+                           handleMemberRecharge={this.handleMemberRecharge}/>
             </div>
         );
     }

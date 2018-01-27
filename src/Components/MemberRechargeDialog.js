@@ -38,7 +38,7 @@ class MemberRechargeDialog extends React.Component {
     };
 
     render() {
-        const {classes, open, onRequestClose, name, memberRecharge} = this.props;
+        const {classes, open, onRequestClose, name, memberRecharge, rechargeAmount} = this.props;
         return (
             <div>
                 <Dialog open={open} onRequestClose={onRequestClose} classes={{paper: classes.dialog}}>
@@ -49,9 +49,9 @@ class MemberRechargeDialog extends React.Component {
                         <FormControl fullWidth className={classes.formControl}>
                             <InputLabel>请输入需要充值的金额</InputLabel>
                             <Input
-                                value={this.state.amount}
+                                value={rechargeAmount}
                                 type="number"
-                                onChange={this.handleOnChange}
+                                onChange={this.props.handleOnChange}
                                 startAdornment={<InputAdornment position="start">￥</InputAdornment>}
                             />
                         </FormControl>
@@ -60,7 +60,7 @@ class MemberRechargeDialog extends React.Component {
                         <Button onClick={onRequestClose} color="primary">
                             取消
                         </Button>
-                        <Button onClick={() => memberRecharge(this.state.amount)} color="primary">
+                        <Button onClick={() => memberRecharge(+rechargeAmount)} color="primary">
                             充值
                         </Button>
                     </DialogActions>

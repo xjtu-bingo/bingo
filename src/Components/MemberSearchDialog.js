@@ -37,6 +37,9 @@ class MemberSearchDialog extends React.Component {
                                               tableSelected={this.props.tableSelected}
                                               members={this.props.members}/>
                     <DialogActions>
+                        <Button onClick={this.props.handleMemberSearchDialogOnClose} color="primary">
+                            取消
+                        </Button>
                         <Button onClick={this.props.handleMemberSearchDialogClose} color="primary">
                             确认
                         </Button>
