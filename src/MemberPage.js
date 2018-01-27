@@ -133,7 +133,8 @@ class MemberPage extends Component {
                 gender: gender,
                 birthday: birthday
             },
-        })
+        });
+        console.log(name + birthday + gender);
     };
 
     handleTopUpPageOpen = () => {
@@ -208,12 +209,15 @@ class MemberPage extends Component {
                 {/*<MemberSearchDialog open={this.state.open} onRequestClose={this.handleMemberSearchClose}/>*/}
                 <RegisterPage open={this.state.registerPageOpen} onRequestClose={this.handleRegisterPageOnRequestClose}
                               RegisterRequestClose={this.handleRegisterPageRequestClose}/>
-                <TopUpPage open={this.state.topUpPageOpen} onRequestClose={this.handleTopUpPageRequestClose}/>
+                <TopUpPage open={this.state.topUpPageOpen} onRequestClose={this.handleTopUpPageRequestClose}
+                           members={this.props.members}/>
             </div>
         );
     }
 }
 
-const selector = (state) => ({});
+const selector = (state) => ({
+    members: state.members.member,
+});
 
 export default withStyles(styles)(connect(selector)(MemberPage));

@@ -26,7 +26,11 @@ const styles = {
     },
     formControl: {
         margin: 'auto',
-        width: 400,
+        width: '30%',
+    },
+    informationTableControl: {
+        margin: 'auto',
+        width: '50%',
     },
 };
 
@@ -44,7 +48,7 @@ class TopUpPage extends React.Component {
     };
 
     handlePersonalInformationChange = event => {
-        this.setState({name: event.target.value});
+        this.setState({personalInformation: event.target.value});
     };
 
     handleMemberRechargeDialogOpen = (i, name) => {
@@ -100,8 +104,12 @@ class TopUpPage extends React.Component {
                             </FormControl>
                         </ListItem>
                         <ListItem>
-                            <PersonalInformationTable onClick={this.handleMemberRechargeDialogOpen}
-                                                      tableSelected={this.state.tableSelectedMemberID}/>
+                            <FormControl className={classes.informationTableControl}>
+                                <PersonalInformationTable onClick={this.handleMemberRechargeDialogOpen}
+                                                          tableSelected={this.state.tableSelectedMemberID}
+                                                          members={this.props.members}/>
+                            </FormControl>
+
                             <MemberRechargeDialog open={this.state.memberRechargeDialogOpen}
                                                   onRequestClose={this.handleMemberRechargeDialogClose}
                                                   name={this.state.memberName}

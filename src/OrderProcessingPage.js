@@ -169,7 +169,8 @@ class OrderProcessingPage extends React.Component {
                                         tableSelected={this.state.tableSelectedMemberID}
                                         handleMemberSearchDialogOnClose={this.handleMemberSearchDialogOnClose}
                                         handleMemberSearchDialogClose={this.handleMemberSearchDialogClose}
-                                        handlePersonalInformationSelected={this.handlePersonalInformationSelected}/>
+                                        handlePersonalInformationSelected={this.handlePersonalInformationSelected}
+                                        members={this.props.members}/>
                 </Grid>
             </div>
         );
@@ -180,6 +181,7 @@ const selector = (state) => ({
     order: state.orders.items,
     paidOrder: state.orders.paidItems,
     finishedOrder: state.orders.finishedItems,
+    members: state.members.member,
 });
 
 export default withStyles(styles)(connect(selector)(OrderProcessingPage));

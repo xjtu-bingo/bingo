@@ -9,7 +9,7 @@ const styles = theme => ({
         overflowX: 'auto',
     },
     table: {
-        maxWidth: 600,
+
     },
 });
 
@@ -29,7 +29,7 @@ const data = [
 ];
 
 function BasicTable(props) {
-    const {classes, onClick, tableSelected} = props;
+    const {classes, onClick, tableSelected, members} = props;
 
     return (
         <Table className={classes.table}>
@@ -44,15 +44,15 @@ function BasicTable(props) {
                 </TableRow>
             </TableHead>
             <TableBody>
-                {data.map((n, i) => {
+                {members.map((n, i) => {
                     return (
                         <TableRow selected={n.id === tableSelected} key={n.id} onClick={() => onClick(n.id, n.name)}>
                             <TableCell>{n.name}</TableCell>
-                            <TableCell padding="none">{n.calories}</TableCell>
-                            <TableCell padding="none">{n.fat}</TableCell>
-                            <TableCell padding="none">{n.carbs}</TableCell>
-                            <TableCell padding="none">{n.protein}</TableCell>
-                            <TableCell padding="none">{n.protein}</TableCell>
+                            <TableCell padding="none">{n.gender}</TableCell>
+                            <TableCell padding="none">{n.phoneNumber}</TableCell>
+                            <TableCell padding="none">{n.cardNumber}</TableCell>
+                            <TableCell padding="none">{n.birthday}</TableCell>
+                            <TableCell padding="none">{n.amount}</TableCell>
                         </TableRow>
                     );
                 })}

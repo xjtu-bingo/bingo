@@ -10,6 +10,7 @@ const style = () => ({
         width: "100%",
     }
 });
+
 class MemberSearchDialog extends React.Component {
 
     render() {
@@ -33,7 +34,8 @@ class MemberSearchDialog extends React.Component {
                         />
                     </DialogContent>
                     <PersonalInformationTable onClick={this.props.handlePersonalInformationSelected}
-                                              tableSelected={this.props.tableSelected}/>
+                                              tableSelected={this.props.tableSelected}
+                                              members={this.props.members}/>
                     <DialogActions>
                         <Button onClick={this.props.handleMemberSearchDialogClose} color="primary">
                             确认
