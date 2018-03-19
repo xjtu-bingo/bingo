@@ -1,3 +1,5 @@
+import * as config from './config.json';
+
 export const GraphQL = endpoint => (query, variables = null) =>
     fetch(endpoint, {
         method: 'POST',
@@ -5,4 +7,4 @@ export const GraphQL = endpoint => (query, variables = null) =>
         body: JSON.stringify({query, variables})
     });
 
-export default GraphQL('http://120.25.205.159:3000');
+export default GraphQL(config.server.endpoint);

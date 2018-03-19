@@ -1,9 +1,6 @@
-import React, { Component } from 'react';
-import { withStyles } from 'material-ui/styles';
-import ExpansionPanel, {
-    ExpansionPanelDetails,
-    ExpansionPanelSummary,
-} from 'material-ui/ExpansionPanel';
+import React, {Component} from 'react';
+import {withStyles} from 'material-ui/styles';
+import ExpansionPanel, {ExpansionPanelDetails, ExpansionPanelSummary,} from 'material-ui/ExpansionPanel';
 import Typography from 'material-ui/Typography';
 import ExpandMoreIcon from 'material-ui-icons/ExpandMore';
 

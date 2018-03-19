@@ -2,11 +2,11 @@ import React from 'react';
 import {withStyles} from 'material-ui/styles';
 import Paper from 'material-ui/Paper';
 import Grid from 'material-ui/Grid';
-import OrderCard from './Components/Card'
-import PaymentSelect from "./Components/PaymentSelect"
+import OrderCard from './components/Card'
+import PaymentSelect from "./components/PaymentSelect"
 import {Button} from "material-ui";
 import {connect} from "react-redux";
-import MemberSearchDialog from './Components/MemberSearchDialog'
+import MemberSearchDialog from './components/MemberSearchDialog'
 
 
 const PaymentWays = ["会员支付", "支付宝", "微信", "现金"];

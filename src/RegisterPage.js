@@ -10,7 +10,7 @@ import Typography from 'material-ui/Typography';
 import CloseIcon from 'material-ui-icons/Close';
 import Slide from 'material-ui/transitions/Slide';
 import {FormControl, Input, InputLabel, MenuItem, Select} from "material-ui";
-import DatePicker from './Components/DatePicker';
+import DatePicker from './components/DatePicker';
 import jMoment from 'moment-jalaali';
 
 jMoment.loadPersian({dialect: 'persian-modern', usePersianDigits: true});

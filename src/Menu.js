@@ -3,7 +3,7 @@ import {withStyles} from 'material-ui/styles';
 import List, {ListItem, ListItemText,} from 'material-ui/List';
 import Grid from 'material-ui/Grid';
 import Typography from 'material-ui/Typography';
-import OrderProductItem from "./Components/OrderProductItem";
+import OrderProductItem from "./components/OrderProductItem";
 
 const styles = theme => ({
     root: {

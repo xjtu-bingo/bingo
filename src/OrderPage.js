@@ -4,7 +4,7 @@ import Button from 'material-ui/Button';
 import {Grid, Paper} from "material-ui";
 import OrderDetail from './OrderDetailTable'
 import Menu from './Menu';
-import SnackBar from './Components/SnackBar'
+import SnackBar from './components/SnackBar'
 import {connect} from "react-redux";
 
 const styles = theme => ({

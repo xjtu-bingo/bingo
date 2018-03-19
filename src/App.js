@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import Drawer from './Drawer';
-import Add from './Components/Add';
-import Edit from './Components/Edit';
+import Add from './components/Add';
+import Edit from './components/Edit';
 import {createMuiTheme, MuiThemeProvider} from "material-ui/styles";
 import purple from 'material-ui/colors/purple';
 import red from 'material-ui/colors/red';

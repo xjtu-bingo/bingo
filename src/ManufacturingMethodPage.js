@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
 import {withStyles} from 'material-ui/styles';
 import {Grid} from "material-ui";
-import MothodPaper from './Components/Paper';
-import ExpansionPanel from'./Components/ExpansionPanel';
+import MothodPaper from './components/Paper';
+import ExpansionPanel from './components/ExpansionPanel';
+
 const styles = theme => ({
     root: {
         margin: "auto",

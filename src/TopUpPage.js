@@ -9,8 +9,8 @@ import Typography from 'material-ui/Typography';
 import CloseIcon from 'material-ui-icons/Close';
 import Slide from 'material-ui/transitions/Slide';
 import {FormControl, Input, InputLabel} from "material-ui";
-import PersonalInformationTable from './Components/PersonalInformationTable';
-import MemberRechargeDialog from './Components/MemberRechargeDialog';
+import PersonalInformationTable from './components/PersonalInformationTable';
+import MemberRechargeDialog from './components/MemberRechargeDialog';
 
 const styles = {
     appBar: {

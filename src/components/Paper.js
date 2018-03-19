@@ -1,5 +1,5 @@
 import React from 'react';
-import { withStyles } from 'material-ui/styles';
+import {withStyles} from 'material-ui/styles';
 import Paper from 'material-ui/Paper';
 import Typography from 'material-ui/Typography';
 
@@ -25,7 +25,7 @@ const PaperSheet = ({classes, category, children}) => {
             </Paper>
         </div>
     );
-}
+};
 
 
 
