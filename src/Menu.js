@@ -4,6 +4,7 @@ import List, {ListItem, ListItemText,} from 'material-ui/List';
 import Grid from 'material-ui/Grid';
 import Typography from 'material-ui/Typography';
 import OrderProductItem from "./components/OrderProductItem";
+import {Chip} from "material-ui";
 
 const styles = theme => ({
     root: {
@@ -18,6 +19,23 @@ const styles = theme => ({
     },
 });
 
+const MenuCategoryChipArray = withStyles(theme => ({
+    root: {
+        display: 'flex',
+        justifyContent: 'center',
+        flexWrap: 'wrap',
+        padding: theme.spacing.unit / 2,
+    },
+    chip: {
+        margin: theme.spacing.unit / 2,
+    },
+}))(({data, onClick, classes}) => (
+    <div className={classes.root}>
+        {data.map((v, i) => (<Chip className={classes.chip} key={i} label={v} onClick={() => onClick(i)}/>))}
+    </div>
+));
+
+
 class InteractiveList extends React.Component {
     state = {
         dense: false,
@@ -28,12 +46,15 @@ class InteractiveList extends React.Component {
     render() {
         const {classes, data, handleAmountChange} = this.props;
         const {dense, category} = this.state;
+        const categories = data.map(v => v.category);
 
         return (
             <div className={classes.root}>
                 <Grid container>
+                    <Grid item xs={12}>
+                        <MenuCategoryChipArray data={categories} onClick={(i) => this.setState({category: i})}/>
+                    </Grid>
                     <Grid item xs={12} md={2}>
-
                     </Grid>
                     <Grid item xs={4} md={3}>
                         <Typography type="title" className={classes.title}>
