@@ -110,11 +110,11 @@ class OrderPage extends React.Component {
                             <OrderDetail
                                 data={order}/>
                             {
-                                this.props.order.length > 0 ?
+                                order.length > 0 ?
                                     <div>
-                                        <Button raised color="primary" className={classes.action}
+                                        <Button variant="raised" color="primary" className={classes.action}
                                                 onClick={this.handleOrderAndSnackBar}>确定下单</Button>
-                                        <Button raised color="accent" className={classes.action}
+                                        <Button variant="raised" color="secondary" className={classes.action}
                                                 onClick={this.handleOrderCanceled}>取消订单</Button>
                                     </div> : null
                             }

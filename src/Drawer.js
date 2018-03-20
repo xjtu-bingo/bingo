@@ -11,7 +11,6 @@ import IconButton from 'material-ui/IconButton';
 import MenuIcon from 'material-ui-icons/Menu';
 import ChevronLeftIcon from 'material-ui-icons/ChevronLeft';
 import ChevronRightIcon from 'material-ui-icons/ChevronRight';
-import {ListItem, ListItemIcon, ListItemText} from "material-ui";
 import CafeIcon from "material-ui-icons/LocalCafe";
 import TimerIcon from 'material-ui-icons/Timer';
 import MemberIcon from 'material-ui-icons/CardMembership';
@@ -25,6 +24,7 @@ import ManufacturingMethodPage from './ManufacturingMethodPage'
 import OrderProcessingPage from './OrderProcessingPage'
 import {connect} from "react-redux";
 import Stepper from './OrderPage'
+import NavigateItem from "./components/NavigateItem";
 
 
 const data = [[{name: "星冰乐", price: 10, amount: 2}, {name: "keke", price: 20, amount: 3}], [{
@@ -48,8 +48,7 @@ const styles = theme => ({
         height: '100%',
     },
     appBar: {
-        position: 'absolute',
-        zIndex: theme.zIndex.navDrawer + 1,
+        zIndex: theme.zIndex.drawer + 1,
         transition: theme.transitions.create(['width', 'margin'], {
             easing: theme.transitions.easing.sharp,
             duration: theme.transitions.duration.leavingScreen,
@@ -72,7 +71,7 @@ const styles = theme => ({
     },
     drawerPaper: {
         position: 'relative',
-        height: '100%',
+        // height: '100%',
         width: drawerWidth,
         transition: theme.transitions.create('width', {
             easing: theme.transitions.easing.sharp,
@@ -80,7 +79,7 @@ const styles = theme => ({
         }),
     },
     drawerPaperClose: {
-        width: 60,
+        width: 72,
         overflowX: 'hidden',
         transition: theme.transitions.create('width', {
             easing: theme.transitions.easing.sharp,
@@ -126,13 +125,13 @@ class MiniDrawer extends React.Component {
             page: 0,
         })
     };
-    handleOrderPageChange =() => {
+    handleOrderPageChange = () => {
         this.setState({
             page: 1,
         })
     };
 
-    handleMemberPageChange =() => {
+    handleMemberPageChange = () => {
         this.setState({
             page: 2,
         })
@@ -143,33 +142,48 @@ class MiniDrawer extends React.Component {
             page: 3,
         })
     };
+
     render() {
         const {classes, theme, order, paidOrder} = this.props;
-        console.log(paidOrder);
+        const {open} = this.state;
+        // console.log(paidOrder);
+
+        const badge = (
+            <Badge className={classes.badge}
+                   badgeContent={order.length + paidOrder.length}
+                   color="primary">
+                <TimerIcon/>
+            </Badge>
+        );
+
         return (
             <div className={classes.root}>
                 <div className={classes.appFrame}>
-                    <AppBar className={classNames(classes.appBar, this.state.open && classes.appBarShift)}>
-                        <Toolbar disableGutters={!this.state.open}>
+                    <AppBar
+                        position="absolute"
+                        className={classNames(classes.appBar, open && classes.appBarShift)}
+                    >
+                        <Toolbar disableGutters={!open}>
                             <IconButton
-                                color="contrast"
+                                color="inherit"
                                 aria-label="open drawer"
                                 onClick={this.handleDrawerOpen}
-                                className={classNames(classes.menuButton, this.state.open && classes.hide)}
+                                className={classNames(classes.menuButton, open && classes.hide)}
                             >
                                 <MenuIcon/>
                             </IconButton>
-                            <Typography align='center' type="title" color="inherit" noWrap>
+                            <Typography variant="title" color="inherit" noWrap>
                                 品阁咖啡屋
                             </Typography>
                         </Toolbar>
                     </AppBar>
+
                     <Drawer
-                        type="permanent"
+                        variant="permanent"
                         classes={{
-                            paper: classNames(classes.drawerPaper, !this.state.open && classes.drawerPaperClose),
+                            paper: classNames(classes.drawerPaper, !open && classes.drawerPaperClose),
                         }}
-                        open={this.state.open}
+                        open={open}
                     >
                         <div className={classes.drawerInner}>
                             <div className={classes.drawerHeader}>
@@ -179,60 +193,23 @@ class MiniDrawer extends React.Component {
                             </div>
                             <Divider/>
                             <List>
-                                <ListItem button onClick={this.handleOrderProcessingPageChange}>
-                                    <ListItemIcon>
-                                        <Badge className={classes.badge} badgeContent={order.length + paidOrder.length}
-                                               color="primary">
-                                            <TimerIcon/>
-                                        </Badge>
-                                    </ListItemIcon>
-                                    <ListItemText primary="待处理订单"/>
-                                </ListItem>
-                                <ListItem button onClick={this.handleOrderPageChange}>
-                                    <ListItemIcon>
-                                        <CafeIcon/>
-                                    </ListItemIcon>
-                                    <ListItemText primary="点单"/>
-                                </ListItem>
-                                <ListItem button onClick={this.handleMemberPageChange}>
-                                    <ListItemIcon>
-                                        <MemberIcon/>
-                                    </ListItemIcon>
-                                    <ListItemText primary="品阁会员"/>
-                                </ListItem>
+                                <NavigateItem text="待处理订单" icon={badge} onClick={this.handleOrderProcessingPageChange}/>
+                                <NavigateItem text="点单" icon={<CafeIcon/>} onClick={this.handleOrderPageChange}/>
+                                <NavigateItem text="品阁会员" icon={<MemberIcon/>} onClick={this.handleMemberPageChange}/>
                             </List>
                             <Divider/>
                             <List>
-                                <ListItem button onClick={this.handleManufacturingMethodPageChange}>
-                                    <ListItemIcon>
-                                        <CookbookIcon/>
-                                    </ListItemIcon>
-                                    <ListItemText primary="制作方法"/>
-                                </ListItem>
-                                <ListItem button>
-                                    <ListItemIcon>
-                                        <AlarmIcon/>
-                                    </ListItemIcon>
-                                    <ListItemText primary="计时器"/>
-                                </ListItem>
+                                <NavigateItem text="制作方法" icon={<CookbookIcon/>}
+                                              onClick={this.handleManufacturingMethodPageChange}/>
+                                <NavigateItem text="计时器" disabled icon={<AlarmIcon/>}/>
                             </List>
                             <Divider/>
                             <List>
-                                <ListItem button>
-                                    <ListItemIcon>
-                                        <FinancialIcon/>
-                                    </ListItemIcon>
-                                    <ListItemText primary="财务报表"/>
-                                </ListItem>
+                                <NavigateItem text="财务报表" disabled icon={<FinancialIcon/>}/>
                             </List>
                             <Divider/>
                             <List>
-                                <ListItem button>
-                                    <ListItemIcon>
-                                        <StaffIcon/>
-                                    </ListItemIcon>
-                                    <ListItemText primary="员工签到"/>
-                                </ListItem>
+                                <NavigateItem text="员工签到" disabled icon={<StaffIcon/>}/>
                             </List>
                         </div>
                     </Drawer>

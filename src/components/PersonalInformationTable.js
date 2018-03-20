@@ -13,21 +13,6 @@ const styles = theme => ({
     },
 });
 
-let id = 0;
-
-function createData(name, gender, phoneNumber, cardNumber, birthday, amount) {
-    id += 1;
-    return {id, name, gender, phoneNumber, cardNumber, birthday, amount};
-}
-
-const data = [
-    createData('Frozen yoghurt', 159, 6.0, 24, 4.0, 23),
-    createData('Ice cream sandwich', 237, 9.0, 37, 4.3, 23),
-    createData('Eclair', 262, 16.0, 24, 6.0, 23),
-    createData('Cupcake', 305, 3.7, 67, 4.3, 33),
-    createData('Gingerbread', 356, 16.0, 49, 3.9, 34),
-];
-
 function BasicTable(props) {
     const {classes, onClick, tableSelected, members} = props;
 
