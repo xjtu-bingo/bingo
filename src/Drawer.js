@@ -21,7 +21,7 @@ import StaffIcon from 'material-ui-icons/Flag';
 import MemberPage from './MemberPage';
 import Badge from 'material-ui/Badge'
 import ManufacturingMethodPage from './ManufacturingMethodPage'
-import OrderProcessingPage from './OrderProcessingPage'
+import OrderProcessingPage from './containers/OrderProcessingPage'
 import {connect} from "react-redux";
 import OrderPage from './containers/OrderPage'
 import NavigateItem from "./components/NavigateItem";
@@ -144,13 +144,13 @@ class MiniDrawer extends React.Component {
     };
 
     render() {
-        const {classes, theme, order, paidOrder} = this.props;
+        const {classes, theme, badgeCount} = this.props;
         const {open} = this.state;
         // console.log(paidOrder);
 
         const badge = (
             <Badge className={classes.badge}
-                   badgeContent={order.length + paidOrder.length}
+                   badgeContent={badgeCount}
                    color="primary">
                 <TimerIcon/>
             </Badge>
@@ -214,8 +214,7 @@ class MiniDrawer extends React.Component {
                         </div>
                     </Drawer>
                     <div className={classes.content}>
-                        {this.state.page === 0 ?
-                            <OrderProcessingPage untreatedOrder={data} paidOrder={data} finishedOrder={data}/> : null}
+                        {this.state.page === 0 ? <OrderProcessingPage/> : null}
                         {this.state.page === 1 ? <OrderPage/> : null}
                         {this.state.page === 2 ? <MemberPage/> : null}
                         {this.state.page === 3 ? <ManufacturingMethodPage/> : null}
@@ -227,8 +226,7 @@ class MiniDrawer extends React.Component {
 }
 
 const selector = (state) => ({
-    order: state.orders.items,
-    paidOrder: state.orders.paidItems,
+    badgeCount: Object.values(state.repo.orders).filter(order => order.status === 'NEW' || order.status === 'PAID').length
 });
 
 export default withStyles(styles, {withTheme: true})(connect(selector)(MiniDrawer));

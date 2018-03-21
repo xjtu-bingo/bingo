@@ -15,8 +15,8 @@ export const OrderedDetailTable = ({data: orderDetail}) => (
         </TableHead>
         <TableBody>
             {
-                orderDetail.map(item => (
-                    <TableRow key={item.id}>
+                orderDetail.map((item, i) => (
+                    <TableRow key={i}>
                         <TableCell>{item.name}</TableCell>
                         <TableCell numeric>{item.price}</TableCell>
                         <TableCell numeric>{item.amount}</TableCell>

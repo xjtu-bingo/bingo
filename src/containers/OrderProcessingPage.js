@@ -2,11 +2,12 @@ import React from 'react';
 import {withStyles} from 'material-ui/styles';
 import Paper from 'material-ui/Paper';
 import Grid from 'material-ui/Grid';
-import OrderCard from './components/OrderCard'
-import PaymentSelect from "./components/PaymentSelect"
+import OrderCard from '../components/OrderCard'
+import PaymentSelect from "../components/PaymentSelect"
 import {Button} from "material-ui";
 import {connect} from "react-redux";
-import MemberSearchDialog from './components/MemberSearchDialog'
+import MemberSearchDialog from '../components/MemberSearchDialog'
+import {updateOrderStatus} from "../redux/mutations";
 
 
 const PaymentWays = ["会员支付", "支付宝", "微信", "现金"];
@@ -124,23 +125,23 @@ class OrderProcessingPage extends React.Component {
     };
 
     render() {
-        const {classes, order, paidOrder, finishedOrder} = this.props;
+        const {classes, orders, newOrders, paidOrders, finishedOrders, dispatch} = this.props;
 
         return (
             <div className={classes.root}>
                 <Grid container spacing={24}>
                     <Grid item xs>
-                        <Paper className={classes.paper}>待付款订单</Paper>
+                        <Paper className={classes.paper}>待付款订单 ({newOrders.length})</Paper>
                         {
-                            order
+                            newOrders
                                 .map((order, i) => (
                                     <OrderCard
-                                        data={order.orders}
-                                        key={i}
+                                        key={order.id}
+                                        order={order}
                                         actions={
                                             [
-                                                <Button onClick={() => this.handleClickOpen(i)}>付款</Button>,
-                                                <Button onClick={() => this.handleCancelOrder(i)}>取消订单</Button>
+                                                <Button key={0} onClick={() => this.handleClickOpen(i)}>付款</Button>,
+                                                <Button key={1} onClick={() => this.handleCancelOrder(i)}>取消订单</Button>
                                             ]
                                         }
                                     />
@@ -148,38 +149,42 @@ class OrderProcessingPage extends React.Component {
                         }
                     </Grid>
                     <Grid item xs>
-                        <Paper className={classes.paper}>待制作订单</Paper>
+                        <Paper className={classes.paper}>待制作订单 ({paidOrders.length})</Paper>
                         {
-                            paidOrder
-                                .map((order, i) => (
+                            paidOrders
+                                .map(order => (
                                     <OrderCard
-                                        data={order.orders}
+                                        key={order.id}
+                                        order={order}
                                         actions={
                                             [
-                                                <Button onClick={() => this.handleFinishOrder(i)}>完成</Button>,
-                                                <Button>退款</Button>
+                                                <Button key={0} onClick={() => dispatch(updateOrderStatus({
+                                                    id: order.id,
+                                                    status: 'FINISHED'
+                                                }))}>完成</Button>,
+                                                <Button key={1}>退款</Button>
                                             ]
                                         }
                                     />
                                 ))
                         }
                     </Grid>
-                    <Grid item xs>
-                        <Paper className={classes.paper}>已完成订单</Paper>
-                        {
-                            finishedOrder
-                                .map((order, i) => (
-                                    <OrderCard
-                                        data={order.orders}
-                                        actions={
-                                            [
-                                                <Button onClick={() => this.handleRevokeOrder(i)}>撤销</Button>
-                                            ]
-                                        }
-                                    />
-                                ))
-                        }
-                    </Grid>
+                    {/*<Grid item xs>*/}
+                    {/*<Paper className={classes.paper}>已完成订单</Paper>*/}
+                    {/*{*/}
+                    {/*finishedOrder*/}
+                    {/*.map((order, i) => (*/}
+                    {/*<OrderCard*/}
+                    {/*data={order}*/}
+                    {/*actions={*/}
+                    {/*[*/}
+                    {/*<Button onClick={() => this.handleRevokeOrder(i)}>撤销</Button>*/}
+                    {/*]*/}
+                    {/*}*/}
+                    {/*/>*/}
+                    {/*))*/}
+                    {/*}*/}
+                    {/*</Grid>*/}
                     <PaymentSelect
                         selectedValue={this.state.selectedValue}
                         open={this.state.open}
@@ -199,11 +204,17 @@ class OrderProcessingPage extends React.Component {
     }
 }
 
-const selector = (state) => ({
-    order: state.orders.items,
-    paidOrder: state.orders.paidItems,
-    finishedOrder: state.orders.finishedItems,
-    members: state.members.member,
-});
+const selector = (state) => {
+    let orders = Object.values(state.repo.orders);
+    let newOrders = orders.filter(order => order.status === 'NEW');
+    let paidOrders = orders.filter(order => order.status === 'PAID');
+    let finishedOrders = orders.filter(order => order.status === 'FINISHED');
+    return {
+        orders,
+        newOrders,
+        paidOrders,
+        finishedOrders
+    };
+};
 
 export default withStyles(styles)(connect(selector)(OrderProcessingPage));

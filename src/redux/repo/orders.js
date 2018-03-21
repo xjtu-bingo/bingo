@@ -24,6 +24,8 @@ const reducer = (state = {}, action) => {
     switch (action.type) {
         case LOAD:
             return Object.assign({}, state, mapId(action.payload));
+        case CREATE:
+            return Object.assign({}, state, {[action.payload.id]: action.payload});
         default:
             return state;
     }

@@ -26,42 +26,32 @@ const styles = theme => ({
     },
 });
 
-class OrderCard extends React.Component {
-    render() {
-        const {classes, data, actions} = this.props;
-        return (
-            <Card className={classes.card}>
-                <CardHeader
-                    avatar={
-                        <Avatar className={classes.avatar}>
-                            匿
-                        </Avatar>
-                    }
-                    title="会员名"
-                    subheader="订单时间"
-                />
-                <CardContent>
-                    <OrderedDetailTable data={data}/>
-                </CardContent>
-                <CardActions>{actions}</CardActions>
-            </Card>
-        );
+const OrderCard = ({classes, order, actions}) => {
+    let member = order.member;
+    let avatar, title;
+    if (member) {
+        avatar = member.name.slice(0, 1);
+        title = member.name;
+    } else {
+        avatar = '匿';
+        title = '订单';
     }
-}
+    return (
+        <Card className={classes.card}>
+            <CardHeader
+                avatar={
+                    <Avatar className={classes.avatar}>{avatar}</Avatar>
+                }
+                title={title}
+                subheader={order.date}
+            />
+            <CardContent>
+                <OrderedDetailTable data={order.details}/>
+            </CardContent>
+            <CardActions>{actions}</CardActions>
+        </Card>
+    );
+};
 
-const Order = ({classes, order}) => (
-    <Card className={classes.card}>
-        <CardHeader
-            avatar={
-                <Avatar className={classes.avatar}>匿</Avatar>
-            }
-            title={order.member}
-            subheader={order.date}
-        />
-        <CardContent>
-            <OrderedDetailTable data={order.details}/>
-        </CardContent>
-    </Card>
-);
 
 export default withStyles(styles)(OrderCard);

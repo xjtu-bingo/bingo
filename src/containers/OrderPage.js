@@ -8,6 +8,7 @@ import SnackBar from '../components/SnackBar'
 import {connect} from "react-redux";
 import {decOrderProduct, delOrderProduct, incOrderProduct, newOrder} from "../redux/order";
 import {Delete, Send} from "material-ui-icons";
+import {createOrder} from "../redux/mutations";
 
 const styles = theme => ({
     root: {
@@ -80,14 +81,13 @@ class OrderPage extends React.Component {
             <div>
                 <Button variant="raised" color="primary" className={classes.action}
                         onClick={() => {
-                            dispatch({
-                                type: "NEW_ORDER",
-                                payload: {
-                                    orders: order,
-                                    total: order.reduce((a, b) => a + b.amount * b.price, 0)
-                                },
-                            });
                             dispatch(newOrder());
+                            dispatch(createOrder({
+                                memberId: null,
+                                details: order,
+                                total: order.reduce((a, b) => a + b.amount * b.price, 0),
+                                note: ''
+                            }));
                         }}>
                     <Send/>
                     确定下单
