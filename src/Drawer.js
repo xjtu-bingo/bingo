@@ -25,6 +25,7 @@ import OrderProcessingPage from './containers/OrderProcessingPage'
 import {connect} from "react-redux";
 import OrderPage from './containers/OrderPage'
 import NavigateItem from "./components/NavigateItem";
+import {isNavigationExpanded, navigate} from "./redux/switches";
 
 
 const data = [[{name: "星冰乐", price: 10, amount: 2}, {name: "keke", price: 20, amount: 3}], [{
@@ -107,46 +108,9 @@ const styles = theme => ({
 });
 
 class MiniDrawer extends React.Component {
-    state = {
-        open: false,
-        page: 1,
-    };
-
-    handleDrawerOpen = () => {
-        this.setState({open: true});
-    };
-
-    handleDrawerClose = () => {
-        this.setState({open: false});
-    };
-
-    handleOrderProcessingPageChange = () => {
-        this.setState({
-            page: 0,
-        })
-    };
-    handleOrderPageChange = () => {
-        this.setState({
-            page: 1,
-        })
-    };
-
-    handleMemberPageChange = () => {
-        this.setState({
-            page: 2,
-        })
-    };
-
-    handleManufacturingMethodPageChange = () => {
-        this.setState({
-            page: 3,
-        })
-    };
 
     render() {
-        const {classes, theme, badgeCount} = this.props;
-        const {open} = this.state;
-        // console.log(paidOrder);
+        const {classes, theme, badgeCount, dispatch, page, open} = this.props;
 
         const badge = (
             <Badge className={classes.badge}
@@ -167,7 +131,7 @@ class MiniDrawer extends React.Component {
                             <IconButton
                                 color="inherit"
                                 aria-label="open drawer"
-                                onClick={this.handleDrawerOpen}
+                                onClick={() => dispatch(isNavigationExpanded.setTrue())}
                                 className={classNames(classes.menuButton, open && classes.hide)}
                             >
                                 <MenuIcon/>
@@ -187,20 +151,20 @@ class MiniDrawer extends React.Component {
                     >
                         <div className={classes.drawerInner}>
                             <div className={classes.drawerHeader}>
-                                <IconButton onClick={this.handleDrawerClose}>
+                                <IconButton onClick={() => dispatch(isNavigationExpanded.setFalse())}>
                                     {theme.direction === 'rtl' ? <ChevronRightIcon/> : <ChevronLeftIcon/>}
                                 </IconButton>
                             </div>
                             <Divider/>
                             <List>
-                                <NavigateItem text="待处理订单" icon={badge} onClick={this.handleOrderProcessingPageChange}/>
-                                <NavigateItem text="点单" icon={<CafeIcon/>} onClick={this.handleOrderPageChange}/>
-                                <NavigateItem text="品阁会员" icon={<MemberIcon/>} onClick={this.handleMemberPageChange}/>
+                                <NavigateItem text="待处理订单" icon={badge} onClick={() => dispatch(navigate(1))}/>
+                                <NavigateItem text="点单" icon={<CafeIcon/>} onClick={() => dispatch(navigate(2))}/>
+                                <NavigateItem text="品阁会员" icon={<MemberIcon/>} onClick={() => dispatch(navigate(3))}/>
                             </List>
                             <Divider/>
                             <List>
-                                <NavigateItem text="制作方法" icon={<CookbookIcon/>}
-                                              onClick={this.handleManufacturingMethodPageChange}/>
+                                <NavigateItem text="制作方法" disabled icon={<CookbookIcon/>}
+                                              onClick={() => dispatch(navigate(4))}/>
                                 <NavigateItem text="计时器" disabled icon={<AlarmIcon/>}/>
                             </List>
                             <Divider/>
@@ -214,10 +178,10 @@ class MiniDrawer extends React.Component {
                         </div>
                     </Drawer>
                     <div className={classes.content}>
-                        {this.state.page === 0 ? <OrderProcessingPage/> : null}
-                        {this.state.page === 1 ? <OrderPage/> : null}
-                        {this.state.page === 2 ? <MemberPage/> : null}
-                        {this.state.page === 3 ? <ManufacturingMethodPage/> : null}
+                        {page === 1 ? <OrderProcessingPage/> : null}
+                        {page === 2 ? <OrderPage/> : null}
+                        {page === 3 ? <MemberPage/> : null}
+                        {page === 4 ? <ManufacturingMethodPage/> : null}
                     </div>
                 </div>
             </div>
@@ -226,7 +190,9 @@ class MiniDrawer extends React.Component {
 }
 
 const selector = (state) => ({
-    badgeCount: Object.values(state.repo.orders).filter(order => order.status === 'NEW' || order.status === 'PAID').length
+    badgeCount: Object.values(state.repo.orders).filter(order => order.status === 'NEW' || order.status === 'PAID').length,
+    page: state.switches.navigate,
+    open: state.switches.isNavigationExpanded
 });
 
 export default withStyles(styles, {withTheme: true})(connect(selector)(MiniDrawer));

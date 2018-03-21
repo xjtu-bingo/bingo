@@ -33,7 +33,7 @@ class ControlledExpansionPanels extends Component {
         return (
             <div className={classes.root}>
                 <Grid container>
-                    <Grid xs={6} sm={6}>
+                    <Grid item xs={6} sm={6}>
                         <ExpansionPanel heading="奶茶" secondaryHeading="台式奶茶">
                             <ol>
                                 <li>175ml红茶+100ml植脂末奶+10ml果糖（一下）+125ml热水或冰</li>
@@ -78,7 +78,7 @@ class ControlledExpansionPanels extends Component {
                             </ol>
                         </ExpansionPanel>
                     </Grid>
-                    <Grid xs={6} sm={6}>
+                    <Grid item xs={6} sm={6}>
                         <MothodPaper category="台式（原味）奶绿" >
                             <ol>
                                 <li>200ml绿茶+100ml植脂末奶+10ml果糖（一下）+100ml热水</li>

@@ -10,6 +10,8 @@ import {put, takeEvery, takeLatest} from 'redux-saga/effects';
 import {CREATE_ORDER} from "./mutations";
 import query from "../query";
 import {createOrder, loadOrders} from "./repo/orders";
+import {loadMembers} from "./repo/members";
+import switches from "./switches";
 
 // Action Types
 export const INIT = 'bingo/INIT';
@@ -24,6 +26,7 @@ const reducer = combineReducers({
     members,
     repo,
     order,
+    switches,
 });
 
 const sagas = saga();
@@ -45,11 +48,12 @@ sagas.run(function* () {
         yield put(createOrder(data.createOrder));
     });
     yield takeEvery(INIT, function* () {
-        const res = yield query('query { products(limit: 60) {id name price type} orders { id date status details { name price amount} member { id name } total }}');
+        const res = yield query('query { products(limit: 60) {id name price type} orders { id date status details { name price amount} member { id name } total } members { id name number }}');
         const json = yield res.json();
         const data = json.data;
         yield put(loadProducts(data.products));
         yield put(loadOrders(data.orders));
+        yield put(loadMembers(data.members));
     });
 });
 
