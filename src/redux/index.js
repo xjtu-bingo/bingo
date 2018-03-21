@@ -11,7 +11,7 @@ import {CREATE_ORDER} from "./mutations";
 import query from "../query";
 import {createOrder, loadOrders} from "./repo/orders";
 import {loadMembers} from "./repo/members";
-import switches from "./switches";
+import switches, {appNavigation, navigate} from "./switches";
 
 // Action Types
 export const INIT = 'bingo/INIT';
@@ -54,6 +54,7 @@ sagas.run(function* () {
         yield put(loadProducts(data.products));
         yield put(loadOrders(data.orders));
         yield put(loadMembers(data.members));
+        yield put(appNavigation.setter(1))
     });
 });
 

@@ -3,30 +3,28 @@
  */
 import {combineReducers} from "redux";
 
-const BooleanSwitch = type => ({
+const NumberSwitch = type => ({
     type,
     setter: payload => ({type, payload}),
-    setTrue: () => ({type, payload: true}),
-    setFalse: () => ({type, payload: false}),
     reducer: (state = false, action) => action.type === type ? action.payload : state
 });
 
+
+const BooleanSwitch = type => ({
+    type,
+    setter: payload => ({type, payload}),
+    reducer: (state = false, action) => action.type === type ? action.payload : state,
+    setTrue: () => ({type, payload: true}),
+    setFalse: () => ({type, payload: false}),
+});
+
 export const isNavigationExpanded = BooleanSwitch('bingo/switches/NavigationExpanded');
-
-const NAVIGATE = 'bingo/switches/NAVIGATE';
-
-export const navigate = (page) => ({type: NAVIGATE, payload: page});
-
-const reducer = (state = 0, action) => {
-    switch (action.type) {
-        case NAVIGATE:
-            return action.payload;
-        default:
-            return state;
-    }
-};
-
+export const isMemberSignUpOpen = BooleanSwitch('bingo/switches/IS_MEMBER_SIGN_UP_OPEN');
+export const isMemberTopUpOpen = BooleanSwitch('bingo/switches/IS_MEMBER_TOP_UP_OPEN');
+export const appNavigation = NumberSwitch('bingo/switches/APP_NAVIGATION');
 export default combineReducers({
-    navigate: reducer,
-    isNavigationExpanded: isNavigationExpanded.reducer
+    isNavigationExpanded: isNavigationExpanded.reducer,
+    isMemberSignUpOpen: isMemberSignUpOpen.reducer,
+    isMemberTopUpOpen: isMemberTopUpOpen.reducer,
+    appNavigation: appNavigation.reducer
 });

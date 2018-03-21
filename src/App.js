@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import Drawer from './Drawer';
+import AppFramework from './containers/AppFramework';
 import {createMuiTheme, MuiThemeProvider} from "material-ui/styles";
 import purple from 'material-ui/colors/purple';
 import red from 'material-ui/colors/red';
@@ -24,7 +24,7 @@ class App extends Component {
             <Provider store={store}>
                 <MuiThemeProvider theme={theme}>
                     <div className="full-height">
-                        <Drawer/>
+                        <AppFramework/>
                     </div>
                 </MuiThemeProvider>
             </Provider>
