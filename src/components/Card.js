@@ -26,14 +26,14 @@ const styles = theme => ({
     },
 });
 
-class SimpleCard extends React.Component {
+class OrderCard extends React.Component {
     render() {
         const {classes, data, actions} = this.props;
         return (
             <Card className={classes.card}>
                 <CardHeader
                     avatar={
-                        <Avatar aria-label="Recipe" className={classes.avatar}>
+                        <Avatar className={classes.avatar}>
                             匿
                         </Avatar>
                     }
@@ -49,5 +49,19 @@ class SimpleCard extends React.Component {
     }
 }
 
+const Order = ({classes, order}) => (
+    <Card className={classes.card}>
+        <CardHeader
+            avatar={
+                <Avatar className={classes.avatar}>匿</Avatar>
+            }
+            title={order.member}
+            subheader={order.date}
+        />
+        <CardContent>
+            <OrderDetail data={order.details}/>
+        </CardContent>
+    </Card>
+);
 
-export default withStyles(styles)(SimpleCard);
+export default withStyles(styles)(OrderCard);
