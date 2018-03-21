@@ -23,7 +23,7 @@ import Badge from 'material-ui/Badge'
 import ManufacturingMethodPage from './ManufacturingMethodPage'
 import OrderProcessingPage from './OrderProcessingPage'
 import {connect} from "react-redux";
-import Stepper from './OrderPage'
+import OrderPage from './containers/OrderPage'
 import NavigateItem from "./components/NavigateItem";
 
 
@@ -216,7 +216,7 @@ class MiniDrawer extends React.Component {
                     <div className={classes.content}>
                         {this.state.page === 0 ?
                             <OrderProcessingPage untreatedOrder={data} paidOrder={data} finishedOrder={data}/> : null}
-                        {this.state.page === 1 ? <Stepper/> : null}
+                        {this.state.page === 1 ? <OrderPage/> : null}
                         {this.state.page === 2 ? <MemberPage/> : null}
                         {this.state.page === 3 ? <ManufacturingMethodPage/> : null}
                     </div>

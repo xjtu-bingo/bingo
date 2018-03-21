@@ -4,7 +4,7 @@ import List, {ListItem, ListItemText,} from 'material-ui/List';
 import Grid from 'material-ui/Grid';
 import Typography from 'material-ui/Typography';
 import OrderProductItem from "./components/OrderProductItem";
-import {Chip} from "material-ui";
+import MenuCategoryChipArray from "./components/MenuCategoryChipArray";
 
 const styles = theme => ({
     root: {
@@ -18,22 +18,6 @@ const styles = theme => ({
         margin: `${theme.spacing.unit * 4}px 0 ${theme.spacing.unit * 2}px`,
     },
 });
-
-const MenuCategoryChipArray = withStyles(theme => ({
-    root: {
-        display: 'flex',
-        justifyContent: 'center',
-        flexWrap: 'wrap',
-        padding: theme.spacing.unit / 2,
-    },
-    chip: {
-        margin: theme.spacing.unit / 2,
-    },
-}))(({data, onClick, classes}) => (
-    <div className={classes.root}>
-        {data.map((v, i) => (<Chip className={classes.chip} key={i} label={v} onClick={() => onClick(i)}/>))}
-    </div>
-));
 
 
 class InteractiveList extends React.Component {

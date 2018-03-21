@@ -2,10 +2,11 @@ import React from 'react';
 import {withStyles} from 'material-ui/styles';
 import Button from 'material-ui/Button';
 import {Grid, Paper} from "material-ui";
-import OrderDetail from './OrderDetailTable'
+import OrderDetail from '../OrderDetailTable'
 import Menu from './Menu';
-import SnackBar from './components/SnackBar'
+import SnackBar from '../components/SnackBar'
 import {connect} from "react-redux";
+import {decOrderProduct, delOrderProduct, incOrderProduct, newOrder} from "../redux/order";
 
 const styles = theme => ({
     root: {
@@ -29,7 +30,7 @@ const styles = theme => ({
     },
     resetContainer: {
         marginTop: 0,
-        padding: theme.spacing.unit * 3, // TODO: See TODO note on Stepper
+        padding: theme.spacing.unit * 3, // TODO: See TODO note on OrderPage
     },
     formControl: {
         marginTop: '2em',
@@ -43,9 +44,6 @@ const styles = theme => ({
 class OrderPage extends React.Component {
     state = {
         orderCreatedSnackBarOpen: false,
-        order: {
-            items: []
-        }
     };
 
     handleOrderAndSnackBar = () => {
@@ -65,27 +63,6 @@ class OrderPage extends React.Component {
         })
     };
 
-    handleAmountChange = (i, j, k) => {
-        let {menu, order, dispatch} = this.props;
-        let product = menu[i].items[j];
-        let ith = order.findIndex((v, ii) => v.name === product.name);
-        let nextOrder;
-        if (ith === -1) {
-            nextOrder = [...order, {...product, amount: k}];
-        }
-        else if (k === 0) {
-            nextOrder = [...order];
-            nextOrder.splice(ith, 1);
-        } else {
-            nextOrder = [...order];
-            nextOrder[ith] = {...order[ith], amount: k};
-        }
-        dispatch({
-            type: "ORDER/EDIT",
-            payload: nextOrder
-        })
-
-    };
 
     handleOrderCanceled = () => {
         this.props.dispatch({
@@ -96,26 +73,41 @@ class OrderPage extends React.Component {
     ;
 
     render() {
-        const {classes, menu, order} = this.props;
+        const {classes, products, order, dispatch} = this.props;
         return (
             <div className={classes.root}>
                 <Grid container>
                     <Grid item xs>
                         <Paper>
-                            <Menu data={menu} handleAmountChange={this.handleAmountChange}/>
+                            <Menu products={products}
+                                  onProductClick={product => dispatch(incOrderProduct(product.id))}/>
                         </Paper>
                     </Grid>
-                    <Grid item xs={4}>
+                    <Grid item xs={8}>
                         <Paper>
                             <OrderDetail
-                                data={order}/>
+                                data={order}
+                                onIncProduct={product => dispatch(incOrderProduct(product.id))}
+                                onDecProduct={product => dispatch(decOrderProduct(product.id))}
+                                onDelProduct={product => dispatch(delOrderProduct(product.id))}
+                                onDelete={() => dispatch(newOrder())}
+                            />
                             {
                                 order.length > 0 ?
                                     <div>
                                         <Button variant="raised" color="primary" className={classes.action}
-                                                onClick={this.handleOrderAndSnackBar}>确定下单</Button>
+                                                onClick={() => {
+                                                    dispatch({
+                                                        type: "NEW_ORDER",
+                                                        payload: {
+                                                            orders: order,
+                                                            total: order.reduce((a, b) => a + b.amount * b.price, 0)
+                                                        },
+                                                    });
+                                                    dispatch(newOrder());
+                                                }}>确定下单</Button>
                                         <Button variant="raised" color="secondary" className={classes.action}
-                                                onClick={this.handleOrderCanceled}>取消订单</Button>
+                                                onClick={() => dispatch(newOrder())}>取消订单</Button>
                                     </div> : null
                             }
 
@@ -171,10 +163,18 @@ function foldMenu(tempMenu, order) {
     return FoldMenu;
 }
 
-const selector = (state) => ({
-    menu: foldMenu(state.products.items, state.orders.curItems),
-    order: state.orders.curItems,
+function ToArray(obj) {
+    let res = [];
+    for (let key in obj) {
+        res.push(obj[key]);
+    }
+    return res;
+}
 
+const selector = (state) => ({
+    menu: foldMenu(ToArray(state.repo.products.items), state.orders.curItems),
+    order: Object.keys(state.order).map(id => ({...state.repo.products[id], amount: state.order[id]})),
+    products: state.repo.products
 });
 
-export default withStyles(styles)(connect(selector)(OrderPage));
+export default connect(selector)(withStyles(styles)(OrderPage));
