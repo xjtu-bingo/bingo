@@ -1,7 +1,7 @@
 import React from 'react';
 import {withStyles} from 'material-ui/styles';
 import Card, {CardActions, CardContent, CardHeader} from 'material-ui/Card';
-import OrderDetail from "../OrderDetailTable"
+import {OrderedDetailTable} from "./OrderDetailTable"
 import {Avatar} from "material-ui";
 
 
@@ -41,7 +41,7 @@ class OrderCard extends React.Component {
                     subheader="订单时间"
                 />
                 <CardContent>
-                    <OrderDetail data={data}/>
+                    <OrderedDetailTable data={data}/>
                 </CardContent>
                 <CardActions>{actions}</CardActions>
             </Card>
@@ -59,7 +59,7 @@ const Order = ({classes, order}) => (
             subheader={order.date}
         />
         <CardContent>
-            <OrderDetail data={order.details}/>
+            <OrderedDetailTable data={order.details}/>
         </CardContent>
     </Card>
 );

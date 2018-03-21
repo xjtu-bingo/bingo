@@ -2,7 +2,7 @@ import React from 'react';
 import {withStyles} from 'material-ui/styles';
 import Paper from 'material-ui/Paper';
 import Grid from 'material-ui/Grid';
-import OrderCard from './components/Card'
+import OrderCard from './components/OrderCard'
 import PaymentSelect from "./components/PaymentSelect"
 import {Button} from "material-ui";
 import {connect} from "react-redux";

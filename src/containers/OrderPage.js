@@ -2,11 +2,12 @@ import React from 'react';
 import {withStyles} from 'material-ui/styles';
 import Button from 'material-ui/Button';
 import {Grid, Paper} from "material-ui";
-import OrderDetail from '../OrderDetailTable'
+import OrderDetail from '../components/OrderDetailTable'
 import Menu from './Menu';
 import SnackBar from '../components/SnackBar'
 import {connect} from "react-redux";
 import {decOrderProduct, delOrderProduct, incOrderProduct, newOrder} from "../redux/order";
+import {Delete, Send} from "material-ui-icons";
 
 const styles = theme => ({
     root: {
@@ -74,6 +75,30 @@ class OrderPage extends React.Component {
 
     render() {
         const {classes, products, order, dispatch} = this.props;
+
+        const appendix = (
+            <div>
+                <Button variant="raised" color="primary" className={classes.action}
+                        onClick={() => {
+                            dispatch({
+                                type: "NEW_ORDER",
+                                payload: {
+                                    orders: order,
+                                    total: order.reduce((a, b) => a + b.amount * b.price, 0)
+                                },
+                            });
+                            dispatch(newOrder());
+                        }}>
+                    <Send/>
+                    确定下单
+                </Button>
+                <Button variant="raised" color="secondary" className={classes.action}
+                        onClick={() => dispatch(newOrder())}>
+                    <Delete/>
+                    取消订单
+                </Button>
+            </div>
+        );
         return (
             <div className={classes.root}>
                 <Grid container>
@@ -92,25 +117,7 @@ class OrderPage extends React.Component {
                                 onDelProduct={product => dispatch(delOrderProduct(product.id))}
                                 onDelete={() => dispatch(newOrder())}
                             />
-                            {
-                                order.length > 0 ?
-                                    <div>
-                                        <Button variant="raised" color="primary" className={classes.action}
-                                                onClick={() => {
-                                                    dispatch({
-                                                        type: "NEW_ORDER",
-                                                        payload: {
-                                                            orders: order,
-                                                            total: order.reduce((a, b) => a + b.amount * b.price, 0)
-                                                        },
-                                                    });
-                                                    dispatch(newOrder());
-                                                }}>确定下单</Button>
-                                        <Button variant="raised" color="secondary" className={classes.action}
-                                                onClick={() => dispatch(newOrder())}>取消订单</Button>
-                                    </div> : null
-                            }
-
+                            {order.length > 0 ? appendix : null}
                         </Paper>
                     </Grid>
                 </Grid>
