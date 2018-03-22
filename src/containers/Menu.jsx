@@ -5,13 +5,13 @@ import ProductsTable from "../components/ProductsTable";
 
 const styles = theme => ({});
 
-const getCategories = (products) => {
-    let t = new Set();
-    for (let id in products) {
-        t.add(products[id].type);
-    }
-    return Array.from(t);
-};
+// const getCategories = (products) => {
+//     let t = new Set();
+//     for (let id in products) {
+//         t.add(products[id].type);
+//     }
+//     return Array.from(t);
+// };
 
 const getProducts = (products) => {
     let res = [];

@@ -125,7 +125,7 @@ class OrderProcessingPage extends React.Component {
     };
 
     render() {
-        const {classes, orders, newOrders, paidOrders, finishedOrders, dispatch} = this.props;
+        const {classes, newOrders, paidOrders, dispatch} = this.props;
 
         return (
             <div className={classes.root}>
@@ -140,8 +140,14 @@ class OrderProcessingPage extends React.Component {
                                         order={order}
                                         actions={
                                             [
-                                                <Button key={0} onClick={() => this.handleClickOpen(i)}>付款</Button>,
-                                                <Button key={1} onClick={() => this.handleCancelOrder(i)}>取消订单</Button>
+                                                <Button key={0} onClick={() => dispatch(updateOrderStatus({
+                                                    id: order.id,
+                                                    status: 'PAID'
+                                                }))}>付款</Button>,
+                                                <Button key={1} onClick={() => dispatch(updateOrderStatus({
+                                                    id: order.id,
+                                                    status: 'CANCELED'
+                                                }))}>取消订单</Button>
                                             ]
                                         }
                                     />
@@ -162,7 +168,10 @@ class OrderProcessingPage extends React.Component {
                                                     id: order.id,
                                                     status: 'FINISHED'
                                                 }))}>完成</Button>,
-                                                <Button key={1}>退款</Button>
+                                                <Button key={1} onClick={() => dispatch(updateOrderStatus({
+                                                    id: order.id,
+                                                    status: 'NEW'
+                                                }))}>退款</Button>
                                             ]
                                         }
                                     />

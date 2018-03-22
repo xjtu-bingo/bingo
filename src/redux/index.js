@@ -7,11 +7,11 @@ import repo from './repo';
 import order, {newOrder} from "./order";
 import saga from "redux-saga";
 import {put, takeEvery, takeLatest} from 'redux-saga/effects';
-import {CREATE_ORDER} from "./mutations";
+import {CREATE_ORDER, UPDATE_ORDER_STATUS} from "./mutations";
 import query from "../query";
-import {createOrder, loadOrders} from "./repo/orders";
+import {createOrder, loadOrders, updateOrder} from "./repo/orders";
 import {loadMembers} from "./repo/members";
-import switches, {appNavigation, navigate} from "./switches";
+import switches, {appNavigation} from "./switches";
 
 // Action Types
 export const INIT = 'bingo/INIT';
@@ -57,6 +57,12 @@ sagas.run(function* () {
         yield put(loadMembers(data.members));
         yield put(appNavigation.setter(1))
     });
+    yield takeEvery(UPDATE_ORDER_STATUS, function* (action) {
+        const res = yield query('mutation ($id: ID!, $status: OrderStatus!) { updateOrderStatus (id: $id, status: $status) { id date status details { name price amount } member { id name } total } }', action.payload);
+        const json = yield res.json();
+        const data = json.data;
+        yield put(updateOrder(data.updateOrderStatus));
+    })
 });
 
 export default store;

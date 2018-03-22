@@ -26,6 +26,8 @@ const reducer = (state = {}, action) => {
             return Object.assign({}, state, mapId(action.payload));
         case CREATE:
             return Object.assign({}, state, {[action.payload.id]: action.payload});
+        case UPDATE:
+            return Object.assign({}, state, {[action.payload.id]: action.payload});
         default:
             return state;
     }
