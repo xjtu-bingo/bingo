@@ -4,9 +4,8 @@ import {ButtonBase, Typography, withStyles} from "material-ui";
 const styles = theme => ({
     image: {
         position: 'relative',
-        marginLeft: 200,
-        marginTop: 100,
         height: 200,
+        margin: 20,
         [theme.breakpoints.down('sm')]: {
             width: '100% !important', // Overrides inline-style
             height: 100,
@@ -57,6 +56,7 @@ const styles = theme => ({
     imageTitle: {
         position: 'relative',
         padding: `${theme.spacing.unit * 2}px ${theme.spacing.unit * 4}px ${theme.spacing.unit + 6}px`,
+        backgroundColor: 'rgba(0, 0, 0, 0.5)'
     },
     imageMarked: {
         height: 3,

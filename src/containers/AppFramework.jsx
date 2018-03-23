@@ -10,7 +10,6 @@ import Divider from 'material-ui/Divider';
 import IconButton from 'material-ui/IconButton';
 import MenuIcon from 'material-ui-icons/Menu';
 import ChevronLeftIcon from 'material-ui-icons/ChevronLeft';
-import ChevronRightIcon from 'material-ui-icons/ChevronRight';
 import CafeIcon from "material-ui-icons/LocalCafe";
 import TimerIcon from 'material-ui-icons/Timer';
 import MemberIcon from 'material-ui-icons/CardMembership';
@@ -102,15 +101,15 @@ const styles = theme => ({
     },
 });
 
-const AppFramework = ({classes, theme, badgeCount, dispatch, page, open}) => {
+const AppFramework = ({classes, badgeCount, dispatch, open, content, title}) => {
 
-    const badge = (
+    const badge = badgeCount > 0 ? (
         <Badge className={classes.badge}
                badgeContent={badgeCount}
                color="primary">
             <TimerIcon/>
         </Badge>
-    );
+    ) : <TimerIcon/>;
 
     return (
         <div className={classes.root}>
@@ -129,7 +128,7 @@ const AppFramework = ({classes, theme, badgeCount, dispatch, page, open}) => {
                             <MenuIcon/>
                         </IconButton>
                         <Typography variant="title" color="inherit" noWrap>
-                            品阁咖啡屋
+                            {title}
                         </Typography>
                     </Toolbar>
                 </AppBar>
@@ -144,7 +143,7 @@ const AppFramework = ({classes, theme, badgeCount, dispatch, page, open}) => {
                     <div className={classes.drawerInner}>
                         <div className={classes.drawerHeader}>
                             <IconButton onClick={() => dispatch(isNavigationExpanded.setFalse())}>
-                                {theme.direction === 'rtl' ? <ChevronRightIcon/> : <ChevronLeftIcon/>}
+                                <ChevronLeftIcon/>
                             </IconButton>
                         </div>
                         <Divider/>
@@ -172,21 +171,25 @@ const AppFramework = ({classes, theme, badgeCount, dispatch, page, open}) => {
                     </div>
                 </Drawer>
                 <div className={classes.content}>
-                    {page === 1 ? <OrderProcessingPage/> : null}
-                    {page === 2 ? <OrderPage/> : null}
-                    {page === 3 ? <MemberPage/> : null}
-                    {page === 4 ? <ManufacturingMethodPage/> : null}
+                    {content}
                 </div>
             </div>
         </div>
     );
 };
 
+const titles = ["加载中", "待处理订单", "点单", "会员", "制作方法"];
+const sub = [null, <OrderProcessingPage/>, <OrderPage/>, <MemberPage/>, <ManufacturingMethodPage/>];
 
-const selector = (state) => ({
-    badgeCount: Object.values(state.repo.orders).filter(order => order.status === 'NEW' || order.status === 'PAID').length,
-    page: state.switches.appNavigation,
-    open: state.switches.isNavigationExpanded
-});
+const selector = (state) => {
+    const page = state.switches.appNavigation || 0;
+    return {
+        badgeCount: Object.values(state.repo.orders).filter(order => order.status === 'NEW' || order.status === 'PAID').length,
+        page,
+        open: state.switches.isNavigationExpanded,
+        title: `品阁咖啡屋 > ${titles[page]}`,
+        content: sub[page]
+    }
+};
 
 export default withStyles(styles, {withTheme: true})(connect(selector)(AppFramework));
