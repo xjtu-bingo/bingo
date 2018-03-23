@@ -12,7 +12,7 @@ export const DELETE_PRODUCT = 'bingo/mutations/DELETE_PRODUCT';
 
 const action = type => payload => ({type, payload});
 
-export const createMemeber = action(CREATE_MEMBER);
+export const createMember = action(CREATE_MEMBER);
 export const updateMember = action(UPDATE_MEMBER);
 export const updateMemberBalanceTopup = action(UPDATE_MEMBER_BALANCE_TOPUP);
 export const createOrder = action(CREATE_ORDER);

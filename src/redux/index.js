@@ -7,11 +7,11 @@ import repo from './repo';
 import order, {newOrder} from "./order";
 import saga from "redux-saga";
 import {put, takeEvery, takeLatest} from 'redux-saga/effects';
-import {CREATE_ORDER, UPDATE_ORDER_STATUS} from "./mutations";
+import {CREATE_MEMBER, CREATE_ORDER, UPDATE_ORDER_STATUS} from "./mutations";
 import query from "../query";
 import {createOrder, loadOrders, updateOrder} from "./repo/orders";
-import {loadMembers} from "./repo/members";
-import switches, {appNavigation} from "./switches";
+import {createMember, loadMembers} from "./repo/members";
+import switches, {appNavigation, isMemberSignUpOpen} from "./switches";
 
 // Action Types
 export const INIT = 'bingo/INIT';
@@ -62,7 +62,14 @@ sagas.run(function* () {
         const json = yield res.json();
         const data = json.data;
         yield put(updateOrder(data.updateOrderStatus));
-    })
+    });
+    yield takeEvery(CREATE_MEMBER, function* (action) {
+        const res = yield query('mutation ($name: String!, $abbr: String, $gender: Gender, $birthday: String, $tel: String, $number: String!, $balance: Float!) { createMember (name: $name, abbr: $abbr, gender: $gender, birthday: $birthday, tel: $tel, number: $number, balance: $balance) { id name number } }', action.payload);
+        const json = yield res.json();
+        const data = json.data;
+        yield put(createMember(data.createMember));
+        yield put(isMemberSignUpOpen.setFalse());
+    });
 });
 
 export default store;

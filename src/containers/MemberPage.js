@@ -6,6 +6,7 @@ import {isMemberSignUpOpen, isMemberTopUpOpen} from "../redux/switches";
 import {Modal, Typography} from "material-ui";
 import MemberSignUpForm from "../components/MemberSignUpForm";
 import MemberTopUpForm from "../components/MemberTopUpForm";
+import {createMember} from "../redux/mutations";
 
 const styles = theme => ({
     root: {
@@ -17,7 +18,7 @@ const styles = theme => ({
     },
     paper: {
         position: 'absolute',
-        width: theme.spacing.unit * 50,
+        width: theme.spacing.unit * 60,
         backgroundColor: theme.palette.background.paper,
         boxShadow: theme.shadows[5],
         padding: theme.spacing.unit * 4,
@@ -50,7 +51,7 @@ const MemberPage = ({classes, dispatch, isSignUp, isTopUp}) => {
                     transform: `translate(-${50}%, -${50}%)`,
                 }} className={classes.paper}>
                     <Typography variant="display1">会员注册</Typography>
-                    <MemberSignUpForm/>
+                    <MemberSignUpForm onSubmit={member => dispatch(createMember(member))}/>
                 </div>
             </Modal>
             <Modal
