@@ -3,12 +3,14 @@
  */
 import {combineReducers} from "redux";
 
-const NumberSwitch = type => ({
+const ScalarSwitch = init => type => ({
     type,
     setter: payload => ({type, payload}),
-    reducer: (state = false, action) => action.type === type ? action.payload : state
+    reducer: (state = init, action) => action.type === type ? action.payload : state
 });
 
+const NumberSwitch = ScalarSwitch(0);
+const StringSwitch = ScalarSwitch("");
 
 const BooleanSwitch = type => ({
     type,
@@ -22,9 +24,14 @@ export const isNavigationExpanded = BooleanSwitch('bingo/switches/NavigationExpa
 export const isMemberSignUpOpen = BooleanSwitch('bingo/switches/IS_MEMBER_SIGN_UP_OPEN');
 export const isMemberTopUpOpen = BooleanSwitch('bingo/switches/IS_MEMBER_TOP_UP_OPEN');
 export const appNavigation = NumberSwitch('bingo/switches/APP_NAVIGATION');
+export const TopUpMemberId = StringSwitch('bingo/switches/TOP_UP_MEMBER_ID');
+export const TopUpAmount = NumberSwitch('bingo/switches/TOP_UP_AMOUNT');
+
 export default combineReducers({
     isNavigationExpanded: isNavigationExpanded.reducer,
     isMemberSignUpOpen: isMemberSignUpOpen.reducer,
     isMemberTopUpOpen: isMemberTopUpOpen.reducer,
-    appNavigation: appNavigation.reducer
+    appNavigation: appNavigation.reducer,
+    topUpMemberId: TopUpMemberId.reducer,
+    topUpAmount: TopUpAmount.reducer,
 });

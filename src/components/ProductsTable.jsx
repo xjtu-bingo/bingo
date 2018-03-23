@@ -5,7 +5,7 @@ const ProductsBody = ({products, onProductClick}) => (
     <TableBody>
         {
             products.map(product => (
-                <TableRow key={product.id} hover={true} onClick={() => onProductClick && onProductClick(product)}>
+                <TableRow key={product.id} hover onClick={() => onProductClick && onProductClick(product)}>
                     <TableCell>{product.type}</TableCell>
                     <TableCell>{product.name}</TableCell>
                     <TableCell numeric>{product.price}</TableCell>

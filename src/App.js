@@ -6,12 +6,13 @@ import red from 'material-ui/colors/red';
 import brown from "material-ui/colors/brown";
 import {Provider} from "react-redux";
 import store from './redux';
+import MemberTopUpPage from "./containers/MemberTopUpPage";
 
 const theme = createMuiTheme({
     palette: {
         primary: {
             ...red,
-            500: 'rgb(163, 46, 10)'
+            500: 'rgb(142, 61, 76)'
         },
         secondary: brown,
         error: purple
@@ -25,6 +26,7 @@ class App extends Component {
                 <MuiThemeProvider theme={theme}>
                     <div className="full-height">
                         <AppFramework/>
+                        <MemberTopUpPage/>
                     </div>
                 </MuiThemeProvider>
             </Provider>
