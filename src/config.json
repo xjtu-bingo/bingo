@@ -1,5 +1,16 @@
 {
   "server": {
     "endpoint": "http://120.25.205.159:3000"
+  },
+  "search": {
+    "delay": 500
+  },
+  "initial": {
+    "members": 4000,
+    "products": 100,
+    "orders": 200
+  },
+  "theme": {
+    "primary": "rgb(142, 61, 76)"
   }
 }

@@ -13,6 +13,7 @@ import {createOrder, loadOrders, updateOrder} from "./repo/orders";
 import {createMember, loadMembers, updateMember} from "./repo/members";
 import switches, {appNavigation, isMemberSignUpOpen, isMemberTopUpOpen} from "./switches";
 import search, {complete, reset, START, start, UPDATE_KEY} from "./search";
+import * as config from "../config";
 
 // Action Types
 export const INIT = 'bingo/INIT';
@@ -52,7 +53,7 @@ sagas.run(function* () {
         yield put(newOrder())
     });
     yield takeLatest(INIT, function* () {
-        const res = yield query('query { products(limit: 60) {id name price type} orders (limit: 200) { id date status details { name price amount} member { id name } total } members (limit: 2000) { id name number abbr balance tel}}');
+        const res = yield query(`query { products(limit: ${config.initial.products}) {id name price type} orders (limit: ${config.initial.orders}) { id date status details { name price amount} member { id name } total } members (limit: ${config.initial.members}) { id name number abbr balance tel}}`);
         const json = yield res.json();
         const data = json.data;
         yield put(loadProducts(data.products));
@@ -75,7 +76,7 @@ sagas.run(function* () {
     });
     yield takeLatest(UPDATE_KEY, function* (action) {
         if (action.payload) {
-            yield delay(500);
+            yield delay(config.search.delay);
             yield put(start());
         } else {
             yield put(reset());

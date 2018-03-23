@@ -7,12 +7,13 @@ import brown from "material-ui/colors/brown";
 import {Provider} from "react-redux";
 import store from './redux';
 import MemberTopUpPage from "./containers/MemberTopUpPage";
+import * as config from "./config";
 
 const theme = createMuiTheme({
     palette: {
         primary: {
             ...red,
-            500: 'rgb(142, 61, 76)'
+            500: config.theme.primary
         },
         secondary: brown,
         error: purple
