@@ -40,7 +40,7 @@ const store = createStore(reducer,
 );
 
 sagas.run(function* () {
-    yield takeLatest(CREATE_ORDER, function* (action) {
+    yield takeEvery(CREATE_ORDER, function* (action) {
         let details = action.payload.details.map(item => ({name: item.name, price: item.price, amount: item.amount}));
         let res = yield query('mutation ($details: [OrderDetailInput!]!) { createOrder (details: $details) { id date status details { name price amount } } }', {details});
         let json = yield res.json();
@@ -48,7 +48,7 @@ sagas.run(function* () {
         yield put(createOrder(data.createOrder));
         yield put(newOrder())
     });
-    yield takeEvery(INIT, function* () {
+    yield takeLatest(INIT, function* () {
         const res = yield query('query { products(limit: 60) {id name price type} orders (limit: 200) { id date status details { name price amount} member { id name } total } members (limit: 2000) { id name number }}');
         const json = yield res.json();
         const data = json.data;
