@@ -1,11 +1,11 @@
 import * as React from "react";
-import {Button, Collapse, Grid, IconButton, LinearProgress, Modal, Tooltip, Typography, withStyles} from "material-ui";
+import {Collapse, Grid, IconButton, LinearProgress, Modal, Tooltip, withStyles} from "material-ui";
 import {connect} from "react-redux";
 import {IsSelectingMember, SelectedMemberId} from "../redux/switches";
 import {updateOrderMember} from "../redux/mutations";
 import SearchBar from "./SearchBar";
 import MemberTable from "../components/MemberTable";
-import {Delete, Done} from "material-ui-icons";
+import {Done} from "material-ui-icons";
 
 const styles = theme => ({
     paper: {
@@ -27,20 +27,6 @@ const MemberSelectingModal = ({classes, dispatch, open, order, isTyping, isCompl
         onClose={() => dispatch(IsSelectingMember.setFalse())}
     >
         <div className={classes.paper}>
-            {
-                order.member ?
-                    <div>
-                        <Typography>当前选择会员 {order.member.name} </Typography>
-                        <Button onClick={() => {
-                            dispatch(updateOrderMember({orderId: order.id, memberId: null}));
-                            dispatch(IsSelectingMember.setFalse());
-                        }}>
-                            <Delete/>
-                            清除已有选择
-                        </Button>
-                    </div>
-                    : null
-            }
             <Grid container>
                 <Grid item xs/>
                 <Grid item xs={6}>

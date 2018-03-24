@@ -20,6 +20,7 @@ import {createMember, loadMembers, updateMember} from "./repo/members";
 import switches, {appNavigation, isMemberSignUpOpen, isMemberTopUpOpen} from "./switches";
 import search, {complete, reset, START, start, UPDATE_KEY} from "./search";
 import * as config from "../config";
+import messages, {iMQ} from "./messages";
 
 // Action Types
 export const INIT = 'bingo/INIT';
@@ -36,6 +37,7 @@ const reducer = combineReducers({
     order,
     switches,
     search,
+    messages,
 });
 
 const sagas = saga();
@@ -71,13 +73,26 @@ sagas.run(function* () {
         const res = yield query('mutation ($id: ID!, $status: OrderStatus!) { updateOrderStatus (id: $id, status: $status) { id date status details { name price amount } member { id name balance } total } }', action.payload);
         const json = yield res.json();
         if (json.errors) {
-
+            const code = parseInt(json.errors[0].message);
+            const messages = [null, "用户余额不足", "不支持的订单状态转移"];
+            yield put(iMQ({type: 'ERROR', message: `${messages[code]}`}));
         } else {
             const data = json.data;
             const order = data.updateOrderStatus;
             yield put(updateOrder(order));
             if (order.member) {
                 yield put(updateMember(order.member));
+                if (order.status === 'PAID') {
+                    yield put(iMQ({
+                        type: 'INFO',
+                        message: `${order.member.name} 消费 ￥${order.total}，余额 ￥${order.member.balance}`
+                    }));
+                } else if (order.status === 'NEW') {
+                    yield put(iMQ({
+                        type: 'INFO',
+                        message: `${order.member.name} 退款 ￥${order.total}，余额 ￥${order.member.balance}`
+                    }));
+                }
             }
         }
     });

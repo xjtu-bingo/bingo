@@ -9,6 +9,7 @@ import store from './redux';
 import MemberTopUpPage from "./containers/MemberTopUpPage";
 import * as config from "./config";
 import MemberSelectingModal from "./containers/MemberSelectingModal";
+import MessageSnackbar from "./containers/MessageSnackbar";
 
 const theme = createMuiTheme({
     palette: {
@@ -30,6 +31,7 @@ class App extends Component {
                         <AppFramework/>
                         <MemberTopUpPage/>
                         <MemberSelectingModal/>
+                        <MessageSnackbar/>
                     </div>
                 </MuiThemeProvider>
             </Provider>
