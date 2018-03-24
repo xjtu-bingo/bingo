@@ -24,8 +24,13 @@ export const isNavigationExpanded = BooleanSwitch('bingo/switches/NavigationExpa
 export const isMemberSignUpOpen = BooleanSwitch('bingo/switches/IS_MEMBER_SIGN_UP_OPEN');
 export const isMemberTopUpOpen = BooleanSwitch('bingo/switches/IS_MEMBER_TOP_UP_OPEN');
 export const appNavigation = NumberSwitch('bingo/switches/APP_NAVIGATION');
+
 export const TopUpMemberId = StringSwitch('bingo/switches/TOP_UP_MEMBER_ID');
 export const TopUpAmount = NumberSwitch('bingo/switches/TOP_UP_AMOUNT');
+
+export const SelectedOrderId = StringSwitch('bingo/switches/SELECTED_ORDER_ID');
+export const SelectedMemberId = StringSwitch('bingo/switches/SELECTED_MEMBER_ID');
+export const IsSelectingMember = BooleanSwitch('bingo/switches/IS_SELECTING_MEMBER');
 
 export default combineReducers({
     isNavigationExpanded: isNavigationExpanded.reducer,
@@ -34,4 +39,7 @@ export default combineReducers({
     appNavigation: appNavigation.reducer,
     topUpMemberId: TopUpMemberId.reducer,
     topUpAmount: TopUpAmount.reducer,
+    selectedMemberId: SelectedMemberId.reducer,
+    isSelectingMember: IsSelectingMember.reducer,
+    selectedOrderId: SelectedOrderId.reducer,
 });

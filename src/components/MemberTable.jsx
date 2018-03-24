@@ -1,10 +1,7 @@
 import React from 'react';
 import Table, {TableBody, TableCell, TableHead, TableRow} from 'material-ui/Table';
-import {IconButton, Tooltip} from "material-ui";
-import {AttachMoney, Person} from "material-ui-icons";
 
-
-const MemberTable = ({data: members, onTopUp}) => (
+const MemberTable = ({data: members, getActions, getSummaryActions}) => (
     <Table>
         <TableHead>
             <TableRow>
@@ -24,16 +21,9 @@ const MemberTable = ({data: members, onTopUp}) => (
                         <TableCell>{item.tel}</TableCell>
                         <TableCell numeric>{item.balance}</TableCell>
                         <TableCell>
-                            <Tooltip title="详细资料卡">
-                                <IconButton>
-                                    <Person/>
-                                </IconButton>
-                            </Tooltip>
-                            <Tooltip title="充值">
-                                <IconButton onClick={() => onTopUp && onTopUp(item.id)}>
-                                    <AttachMoney/>
-                                </IconButton>
-                            </Tooltip>
+                            {
+                                getActions && getActions(item)
+                            }
                         </TableCell>
                     </TableRow>
                 ))
@@ -44,6 +34,7 @@ const MemberTable = ({data: members, onTopUp}) => (
                 <TableCell>N/A</TableCell>
                 <TableCell numeric>{members.reduce((a, b) => a + b.balance, 0)}</TableCell>
                 <TableCell>
+                    {getSummaryActions && getSummaryActions(members)}
                 </TableCell>
             </TableRow>
         </TableBody>

@@ -7,7 +7,13 @@ import repo from './repo';
 import order, {newOrder} from "./order";
 import saga from "redux-saga";
 import {put, takeEvery, takeLatest} from 'redux-saga/effects';
-import {CREATE_MEMBER, CREATE_ORDER, UPDATE_MEMBER_BALANCE_TOPUP, UPDATE_ORDER_STATUS} from "./mutations";
+import {
+    CREATE_MEMBER,
+    CREATE_ORDER,
+    UPDATE_MEMBER_BALANCE_TOPUP,
+    UPDATE_ORDER_MEMBER,
+    UPDATE_ORDER_STATUS
+} from "./mutations";
 import query from "../query";
 import {createOrder, loadOrders, updateOrder} from "./repo/orders";
 import {createMember, loadMembers, updateMember} from "./repo/members";
@@ -62,10 +68,18 @@ sagas.run(function* () {
         yield put(appNavigation.setter(1))
     });
     yield takeEvery(UPDATE_ORDER_STATUS, function* (action) {
-        const res = yield query('mutation ($id: ID!, $status: OrderStatus!) { updateOrderStatus (id: $id, status: $status) { id date status details { name price amount } member { id name } total } }', action.payload);
+        const res = yield query('mutation ($id: ID!, $status: OrderStatus!) { updateOrderStatus (id: $id, status: $status) { id date status details { name price amount } member { id name balance } total } }', action.payload);
         const json = yield res.json();
-        const data = json.data;
-        yield put(updateOrder(data.updateOrderStatus));
+        if (json.errors) {
+
+        } else {
+            const data = json.data;
+            const order = data.updateOrderStatus;
+            yield put(updateOrder(order));
+            if (order.member) {
+                yield put(updateMember(order.member));
+            }
+        }
     });
     yield takeEvery(CREATE_MEMBER, function* (action) {
         const res = yield query('mutation ($name: String!, $abbr: String, $gender: Gender, $birthday: String, $tel: String, $number: String!, $balance: Float!) { createMember (name: $name, abbr: $abbr, gender: $gender, birthday: $birthday, tel: $tel, number: $number, balance: $balance) { id name number abbr balance tel } }', action.payload);
@@ -107,6 +121,12 @@ sagas.run(function* () {
         yield put(updateMember(data.updateMemberBalanceTopup));
         yield put(start()); // refresh searching
         yield put(isMemberTopUpOpen.setFalse());
+    });
+    yield takeEvery(UPDATE_ORDER_MEMBER, function* (action) {
+        const res = yield query('mutation ($orderId: ID!, $memberId: ID) { updateOrderMember (orderId: $orderId, memberId: $memberId) { id member { id name } } }', action.payload);
+        const json = yield res.json();
+        const data = json.data;
+        yield put(updateOrder(data.updateOrderMember));
     })
 });
 

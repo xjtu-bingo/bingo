@@ -8,6 +8,7 @@ import {Provider} from "react-redux";
 import store from './redux';
 import MemberTopUpPage from "./containers/MemberTopUpPage";
 import * as config from "./config";
+import MemberSelectingModal from "./containers/MemberSelectingModal";
 
 const theme = createMuiTheme({
     palette: {
@@ -28,6 +29,7 @@ class App extends Component {
                     <div className="full-height">
                         <AppFramework/>
                         <MemberTopUpPage/>
+                        <MemberSelectingModal/>
                     </div>
                 </MuiThemeProvider>
             </Provider>

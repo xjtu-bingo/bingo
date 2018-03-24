@@ -2,12 +2,12 @@ import React from 'react';
 import {withStyles} from 'material-ui/styles';
 import {connect} from 'react-redux';
 import {isMemberSignUpOpen, isMemberTopUpOpen, TopUpMemberId} from "../redux/switches";
-import {Button, Collapse, Grid, LinearProgress, Modal, Slide, TextField, Tooltip, Typography} from "material-ui";
+import {Button, Collapse, Grid, IconButton, LinearProgress, Modal, Slide, Tooltip, Typography} from "material-ui";
 import MemberSignUpForm from "../components/MemberSignUpForm";
 import {createMember} from "../redux/mutations";
-import {Add, Search} from "material-ui-icons";
-import {updateKey} from "../redux/search";
+import {Add, AttachMoney, Person} from "material-ui-icons";
 import MemberTable from "../components/MemberTable";
+import SearchBar from "./SearchBar";
 
 const styles = theme => ({
     root: {
@@ -39,7 +39,7 @@ const styles = theme => ({
     }
 });
 
-const MemberPage = ({classes, dispatch, isSignUp, isTopUp, searchMembers, searchKey, isComplete, isTyping}) => {
+const MemberPage = ({classes, dispatch, isSignUp, searchMembers, searchKey, isComplete, isTyping}) => {
 
     return (
         <div className={classes.root}>
@@ -57,16 +57,7 @@ const MemberPage = ({classes, dispatch, isSignUp, isTopUp, searchMembers, search
             <Grid container>
                 <Grid item xs/>
                 <Grid item xs={6}>
-                    <TextField
-                        fullWidth
-                        label={"搜索"}
-                        InputProps={{
-                            startAdornment: <Search/>,
-                        }}
-                        helperText="卡号/姓名/缩写/电话"
-                        value={searchKey}
-                        onChange={e => dispatch(updateKey(e.target.value))}
-                    />
+                    <SearchBar/>
                 </Grid>
                 <Grid item xs/>
             </Grid>
@@ -74,10 +65,24 @@ const MemberPage = ({classes, dispatch, isSignUp, isTopUp, searchMembers, search
             <Grid container>
                 <Grid item xs={12}>
                     <Collapse in={isComplete && searchKey !== ''}>
-                        <MemberTable data={searchMembers} onTopUp={id => {
-                            dispatch(TopUpMemberId.setter(id));
-                            dispatch(isMemberTopUpOpen.setTrue());
-                        }}/>
+                        <MemberTable
+                            data={searchMembers}
+                            getActions={member => [
+                                <Tooltip key={0} title="详细资料卡">
+                                    <IconButton>
+                                        <Person/>
+                                    </IconButton>
+                                </Tooltip>,
+                                <Tooltip key={1} title="充值">
+                                    <IconButton onClick={() => {
+                                        dispatch(TopUpMemberId.setter(member.id));
+                                        dispatch(isMemberTopUpOpen.setTrue());
+                                    }}>
+                                        <AttachMoney/>
+                                    </IconButton>
+                                </Tooltip>
+                            ]}
+                        />
                     </Collapse>
                 </Grid>
             </Grid>
@@ -100,12 +105,6 @@ const MemberPage = ({classes, dispatch, isSignUp, isTopUp, searchMembers, search
                     <MemberSignUpForm onSubmit={member => dispatch(createMember(member))}/>
                 </div>
             </Modal>
-            {/*<MemberSearchDialog open={this.state.open} onRequestClose={this.handleMemberSearchClose}/>*/}
-            {/*<RegisterPage open={this.state.registerPageOpen} onRequestClose={this.handleRegisterPageOnRequestClose}*/}
-            {/*RegisterRequestClose={this.handleRegisterPageRequestClose}/>*/}
-            {/*<TopUpPage open={this.state.topUpPageOpen} onRequestClose={this.handleTopUpPageRequestClose}*/}
-            {/*members={this.props.members}*/}
-            {/*handleMemberRecharge={this.handleMemberRecharge}/>*/}
         </div>
     );
 };
@@ -114,7 +113,6 @@ const MemberPage = ({classes, dispatch, isSignUp, isTopUp, searchMembers, search
 const selector = (state) => ({
     members: state.members.member,
     isSignUp: state.switches.isMemberSignUpOpen,
-    isTopUp: state.switches.isMemberTopUpOpen,
     searchKey: state.search.key,
     searchMembers: Object.values(state.search.results.members),
     isComplete: state.search.isComplete,

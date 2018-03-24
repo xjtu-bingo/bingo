@@ -6,13 +6,11 @@
 const LOAD = 'bingo/orders/LOAD';
 const CREATE = 'bingo/orders/CREATE';
 const UPDATE = 'bingo/orders/UPDATE';
-const REMOVE = 'bingo/orders/REMOVE';
 
 // Action Creators
 export const loadOrders = (orders) => ({type: LOAD, payload: orders});
 export const createOrder = (order) => ({type: CREATE, payload: order});
 export const updateOrder = (order) => ({type: UPDATE, payload: order});
-export const removeOrder = (order) => ({type: REMOVE, payload: order});
 
 const mapId = (arr) => {
     let ret = {};
@@ -27,7 +25,7 @@ const reducer = (state = {}, action) => {
         case CREATE:
             return Object.assign({}, state, {[action.payload.id]: action.payload});
         case UPDATE:
-            return Object.assign({}, state, {[action.payload.id]: action.payload});
+            return Object.assign({}, state, {[action.payload.id]: Object.assign({}, state[action.payload.id], action.payload)});
         default:
             return state;
     }
