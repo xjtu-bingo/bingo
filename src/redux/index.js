@@ -91,9 +91,9 @@ sagas.run(function* () {
             members: {}
         };
         // search member
+        const keyRE = RegExp(key, 'i');
         Object.values(members).forEach(member => {
             const {id, number, name, abbr, tel} = member;
-            const keyRE = RegExp(key, 'i');
             if (keyRE.test(abbr) || keyRE.test(name) || keyRE.test(number) || keyRE.test(tel)) {
                 res.members[id] = member;
             }
