@@ -12,7 +12,6 @@ import {IsSelectingMember, SelectedOrderId} from "../redux/switches";
 const styles = theme => ({
     root: {
         flexGrow: 1,
-        marginTop: 30,
     },
     paper: {
         padding: 16,
@@ -22,8 +21,16 @@ const styles = theme => ({
     },
 });
 
-const OrderProcessingPage = ({classes, newOrders, paidOrders, dispatch}) => (
+const OrderProcessingPage = ({classes, newOrders, paidOrders, finishedOrders, canceledOrders, dispatch}) => (
     <div className={classes.root}>
+        <Grid container>
+            <Grid item xs>
+                <Paper className={classes.paper}>已完成订单 ({finishedOrders.length})</Paper>
+            </Grid>
+            <Grid item xs>
+                <Paper className={classes.paper}>已取消订单 ({canceledOrders.length})</Paper>
+            </Grid>
+        </Grid>
         <Grid container spacing={24}>
             <Grid item xs>
                 <Paper className={classes.paper}>待付款订单 ({newOrders.length})</Paper>
@@ -96,11 +103,13 @@ const selector = (state) => {
     let newOrders = orders.filter(order => order.status === 'NEW');
     let paidOrders = orders.filter(order => order.status === 'PAID');
     let finishedOrders = orders.filter(order => order.status === 'FINISHED');
+    let canceledOrders = orders.filter(order => order.status === 'CANCELED');
     return {
         orders,
         newOrders,
         paidOrders,
-        finishedOrders
+        finishedOrders,
+        canceledOrders
     };
 };
 

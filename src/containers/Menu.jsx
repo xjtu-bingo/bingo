@@ -1,33 +1,25 @@
 import * as React from "react";
 import {withStyles} from "material-ui/styles/index";
 import ProductsTable from "../components/ProductsTable";
+import {connect} from "react-redux";
+import MenuCategoryChipArray from "../components/MenuCategoryChipArray";
+import {MenuCategory} from "../redux/switches";
 
 
 const styles = theme => ({});
 
-// const getCategories = (products) => {
-//     let t = new Set();
-//     for (let id in products) {
-//         t.add(products[id].type);
-//     }
-//     return Array.from(t);
-// };
 
-const getProducts = (products) => {
-    let res = [];
-    for (let id in products) {
-        res.push(products[id]);
-    }
-    return res;
-};
-
-
-const Menu = ({classes, products, onProductClick}) => (
+const Menu = ({classes, products, onProductClick, categories, dispatch}) => (
     <div>
-        {/*<MenuCategoryChipArray data={this.cats} onClick={i => this.setState({category: i})}/>*/}
-        <ProductsTable products={getProducts(products)}
+        <MenuCategoryChipArray data={categories} onClick={category => dispatch(MenuCategory.setter(category))}/>
+        <ProductsTable products={products}
                        onProductClick={product => onProductClick && onProductClick(product)}/>
     </div>
 );
 
-export default withStyles(styles)(Menu);
+const selector = state => ({
+    products: Object.values(state.repo.products).filter(pro => state.switches.menuCategory === '' || pro.type === state.switches.menuCategory),
+    categories: Array.from(new Set(Object.values(state.repo.products).map(pro => pro.type))),
+});
+
+export default connect(selector)(withStyles(styles)(Menu));

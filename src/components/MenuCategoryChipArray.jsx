@@ -4,9 +4,10 @@ import {Chip} from "material-ui";
 
 const MenuCategoryChipArray = ({data, onClick, classes}) => (
     <div className={classes.root}>
+        <Chip className={classes.chip} label="全部" onClick={() => onClick && onClick('')}/>
         {
             data.map((v, i) => (
-                <Chip className={classes.chip} key={i} label={v} onClick={() => onClick && onClick(i)}/>
+                <Chip className={classes.chip} key={i} label={v} onClick={() => onClick && onClick(v)}/>
             ))
         }
     </div>

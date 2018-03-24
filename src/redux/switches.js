@@ -32,6 +32,12 @@ export const SelectedOrderId = StringSwitch('bingo/switches/SELECTED_ORDER_ID');
 export const SelectedMemberId = StringSwitch('bingo/switches/SELECTED_MEMBER_ID');
 export const IsSelectingMember = BooleanSwitch('bingo/switches/IS_SELECTING_MEMBER');
 
+export const IsOrderTotalOverride = BooleanSwitch('bingo/switches/IS_ORDER_TOTAL_OVERRIDE');
+export const OrderTotal = NumberSwitch('bingo/switches/ORDER_TOTAL');
+export const OrderNote = StringSwitch('bingo/switches/ORDER_NOTE');
+
+export const MenuCategory = StringSwitch('bingo/switches/MENU_CATEGORY');
+
 export default combineReducers({
     isNavigationExpanded: isNavigationExpanded.reducer,
     isMemberSignUpOpen: isMemberSignUpOpen.reducer,
@@ -42,4 +48,8 @@ export default combineReducers({
     selectedMemberId: SelectedMemberId.reducer,
     isSelectingMember: IsSelectingMember.reducer,
     selectedOrderId: SelectedOrderId.reducer,
+    orderTotal: OrderTotal.reducer,
+    orderNote: OrderNote.reducer,
+    isOrderTotalOverride: IsOrderTotalOverride.reducer,
+    menuCategory: MenuCategory.reducer,
 });

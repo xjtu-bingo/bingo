@@ -57,6 +57,9 @@ class MemberSignUpForm extends React.Component {
                     InputProps={{
                         startAdornment: <InputAdornment position="start">￥</InputAdornment>
                     }}
+                    inputProps={{
+                        min: 0
+                    }}
                 />
                 <br/>
                 <TextField

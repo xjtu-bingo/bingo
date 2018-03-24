@@ -28,6 +28,7 @@ class App extends Component {
             <Provider store={store}>
                 <MuiThemeProvider theme={theme}>
                     <div className="full-height">
+                        <img src="images/bingo-logo.jpg" alt="bingo-logo" style={{display: 'none'}}/>
                         <AppFramework/>
                         <MemberTopUpPage/>
                         <MemberSelectingModal/>

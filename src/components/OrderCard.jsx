@@ -2,7 +2,7 @@ import React from 'react';
 import {withStyles} from 'material-ui/styles';
 import Card, {CardActions, CardContent, CardHeader} from 'material-ui/Card';
 import {OrderedDetailTable} from "./OrderDetailTable"
-import {Avatar} from "material-ui";
+import {Avatar, TextField} from "material-ui";
 
 
 const styles = theme => ({
@@ -57,7 +57,8 @@ const OrderCard = ({classes, order, actions}) => {
                 subheader={`${order.date} - ${moment}`}
             />
             <CardContent>
-                <OrderedDetailTable data={order.details}/>
+                <OrderedDetailTable order={order}/>
+                {order.note !== '' ? <TextField label="备注" disabled value={order.note} fullWidth multiline/> : null}
             </CardContent>
             <CardActions>{actions}</CardActions>
         </Card>

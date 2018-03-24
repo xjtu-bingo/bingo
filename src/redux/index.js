@@ -54,14 +54,17 @@ const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
 sagas.run(function* () {
     yield takeEvery(CREATE_ORDER, function* (action) {
         let details = action.payload.details.map(item => ({name: item.name, price: item.price, amount: item.amount}));
-        let res = yield query('mutation ($details: [OrderDetailInput!]!) { createOrder (details: $details) { id date status details { name price amount } } }', {details});
+        let res = yield query('mutation ($details: [OrderDetailInput!]!, $note: String, $total: Float) { createOrder (details: $details, note: $note, total: $total) { id date status details { name price amount } total note } }', {
+            ...action.payload,
+            details
+        });
         let json = yield res.json();
         let data = json.data;
         yield put(createOrder(data.createOrder));
         yield put(newOrder())
     });
     yield takeLatest(INIT, function* () {
-        const res = yield query(`query { products(limit: ${config.initial.products}) {id name price type} orders (limit: ${config.initial.orders}) { id date status details { name price amount} member { id name } total } members (limit: ${config.initial.members}) { id name number abbr balance tel}}`);
+        const res = yield query(`query { products(limit: ${config.initial.products}) {id name price type} orders (limit: ${config.initial.orders}) { id date status details { name price amount} member { id name } total note } members (limit: ${config.initial.members}) { id name number abbr balance tel}}`);
         const json = yield res.json();
         const data = json.data;
         yield put(loadProducts(data.products));
@@ -73,7 +76,7 @@ sagas.run(function* () {
         const res = yield query('mutation ($id: ID!, $status: OrderStatus!) { updateOrderStatus (id: $id, status: $status) { id date status details { name price amount } member { id name balance } total } }', action.payload);
         const json = yield res.json();
         if (json.errors) {
-            const code = parseInt(json.errors[0].message);
+            const code = parseInt(json.errors[0].message, 10);
             const messages = [null, "用户余额不足", "不支持的订单状态转移"];
             yield put(iMQ({type: 'ERROR', message: `${messages[code]}`}));
         } else {

@@ -30,7 +30,9 @@ const MemberTopUpPage = ({classes, dispatch, member, open, amount}) => open ? (
             <Typography>姓名：{member.name}</Typography>
             <Typography>余额：{member.balance}</Typography>
             <TextField label="充值金额" type="number" value={amount}
-                       onChange={e => dispatch(TopUpAmount.setter(e.target.value))}/>
+                       onChange={e => dispatch(TopUpAmount.setter(e.target.value))}
+                       inputProps={{min: 0}}
+            />
             <Button onClick={() => dispatch(updateMemberBalanceTopup({id: member.id, amount}))}>充值</Button>
         </div>
     </Modal>

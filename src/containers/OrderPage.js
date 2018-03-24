@@ -1,13 +1,14 @@
 import React from 'react';
 import {withStyles} from 'material-ui/styles';
 import Button from 'material-ui/Button';
-import {Grid, Paper} from "material-ui";
+import {Fade, FormControlLabel, Grid, InputAdornment, Paper, Switch, TextField} from "material-ui";
 import OrderDetail from '../components/OrderDetailTable'
 import Menu from './Menu';
 import {connect} from "react-redux";
 import {decOrderProduct, delOrderProduct, incOrderProduct, newOrder} from "../redux/order";
 import {Delete, Send} from "material-ui-icons";
 import {createOrder} from "../redux/mutations";
+import {IsOrderTotalOverride, OrderNote, OrderTotal} from '../redux/switches';
 
 const styles = theme => ({
     root: {
@@ -39,20 +40,67 @@ const styles = theme => ({
     },
     memberSearch: {
         display: 'none'
+    },
+    orderAppendix: {
+        padding: '1em'
     }
 });
 
-const OrderPage = ({classes, products, order, dispatch}) => {
+const OrderPage = ({classes, products, note, total, isTotalOverride, order, dispatch}) => {
+    const notes = [note];
+
+    if (isTotalOverride) {
+        notes.push(`指定总价：￥${total}`);
+    }
+
     const appendix = (
-        <div>
+        <div className={classes.orderAppendix}>
+            <FormControlLabel
+                control={
+                    <Switch
+                        checked={isTotalOverride}
+                        onChange={e => dispatch(IsOrderTotalOverride.setter(e.target.checked))}
+                        color="primary"
+                    />
+                }
+                label="指定总价"
+            />
+            <Fade in={isTotalOverride} mountOnEnter unmountOnExit>
+                <TextField
+                    label="总价"
+                    type="number"
+                    helperText="实际结算时将按照指定的总价支付"
+                    fullWidth
+                    value={total}
+                    onChange={e => dispatch(OrderTotal.setter(parseFloat(e.target.value)))}
+                    InputProps={{
+                        startAdornment: <InputAdornment position="start">￥</InputAdornment>
+                    }}
+                    inputProps={{
+                        min: 0
+                    }}
+                />
+            </Fade>
+
+            <TextField
+                label="备注"
+                helperText="e.g. 少加糖 / 多加珍珠"
+                fullWidth
+                value={note}
+                onChange={(e) => dispatch(OrderNote.setter(e.target.value))}
+                multiline margin="normal"
+            />
             <Button variant="raised" color="primary" className={classes.action}
                     onClick={() => {
                         dispatch(createOrder({
                             memberId: null,
                             details: order,
-                            total: order.reduce((a, b) => a + b.amount * b.price, 0),
-                            note: ''
+                            total: isTotalOverride ? total : order.reduce((a, b) => a + b.amount * b.price, 0),
+                            note: notes.join('\n')
                         }));
+                        dispatch(IsOrderTotalOverride.setFalse());
+                        dispatch(OrderNote.setter(""));
+                        dispatch(OrderTotal.setter(0));
                     }}>
                 <Send/>
                 确定下单
@@ -93,7 +141,10 @@ const OrderPage = ({classes, products, order, dispatch}) => {
 
 const selector = (state) => ({
     order: Object.keys(state.order).map(id => ({...state.repo.products[id], amount: state.order[id]})),
-    products: state.repo.products
+    isTotalOverride: state.switches.isOrderTotalOverride,
+    total: state.switches.orderTotal,
+    note: state.switches.orderNote,
+    products: state.repo.products,
 });
 
 export default connect(selector)(withStyles(styles)(OrderPage));
