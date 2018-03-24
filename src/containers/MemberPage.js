@@ -25,7 +25,8 @@ const styles = theme => ({
         padding: theme.spacing.unit * 4,
     },
     logo: {
-        width: '100%'
+        width: '100%',
+        marginBottom: '4em'
     },
     loading: {
         margin: '2em',

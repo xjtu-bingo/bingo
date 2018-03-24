@@ -36,6 +36,17 @@ const OrderCard = ({classes, order, actions}) => {
         avatar = '匿';
         title = '订单';
     }
+    let ms = new Date(Date.now() - new Date(order.date).getTime());
+    let moment;
+    if (ms < 60000) {
+        moment = '刚刚';
+    } else if (ms < 3600000) {
+        moment = `${~~(ms / 60000)}分钟前`;
+    } else if (ms < 86400000) {
+        moment = `${~~(ms / 3600000)}小时前`;
+    } else {
+        moment = `${~~(ms / 86400000)}天前`;
+    }
     return (
         <Card className={classes.card}>
             <CardHeader
@@ -43,7 +54,7 @@ const OrderCard = ({classes, order, actions}) => {
                     <Avatar className={classes.avatar}>{avatar}</Avatar>
                 }
                 title={title}
-                subheader={order.date}
+                subheader={`${order.date} - ${moment}`}
             />
             <CardContent>
                 <OrderedDetailTable data={order.details}/>
